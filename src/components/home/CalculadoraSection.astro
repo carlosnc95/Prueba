@@ -5,7 +5,12 @@ import Calculadora from '../../islands/Calculadora';
 <section id="calculadora" class="calculadora-section">
   <div class="container">
     <div data-reveal>
-      <Calculadora client:visible />
+      {/* client:load, no client:visible: el <astro-island> usa display:contents,
+          cuyo getBoundingClientRect() siempre da 0 — el IntersectionObserver de
+          client:visible nunca lo considera "visible" y la isla no se hidrata
+          nunca (confirmado en producción: los sliders movían el pomo pero no
+          recalculaban nada). El componente es ligero (~2.5 kB), sin coste real. */}
+      <Calculadora client:load />
     </div>
   </div>
 </section>
