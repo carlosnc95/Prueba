@@ -1,0 +1,150 @@
+---
+import ChatDiagnostico from '../../islands/ChatDiagnostico';
+import { site } from '../../config/site';
+
+const whatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}`;
+---
+
+<section id="inicio" class="hero">
+  <div class="container hero__grid">
+    <div class="hero__text" data-reveal>
+      <p class="eyebrow">Diagnóstico de procesos · IA aplicada</p>
+      <h1 class="hero__title">¿Qué proceso está <span class="hero__title-accent">frenando</span> a tu empresa?</h1>
+      <p class="hero__subtitle">
+        Cuéntanos qué tarea te hace perder tiempo o dinero. Medimos el proceso, diseñamos la solución de IA y la
+        construimos contigo.
+      </p>
+      <div class="hero__actions">
+        <a href="#diagnostico" class="btn btn--primary">Cuéntanos tu caso <span aria-hidden="true">→</span></a>
+        <a href="#calculadora" class="btn btn--secondary">Calcula tu ahorro</a>
+        <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="currentColor">
+            <path
+              d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.94-.26-.1-.46-.15-.65.15-.2.29-.75.94-.92 1.13-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.37-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.5-.17-.01-.37-.01-.56-.01-.2 0-.51.07-.78.37-.26.29-1.02 1-1.02 2.43 0 1.43 1.05 2.82 1.19 3.01.15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"
+            ></path>
+            <path
+              d="M12.02 2C6.5 2 2.02 6.48 2.02 12c0 1.86.5 3.6 1.38 5.1L2 22l5.05-1.36A9.94 9.94 0 0 0 12.02 22C17.53 22 22 17.52 22 12S17.53 2 12.02 2Zm0 18.1c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-3 .81.8-2.92-.21-.3A8.09 8.09 0 0 1 3.92 12c0-4.48 3.64-8.1 8.1-8.1 4.47 0 8.1 3.63 8.1 8.1s-3.63 8.1-8.1 8.1Z"
+            ></path>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <ChatDiagnostico client:load />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-12) 0;
+    position: relative;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: var(--space-14);
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: var(--text-h1);
+    line-height: 1;
+    margin-top: 0;
+  }
+
+  .hero__title-accent {
+    color: var(--color-zafiro);
+  }
+
+  .hero__subtitle {
+    margin-top: var(--space-6);
+    font-size: var(--text-body-lg);
+    color: var(--color-gris-texto);
+    max-width: 44ch;
+  }
+
+  .hero__actions {
+    margin-top: var(--space-7);
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn--whatsapp {
+    background: #e9f9ee;
+    border-color: #bdeccb;
+    color: #14803c;
+  }
+
+  .btn--whatsapp svg {
+    color: #25d366;
+    flex-shrink: 0;
+  }
+
+  .btn--whatsapp:hover {
+    background: #d8f4e1;
+    border-color: #25d366;
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
+
+  .btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 14px 22px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-tinta);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .btn--primary {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-zafiro);
+    border-color: var(--color-zafiro);
+    box-shadow: var(--shadow-cta-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-tinta);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-crema-media);
+  }
+
+  @media (max-width: 980px) {
+    .hero {
+      padding: var(--space-8) 0;
+    }
+
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    /* En móvil ya está la burbuja flotante (ver WhatsappButton.astro,
+       mode="mobile-only"); no duplicar la entrada aquí. Va después de la
+       regla base .btn para ganarle el empate de especificidad. */
+    .btn--whatsapp {
+      display: none;
+    }
+  }
+</style>

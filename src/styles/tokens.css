@@ -1,0 +1,97 @@
+/* Design tokens — ver README.md > Design Tokens */
+:root {
+  /* Colores */
+  --color-tinta: #14161b;
+  --color-tinta-suave: #2c3138;
+  --color-zafiro: #2d5b9e;
+  --color-zafiro-oscuro: #1e3f70;
+  --color-zafiro-claro: #9fbde4;
+  --color-zafiro-tenue: #e9eef6;
+  --color-crema: #f8f7f2;
+  --color-crema-fondo: #f6f4ec;
+  --color-crema-media: #f1efe6;
+  --color-linea: #e4e1d3;
+  --color-gris-texto: #5b6570;
+  /* Contraste límite de AA en tamaños pequeños sobre crema (ver README > Accesibilidad).
+     Usar --color-gris-oscuro-tenue en su lugar si el texto es pequeño. */
+  --color-gris-tenue: #9a9d97;
+  --color-gris-oscuro-tenue: #6f767c;
+  --color-verde-online: #3fcb6b;
+
+  /* Tipografía */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --text-h1: clamp(2.8rem, 5.4vw, 4.4rem);
+  --text-h1-interior: clamp(2.5rem, 4.8vw, 3.9rem);
+  --text-h2: clamp(1.9rem, 3.2vw, 2.6rem);
+  --text-h2-menor: clamp(1.7rem, 2.8vw, 2.2rem);
+  --text-h3: 1.08rem;
+  --text-body-lg: 1.14rem;
+  --text-body: 1rem;
+  --text-sm: 0.92rem;
+  --text-xs: 0.84rem;
+  --text-eyebrow: 0.78rem;
+
+  --leading-body: 1.55;
+  --tracking-eyebrow: 0.14em;
+  --tracking-heading-tight: -0.03em;
+  --tracking-heading: -0.018em;
+
+  /* Espaciado (múltiplos de 2 sobre base 4) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-2-5: 9px;
+  --space-3: 11px;
+  --space-3-5: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-5-5: 22px;
+  --space-6: 26px;
+  --space-6-5: 28px;
+  --space-7: 32px;
+  --space-8: 36px;
+  --space-10: 46px;
+  --space-12: 56px;
+  --space-14: 64px;
+  --space-16: 72px;
+
+  /* Contenedor */
+  --container-max: 1240px;
+  --container-pad: 32px;
+  --container-pad-narrow: 20px;
+  --breakpoint-narrow: 980px;
+
+  /* Radios */
+  --radius-sm: 8px;
+  --radius-md: 9px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-3xl: 24px;
+  --radius-full: 50%;
+
+  /* Sombras */
+  --shadow-btn-hover: 0 10px 22px -10px #2d5b9e70;
+  --shadow-cta-hover: 0 12px 26px -12px #2d5b9e80;
+  --shadow-chat-panel: 0 34px 74px -34px rgba(20, 22, 27, 0.28);
+  --shadow-card-dark: 0 36px 70px -40px rgba(20, 22, 27, 0.5);
+
+  /* Movimiento */
+  --ease-reveal: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --duration-reveal: 0.55s;
+  --duration-hover: 0.18s;
+  --duration-accordion: 0.3s;
+  --duration-typing-dot: 1.2s;
+
+  /* Header sticky: usado en scroll-margin-top de destinos de ancla */
+  --header-offset: 104px;
+
+  /* Fondo global fijo */
+  --bg-image: radial-gradient(1100px 680px at 84% -8%, rgba(45, 91, 158, 0.22), transparent 64%),
+    radial-gradient(900px 620px at -12% 18%, rgba(159, 189, 228, 0.3), transparent 66%),
+    radial-gradient(1000px 760px at 112% 78%, rgba(206, 186, 150, 0.34), transparent 62%),
+    radial-gradient(700px 520px at 30% 108%, rgba(45, 91, 158, 0.12), transparent 66%),
+    linear-gradient(180deg, rgba(248, 247, 242, 0.92), rgba(241, 239, 230, 0.45) 48%, rgba(248, 247, 242, 0.9));
+}

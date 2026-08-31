@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sira · Diagnóstico de IA para automatizar tus procesos</title>
+<meta name="description" content="Cuéntanos la tarea que más tiempo os ocupa y te devolvemos en 48 horas un diagnóstico con qué se puede automatizar, el alcance y el retorno esperado. Sin coste.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://sira.ai/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314161b'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%232d5b9e'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sira">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Sira · Diagnóstico de IA para automatizar tus procesos">
+<meta property="og:description" content="Cuéntanos la tarea que más tiempo os ocupa y te devolvemos en 48 horas un diagnóstico con qué se puede automatizar, el alcance y el retorno esperado. Sin coste.">
+<meta property="og:url" content="https://sira.ai/">
+<meta property="og:image" content="https://sira.ai/og-sira.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sira · Diagnóstico de IA para automatizar tus procesos">
+<meta name="twitter:description" content="Cuéntanos la tarea que más tiempo os ocupa y te devolvemos en 48 horas un diagnóstico con qué se puede automatizar, el alcance y el retorno esperado. Sin coste.">
+<meta name="twitter:image" content="https://sira.ai/og-sira.png">
+<meta name="theme-color" content="#14161b">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Sira","url":"https://sira.ai","logo":"https://sira.ai/og-sira.png","description":"Diagnóstico y desarrollo de automatizaciones con IA para procesos de empresa.","email":"hola@sira.ai","areaServed":"ES","sameAs":[],"knowsAbout":["Automatización de procesos","Inteligencia artificial aplicada","Análisis de datos","Desarrollo de software"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué incluye exactamente el diagnóstico gratuito?","acceptedAnswer":{"@type":"Answer","text":"Un análisis escrito de la tarea que nos cuentas: qué parte puede automatizarse, con qué herramientas, en qué plazo y cuántas horas al año está consumiendo hoy. Lo recibes por email en menos de 48 horas."}},{"@type":"Question","name":"¿Por qué es gratis?","acceptedAnswer":{"@type":"Answer","text":"Es nuestra forma de demostrar criterio antes de pedir nada. Si el caso encaja, preferimos empezar la conversación con el trabajo hecho."}},{"@type":"Question","name":"¿Cuánto cuesta después el desarrollo?","acceptedAnswer":{"@type":"Answer","text":"Trabajamos por proyecto cerrado, empezando por un proceso concreto. El diagnóstico incluye el rango de inversión y el retorno estimado. Sin permanencia."}},{"@type":"Question","name":"¿Cuánto se tarda en tener algo funcionando?","acceptedAnswer":{"@type":"Answer","text":"Las primeras automatizaciones suelen estar en producción en semanas, no en trimestres."}},{"@type":"Question","name":"¿Tengo que cambiar mis herramientas?","acceptedAnswer":{"@type":"Answer","text":"No. Construimos sobre lo que ya usas: ERP, correo, hojas de cálculo o CRM."}},{"@type":"Question","name":"¿Qué pasa con la confidencialidad de mis datos?","acceptedAnswer":{"@type":"Answer","text":"Firmamos acuerdo de confidencialidad antes de ver nada y, cuando el proceso lo requiere, se despliega sobre tu propia infraestructura."}},{"@type":"Question","name":"¿La IA va a tomar decisiones por mi equipo?","acceptedAnswer":{"@type":"Answer","text":"No. La IA prepara, ordena y propone; lo que tiene consecuencias lo confirma siempre una persona."}},{"@type":"Question","name":"¿Necesito que alguien de mi equipo sea técnico?","acceptedAnswer":{"@type":"Answer","text":"No. Entregamos el proceso funcionando y documentado, con formación para quien vaya a usarlo."}}]}</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    @keyframes nexoBlink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+    body{margin:0;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:#2d5b9e}
+    a:hover{color:#1e3f70}
+    ::selection{background:#2d5b9e;color:#fff}
+    input[type=range]{accent-color:#2d5b9e}
+  </style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="background-color:#f6f4ec;background-image:radial-gradient(1100px 680px at 84% -8%, rgba(45,91,158,.22), transparent 64%),radial-gradient(900px 620px at -12% 18%, rgba(159,189,228,.30), transparent 66%),radial-gradient(1000px 760px at 112% 78%, rgba(206,186,150,.34), transparent 62%),radial-gradient(700px 520px at 30% 108%, rgba(45,91,158,.12), transparent 66%),linear-gradient(180deg, rgba(248,247,242,.92), rgba(241,239,230,.45) 48%, rgba(248,247,242,.9));background-repeat:no-repeat;background-attachment:fixed;color:#14161b;font-family:Inter,sans-serif;line-height:1.55;overflow-x:clip">
+
+  <header style="position:sticky;top:0;z-index:60;background:rgba(248,247,242,.86);backdrop-filter:blur(10px);border-bottom:1px solid #e4e1d3">
+    <div style="max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between">
+      <a href="#inicio" aria-label="Sira, inicio" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.28rem;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;color:#14161b">
+        <span style="width: 9px; height: 9px; border-radius: 50%; background: rgb(45, 91, 158); display: inline-block;"></span>SIRA</a>
+      <nav style="display:flex;align-items:center;gap:28px">
+        <a href="./Sira%20casos.dc.html" style="{{ navTextLinkStyle }}" style-hover="color:#14161b">Soluciones</a>
+        <a href="./Sira%20quienes%20somos.dc.html" style="{{ navTextLinkStyle }}" style-hover="color:#14161b">Quiénes somos</a>
+        <a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:8px;white-space:nowrap" style-hover="background:#2d5b9e;border-color:#2d5b9e;box-shadow:0 10px 22px -10px #2d5b9e70;transform:translateY(-1px)">Cuéntanos tu caso <span>→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section style="padding:56px 0 56px;position:relative">
+      <div style="max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:1">
+        <div style="{{ heroGridStyle }}">
+          <div style="{{ heroTextStyle }}">
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;margin:0 0 22px;display:flex;align-items:center;gap:9px"><span style="width:6px;height:6px;border-radius:50%;background:#2d5b9e;display:inline-block"></span>Diagnóstico de procesos · IA aplicada</p>
+            <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.8rem,5.4vw,4.4rem);line-height:1;letter-spacing:-.03em;margin:0;text-wrap:pretty">¿Qué proceso está <span style="color:#2d5b9e">frenando</span> a tu empresa?</h1>
+            <p style="margin-top:26px;font-size:1.14rem;color:#5b6570;max-width:44ch;text-wrap:pretty">Cuéntanos qué tarea te hace perder tiempo o dinero. Medimos el proceso, diseñamos la solución de IA y la construimos contigo.</p>
+            <div style="margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;padding:14px 22px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:9px;cursor:pointer" style-hover="background:#2d5b9e;border-color:#2d5b9e;box-shadow:0 12px 26px -12px #2d5b9e80;transform:translateY(-1px)">Cuéntanos tu caso <span>→</span></a>
+              <a href="#calculadora" style="font-family:Inter,sans-serif;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;padding:14px 22px;background:transparent;color:#14161b;border:1px solid #14161b;border-radius:9px;cursor:pointer" style-hover="background:#f1efe6">Calcula tu ahorro</a>
+            </div>
+            
+          </div>
+
+          <div id="diagnostico" style="{{ chatShellStyle }}">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid #e4e1d3">
+              <div style="width:32px;height:32px;border-radius:9px;background:#14161b;color:#f8f7f2;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem">S</div>
+              <div>
+                <b style="font-size:.9rem;display:block">Diagnóstico Sira</b>
+                <span style="font-size:.74rem;color:#9a9d97;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#3fcb6b;display:inline-block"></span>En línea · responde al instante</span>
+              </div>
+            </div>
+
+            <div data-chat-body="1" ref="{{ chatBodyRef }}" style="padding:20px;display:flex;flex-direction:column;gap:11px;min-height:300px;max-height:360px;overflow-y:auto">
+              <sc-for list="{{ messages }}" as="m" hint-placeholder-count="2">
+                <sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="max-width:86%;padding:12px 16px;border-radius:14px;font-size:.9rem;line-height:1.5;background:#f1efe6;border-bottom-left-radius:4px">{{ m.text }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-end">
+                    <div style="max-width:86%;padding:12px 16px;border-radius:14px;font-size:.9rem;line-height:1.5;background:#2d5b9e;color:#f8f7f2;border-bottom-right-radius:4px">{{ m.text }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isChips }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;max-width:100%">
+                      <sc-for list="{{ m.options }}" as="opt" hint-placeholder-count="3">
+                        <button type="button" onClick="{{ opt.onClick }}" disabled="{{ m.disabled }}" style="{{ opt.style }}" style-hover="background:#e9eef6;border-color:#2d5b9e">{{ opt.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isConsent }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%">
+                    <div style="max-width:100%;width:100%;padding:16px;border-radius:14px;background:#f1efe6;border:1px solid #e4e1d3;box-sizing:border-box">
+                      <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+                        <input type="checkbox" checked="{{ consentChecked }}" onChange="{{ onConsentToggle }}" disabled="{{ m.disabled }}" style="margin-top:3px;width:16px;height:16px;accent-color:#2d5b9e;flex-shrink:0" />
+                        <span style="font-size:.84rem;line-height:1.5;color:#5b6570">Acepto que Sira trate mis datos para preparar y enviarme el diagnóstico. Ver la <a href="./Sira%20privacidad.dc.html" target="_blank" style="color:#2d5b9e;text-decoration:underline">política de privacidad</a>.</span>
+                      </label>
+                      <button type="button" onClick="{{ onConsentSubmit }}" disabled="{{ consentSubmitDisabled }}" style="{{ consentBtnStyle }}">Enviar y recibir el diagnóstico</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isTyping }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="display:flex;gap:4px;padding:12px 16px;background:#f1efe6;border-radius:14px;border-bottom-left-radius:4px;width:fit-content">
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite"></span>
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite .2s"></span>
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite .4s"></span>
+                    </div>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;gap:10px;padding:14px 16px;border-top:1px solid #e4e1d3;background:#f8f7f2;opacity:{{ inputRowOpacity }};pointer-events:{{ inputRowPointer }}">
+              <input type="{{ inputType }}" value="{{ inputValue }}" onChange="{{ onInputChange }}" onKeyDown="{{ onInputKeyDown }}" placeholder="{{ inputPlaceholder }}" disabled="{{ inputDisabled }}" autocomplete="off" aria-label="Escribe tu respuesta" style="flex:1;border:1px solid #e4e1d3;border-radius:24px;padding:12px 18px;font-family:Inter,sans-serif;font-size:.9rem;background:#f1efe6;color:#14161b" style-focus="outline:2px solid #2d5b9e;outline-offset:2px">
+              <button onClick="{{ onSendClick }}" disabled="{{ inputDisabled }}" aria-label="Enviar mensaje" style="width:42px;height:42px;border-radius:50%;background:#14161b;border:none;color:#f8f7f2;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#2d5b9e">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    <section id="como-funciona" style="padding: 52px 0 64px; position: relative">
+      <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+        <div style="background:#14161b;color:#f8f7f2;border-radius:24px;padding:46px 44px;box-shadow:0 36px 70px -40px rgba(20,22,27,.5)">
+        <div style="{{ stepsHeadStyle }}" data-reveal-id="steps-head">
+          
+          
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,3.2vw,2.6rem);letter-spacing:-.025em;margin:0;max-width:20ch;color:#f8f7f2">Tres pasos, sin vueltas</h2></div>
+        <div style="{{ stepsGridStyle }}">
+          <div style="{{ step0Style }}" data-reveal-id="step-0" style-hover="border-color:#3f5f8f">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.76rem;letter-spacing:.14em;color:#9fbde4">01</span>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.14rem;margin:14px 0 10px;color:#f8f7f2">Cuéntanos el caso</h3>
+            <p style="color:#c9cfd3;font-size:1rem;margin:0;text-wrap:pretty">Sin jerga ni requisitos técnicos. Solo qué está ocurriendo hoy.</p>
+          </div>
+          <div style="{{ step1Style }}" data-reveal-id="step-1" style-hover="border-color:#3f5f8f">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.76rem;letter-spacing:.14em;color:#9fbde4">02</span>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.14rem;margin:14px 0 10px;color:#f8f7f2">Diseñamos la solución</h3>
+            <p style="color:#c9cfd3;font-size:1rem;margin:0;text-wrap:pretty">Alcance, plazos y retorno estimado sobre tu proceso real.</p>
+          </div>
+          <div style="{{ step2Style }}" data-reveal-id="step-2" style-hover="border-color:#3f5f8f">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.76rem;letter-spacing:.14em;color:#9fbde4">03</span>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.14rem;margin:14px 0 10px;color:#f8f7f2">La construimos contigo</h3>
+            <p style="color:#c9cfd3;font-size:1rem;margin:0;text-wrap:pretty">Integrada en tus herramientas y medida desde el primer día.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section><section id="resolvemos" style="padding:64px 0">
+      <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+        <div style="{{ casesHeadStyle }}" data-reveal-id="cases-head">
+          <div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;display:block;margin-bottom:10px">Qué resolvemos</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,3.2vw,2.6rem);letter-spacing:-.025em;margin:0;max-width:26ch">Lo que nos suelen contar</h2>
+          </div>
+          
+        </div>
+
+        <div style="{{ casesLayoutStyle }}">
+          <div style="display:flex;flex-direction:column;border-left:1px solid #e4e1d3">
+            <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
+              <button type="button" onClick="{{ c.onSelect }}" style="{{ c.navStyle }}" style-hover="color:#14161b">{{ c.sector }}</button>
+            </sc-for>
+          </div>
+
+          <div style="{{ casePanelStyle }}">
+            <div style="min-width:0;flex:1">
+            
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#9a9d97;margin:0 0 16px">Nos dicen</p><p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.3rem,2.3vw,1.85rem);line-height:1.26;letter-spacing:-.02em;margin:0 0 28px;max-width:min(34ch,100%);text-wrap:pretty">{{ activeQuote }}</p>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;margin:0 0 12px">Cómo lo abordamos</p>
+            <p style="margin:0;font-size:1.02rem;color:#5b6570;text-wrap:pretty;width:100%;max-width:min(56ch,100%);height:auto">{{ activeSolution }}</p>
+            </div>
+            <img src="./icon-datos.png" alt="" style="{{ iconDatosStyle }}">
+            <img src="./icon-engranajes.png" alt="" style="{{ iconEngranajesStyle }}">
+            <img src="./icon-chat.png" alt="" style="{{ iconChatStyle }}">
+          </div>
+        </div>
+      </div>
+    </section><section id="calculadora" style="padding:64px 0;border-top:1px solid #e4e1d3">
+      <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+        <div style="{{ calcGridStyle }}" data-reveal-id="calc">
+          <div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;display:block;margin-bottom:10px">Calcula</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,3.2vw,2.6rem);letter-spacing:-.025em;margin:0 0 26px;max-width:22ch">¿Cuánto te cuesta hacerlo a mano?</h2>
+
+            <label style="display:block;margin-bottom:22px">
+              <span style="display:flex;justify-content:space-between;font-size:.9rem;color:#5b6570;margin-bottom:8px">Horas a la semana en esa tarea <b style="font-family:'IBM Plex Mono',monospace;color:#14161b">{{ horas }} h</b></span>
+              <input type="range" min="1" max="20" step="1" value="{{ horas }}" onChange="{{ onHoras }}" aria-label="Horas a la semana" style="width:100%">
+            </label>
+            <label style="display:block;margin-bottom:22px">
+              <span style="display:flex;justify-content:space-between;font-size:.9rem;color:#5b6570;margin-bottom:8px">Personas implicadas <b style="font-family:'IBM Plex Mono',monospace;color:#14161b">{{ personas }}</b></span>
+              <input type="range" min="1" max="10" step="1" value="{{ personas }}" onChange="{{ onPersonas }}" aria-label="Personas implicadas" style="width:100%">
+            </label>
+            <label style="display:block">
+              <span style="display:flex;justify-content:space-between;font-size:.9rem;color:#5b6570;margin-bottom:8px">Coste medio por hora <b style="font-family:'IBM Plex Mono',monospace;color:#14161b">{{ coste }} €</b></span>
+              <input type="range" min="12" max="45" step="1" value="{{ coste }}" onChange="{{ onCoste }}" aria-label="Coste medio por hora" style="width:100%">
+            </label>
+          </div>
+
+          <div style="background:#14161b;color:#f8f7f2;border-radius:18px;padding:34px 32px;align-self:stretch;display:flex;flex-direction:column;justify-content:center">
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9fbde4;margin:0 0 12px">Coste anual de esa tarea</p>
+            <b style="font-family:'Space Grotesk',sans-serif;font-size:clamp(2.6rem,5vw,3.6rem);letter-spacing:-.03em;line-height:1;display:block">{{ ahorroTexto }}</b>
+            <div style="display:flex;gap:28px;margin-top:26px;padding-top:22px;border-top:1px solid #2c3138;flex-wrap:wrap">
+              <div><b style="font-family:'Space Grotesk',sans-serif;font-size:1.3rem;display:block">{{ horasTexto }}</b><span style="font-size:.8rem;color:#9aa3a8">horas al año</span></div>
+              <div><b style="font-family:'Space Grotesk',sans-serif;font-size:1.3rem;display:block">{{ semanasTexto }}</b><span style="font-size:.8rem;color:#9aa3a8">jornadas de 8 h al año</span></div>
+            </div>
+            <p style="font-size:.78rem;color:#6f767c;margin:22px 0 0">Cálculo directo sobre tus datos: horas × personas × 46 semanas laborables × coste/hora. Las jornadas son esas horas divididas entre 8. Cuánto de eso se puede automatizar lo dice el diagnóstico, no una estimación genérica.</p>
+            <a href="#diagnostico" style="margin-top:24px;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;padding:13px 20px;background:#f8f7f2;color:#14161b;border-radius:9px;align-self:flex-start" style-hover="background:#9fbde4;color:#14161b">Pedir el diagnóstico <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="padding:64px 0;border-top:1px solid #e4e1d3">
+      <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+        <div style="{{ faqLayoutStyle }}">
+          <div>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;margin:0 0 14px">Preguntas frecuentes</p>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,3.2vw,2.5rem);letter-spacing:-.025em;line-height:1.06;margin:0 0 28px;max-width:20ch;text-wrap:pretty">Lo que suelen preguntarnos antes de empezar</h2>
+            <div style="{{ faqMailCardStyle }}">
+              <p style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9fbde4;margin:0 0 12px">¿Otra duda?</p>
+              <a href="mailto:hola@sira.ai" style="{{ faqMailLinkStyle }}" style-hover="color:#9fbde4">hola@sira.ai</a>
+              <p style="margin:12px 0 0;font-size:.93rem;color:#9aa3a8;max-width:30ch">Responde una persona, no un formulario.</p>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+              <div style="{{ f.wrapStyle }}">
+                <button type="button" onClick="{{ f.onToggle }}" aria-expanded="{{ f.expanded }}" style="{{ f.btnStyle }}">
+                  <span style="{{ f.numStyle }}">{{ f.num }}</span>
+                  <span style="{{ f.qStyle }}">{{ f.q }}</span>
+                  <span style="{{ f.iconStyle }}">+</span>
+                </button>
+                <div style="{{ f.bodyStyle }}">
+                  <div style="overflow:hidden;min-height:0">
+                    <p style="{{ f.aStyle }}">{{ f.a }}</p>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:56px 0 72px">
+      <div style="{{ ctaStyle }}" data-reveal-id="cta">
+        <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+          <div style="background:#f1efe6;border:1px solid #e4e1d3;border-radius:22px;padding:56px 40px;text-align:center">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#1e3f70;display:block;margin-bottom:16px">Siguiente paso</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,3.8vw,3rem);letter-spacing:-.03em;line-height:1.05;margin:0 auto 18px;max-width:24ch;text-wrap:pretty">Empecemos por la tarea que más tiempo te ocupa.</h2>
+            <p style="margin:0 auto 30px;max-width:52ch;color:#5b6570;font-size:1.02rem">Tres minutos de conversación y te decimos qué se puede automatizar, cómo y en qué orden.</p>
+            <a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:1rem;display:inline-flex;align-items:center;gap:8px;padding:16px 26px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:10px;cursor:pointer" style-hover="background:#2d5b9e;border-color:#2d5b9e;box-shadow:0 14px 28px -14px #2d5b9e80;transform:translateY(-1px)">Empezar el diagnóstico <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background:#14161b;color:#f8f7f2;padding:52px 0 26px">
+    <div style="max-width:1240px;margin:0 auto;padding:0 32px">
+      <div style="{{ footerGridStyle }}">
+        <div>
+          <a href="#inicio" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;display:inline-flex;align-items:center;gap:9px;color:#f8f7f2">
+            <span style="width:9px;height:9px;border-radius:50%;background:#9fbde4;display:inline-block"></span>Sira
+          </a>
+          <p style="margin:14px 0 0;color:#9aa3a8;font-size:.92rem;max-width:30ch">Diagnosticamos el proceso, diseñamos la solución de IA y la construimos contigo.</p>
+        </div>
+        <div>
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6f767c;margin:0 0 14px">Navegación</p>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <a href="#como-funciona" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Cómo funciona</a>
+            <a href="#resolvemos" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Qué resolvemos</a>
+            <a href="#calculadora" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Calcula tu ahorro</a>
+            <a href="#faq" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Preguntas frecuentes</a>
+            <a href="./Sira%20casos.dc.html" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Catálogo de soluciones</a>
+            <a href="./Sira%20quienes%20somos.dc.html" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Quiénes somos</a>
+          </div>
+        </div>
+        <div>
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6f767c;margin:0 0 14px">Contacto</p>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <a href="mailto:hola@sira.ai" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">hola@sira.ai</a>
+            <a href="#diagnostico" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Empezar el diagnóstico</a>
+            <a href="./Sira%20privacidad.dc.html" style="font-size:.9rem;color:#c9cfd3" style-hover="color:#f8f7f2">Privacidad</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:40px;padding-top:20px;border-top:1px solid #2c3138;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+        <p style="font-size:.8rem;color:#6f767c;margin:0">© 2026 Sira</p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#6f767c;margin:0">IA · Automatización · Datos · Software</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1400}}">
+const CASES = [
+  {
+    icon: './icon-datos.png',
+    sector: 'Industria',
+    quote: '“Revisamos cientos de documentos técnicos a mano cada semana.”',
+    solution: 'Un sistema de IA lee, clasifica y extrae los datos de cada documento, los cruza con vuestros criterios y deja al equipo solo las excepciones que necesitan criterio humano.'
+  },
+  {
+    icon: './icon-engranajes.png',
+    sector: 'Operaciones',
+    quote: '“Introducimos los mismos datos en varios sistemas cada día.”',
+    solution: 'Conectamos las herramientas que ya usáis para que el dato se escriba una sola vez y viaje solo, con control de errores y trazabilidad de cada cambio.'
+  },
+  {
+    icon: './icon-chat.png',
+    sector: 'Atención al cliente',
+    quote: '“Los clientes preguntan siempre lo mismo y tardamos en responder.”',
+    solution: 'Un asistente responde con vuestra propia documentación, mantiene el tono de la casa y escala a una persona solo cuando la consulta lo pide.'
+  },
+  {
+    icon: './icon-datos.png',
+    sector: 'Administración',
+    quote: '“El cierre de mes se nos va en cuadrar hojas de cálculo.”',
+    solution: 'Consolidamos las fuentes de datos, automatizamos las comprobaciones repetitivas y dejamos el cierre listo para revisar en lugar de construirlo desde cero.'
+  }
+];
+
+const INTENTS = [
+  { re: /document|pdf|factur|albar|contrat|expedient|escritur|plieg|certificad/i,
+    reply: 'Leer y clasificar documentos es uno de los casos más directos: la IA extrae los datos, los valida contra vuestros criterios y el equipo solo revisa excepciones.' },
+  { re: /informe|report|excel|hoja de c|dashboard|kpi|cierre|contabil/i,
+    reply: 'Los informes recurrentes se pueden generar solos: consolidamos las fuentes, automatizamos las comprobaciones y el informe llega hecho para revisar.' },
+  { re: /email|correo|mail|bandeja|whatsapp|ticket|soporte|consulta|cliente|atenci/i,
+    reply: 'Ahí encaja un asistente que responde con vuestra documentación y escala a una persona solo lo que lo necesita, sin perder el tono de la casa.' },
+  { re: /duplicad|dos veces|varios sistemas|erp|crm|integr|copiar|pegar|migrar|sincroniz/i,
+    reply: 'Eso suele ser un problema de integración: conectamos las herramientas para que el dato se escriba una vez y viaje solo, con trazabilidad.' },
+  { re: /present|propuest|presupuest|oferta|licitaci/i,
+    reply: 'Preparar propuestas o presupuestos se puede plantillizar: la IA reutiliza vuestro histórico y deja un borrador listo para ajustar.' },
+  { re: /stock|inventar|almac|log[ií]stic|ruta|reparto|pedido/i,
+    reply: 'Con vuestro histórico se puede anticipar demanda y priorizar pedidos o rutas, en lugar de decidirlo a mano cada mañana.' },
+  { re: /candidat|curr[ií]cul|cv|contrataci|rrhh|n[oó]mina|fichaje/i,
+    reply: 'El cribado y la gestión documental de personas es muy automatizable: la IA ordena, resume y compara, y la decisión sigue siendo vuestra.' },
+  { re: /llamad|cita|agenda|reserva|turno/i,
+    reply: 'Agendar y confirmar citas es un flujo cerrado: se puede automatizar de punta a punta con avisos y reprogramación incluidos.' },
+  { re: /traduc|transcrib|acta|reuni[oó]n|resumen/i,
+    reply: 'Transcribir y resumir reuniones o expedientes es inmediato de montar, y deja el resultado buscable para todo el equipo.' },
+  { re: /web|marketing|contenido|redes|seo|newsletter/i,
+    reply: 'La producción de contenido repetitivo se puede asistir: borradores con vuestra voz, revisión humana antes de publicar.' }
+];
+
+const SECTORES = ['Industria', 'Ingeniería', 'Logística', 'Operaciones', 'Servicios', 'Otro'];
+
+const FAQS = [
+  { q: '¿Qué incluye el diagnóstico gratuito?', a: 'Un análisis escrito de tu tarea: qué puede automatizarse, con qué herramientas, en qué plazo y cuántas horas al año consume hoy. En menos de 48 horas.' },
+  { q: '¿Por qué es gratis?', a: 'Es nuestra forma de demostrar criterio antes de pedirte nada. Si el caso encaja, preferimos empezar con el trabajo hecho. Si no, te lo decimos.' },
+  { q: '¿Cuánto cuesta después?', a: 'Por proyecto cerrado, empezando por un proceso concreto. Verás el rango de inversión y el retorno estimado antes de comprometerte. Sin permanencia.' },
+  { q: '¿Tengo que cambiar mis herramientas?', a: 'No. Construimos sobre lo que ya usas: tu ERP, tu correo, tus hojas de cálculo, tu CRM.' },
+  { q: '¿La IA decidirá por mi equipo?', a: 'No. Prepara, ordena y propone; lo que tiene consecuencias lo confirma siempre una persona. Quitamos trabajo mecánico, no criterio.' }
+];
+
+class Component extends DCLogic {
+  state = {
+    messages: [
+      { id: 1, kind: 'bot', text: 'Hola 👋 ¿Qué tarea o proceso te gustaría eliminar, automatizar o hacer mucho más rápido?' },
+      { id: 2, kind: 'chips', disabled: false, options: [
+        { label: 'Revisamos muchos documentos' },
+        { label: 'Perdemos tiempo con informes' },
+        { label: 'Gestionamos muchos emails' }
+      ]}
+    ],
+    stage: 'problema',
+    inputValue: '',
+    inputDisabled: false,
+    inputType: 'text',
+    inputPlaceholder: 'Escribe tu respuesta...',
+    consentChecked: false,
+    openFaq: null,
+    email: '',
+    revealed: {},
+    isMobile: false,
+    isNarrow: false,
+    openCase: 0,
+    horas: 8,
+    personas: 3,
+    coste: 25,
+    misses: 0
+  };
+
+  nextId = 3;
+  rootRef = React.createRef();
+  chatBodyRef = React.createRef();
+
+  componentDidMount() {
+    this.mq = window.matchMedia('(max-width:1080px)');
+    this.mqNarrow = window.matchMedia('(max-width:700px)');
+    this.updateMQ = () => this.setState({ isMobile: this.mq.matches, isNarrow: this.mqNarrow.matches });
+    this.updateMQ();
+    this.mq.addEventListener('change', this.updateMQ);
+    this.mqNarrow.addEventListener('change', this.updateMQ);
+
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('data-reveal-id');
+          this.setState((s) => ({ revealed: { ...s.revealed, [id]: true } }));
+          this.io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    this.setState((s) => ({ revealed: { ...s.revealed, 'hero-text': true, 'hero-chat': true } }));
+    if (this.rootRef.current) {
+      this.rootRef.current.querySelectorAll('[data-reveal-id]').forEach((el) => this.io.observe(el));
+    }
+  }
+
+  componentDidUpdate() { this.scrollChat(); }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.mq && this.updateMQ) this.mq.removeEventListener('change', this.updateMQ);
+    if (this.mqNarrow && this.updateMQ) this.mqNarrow.removeEventListener('change', this.updateMQ);
+  }
+
+  scrollChat() {
+    const find = () => (this.chatBodyRef && this.chatBodyRef.current)
+      || (this.rootRef.current && this.rootRef.current.querySelector('[data-chat-body]'));
+    const run = () => { const el = find(); if (el) el.scrollTop = el.scrollHeight; };
+    run();
+    requestAnimationFrame(run);
+    setTimeout(run, 60);
+  }
+
+  push(items, extra) {
+    this.setState((s) => ({
+      messages: [...s.messages, ...items.map((it) => ({ id: this.nextId++, ...it }))],
+      ...(extra || {})
+    }), () => this.scrollChat());
+  }
+
+  disableAllChips() {
+    this.setState((s) => ({ messages: s.messages.map((m) => (m.kind === 'chips' ? { ...m, disabled: true } : m)) }));
+  }
+
+  selectChip(msgId, label) {
+    const msg = this.state.messages.find((m) => m.id === msgId);
+    if (msg && msg.disabled) return;
+    this.sendMessage(label);
+  }
+
+  sendMessage(text) {
+    const val = (text ?? this.state.inputValue).trim();
+    if (!val) return;
+    this.disableAllChips();
+    this.push([{ kind: 'user', text: val }], { inputValue: '' });
+    const typingId = this.nextId++;
+    this.setState((s) => ({ messages: [...s.messages, { id: typingId, kind: 'typing' }] }), () => this.scrollChat());
+    setTimeout(() => {
+      this.setState((s) => ({ messages: s.messages.filter((m) => m.id !== typingId) }), () => {
+        this.reply(val);
+      });
+    }, 720);
+  }
+
+  reply(text) {
+    const t = text.toLowerCase();
+    const stage = this.state.stage;
+
+    if (stage === 'problema') return this.replyProblema(text, t);
+    if (stage === 'sector') return this.replySector(text, t);
+    if (stage === 'horas') return this.replyHoras(text, t);
+    if (stage === 'email') return this.replyEmail(text);
+    return this.push([{ kind: 'bot', text: 'Ya tengo tu caso ✓ Si quieres añadir algo, respóndenos al email del diagnóstico y lo incorporamos.' }]);
+  }
+
+  askSector(intro) {
+    this.push([
+      { kind: 'bot', text: intro },
+      { kind: 'bot', text: '¿En qué sector trabajas?' },
+      { kind: 'chips', disabled: false, options: SECTORES.map((label) => ({ label })) }
+    ], { stage: 'sector', inputPlaceholder: 'Tu sector...' });
+  }
+
+  replyProblema(raw, t) {
+    if (/^(hola|buenas|hey|qu[eé] tal|buenos d[ií]as|buenas tardes)[\s!.]*$/i.test(t)) {
+      return this.push([{ kind: 'bot', text: '¡Hola! Cuéntame en una frase qué tarea os está costando más tiempo esta semana.' }]);
+    }
+    if (/(no s[eé]|no lo s[eé]|ni idea|no estoy seguro|varias cosas|de todo)/i.test(t)) {
+      return this.push([
+        { kind: 'bot', text: 'Sin problema. Empecemos por lo más repetitivo: ¿qué es lo que más veces al día hace alguien del equipo con datos, documentos o mensajes?' },
+        { kind: 'chips', disabled: false, options: [
+          { label: 'Copiar datos entre sistemas' },
+          { label: 'Revisar documentos' },
+          { label: 'Responder consultas' },
+          { label: 'Preparar informes' }
+        ]}
+      ]);
+    }
+    if (/(qu[eé] hac[eé]is|c[oó]mo funciona|precio|cu[aá]nto cuesta|tarifa)/i.test(t)) {
+      return this.push([{ kind: 'bot', text: 'El diagnóstico es gratis y son 3 minutos: medimos el proceso y te decimos qué se puede automatizar y con qué retorno. Para eso, cuéntame qué tarea te está costando más tiempo.' }]);
+    }
+
+    const intent = INTENTS.find((i) => i.re.test(raw));
+    if (intent) return this.askSector(intent.reply);
+
+    const words = raw.split(/\s+/).filter(Boolean).length;
+    if (words < 3 && this.state.misses < 1) {
+      this.setState((s) => ({ misses: s.misses + 1 }));
+      return this.push([{ kind: 'bot', text: 'Cuéntame un poco más: ¿quién lo hace, con qué herramienta y cada cuánto? Con eso ya puedo situarlo.' }]);
+    }
+    return this.askSector('Entendido: “' + this.shorten(raw) + '”. Suena a un proceso repetitivo con datos de por medio, y eso se puede medir.');
+  }
+
+  replySector(raw, t) {
+    const conocido = SECTORES.find((s) => t.includes(s.toLowerCase().slice(0, 6)));
+    const sector = conocido || this.shorten(raw);
+    if (raw.length < 2) {
+      return this.push([{ kind: 'bot', text: 'Dime el sector aunque sea de forma aproximada (industria, servicios, logística...).' }]);
+    }
+    this.push([
+      { kind: 'bot', text: 'Perfecto, ' + sector.toLowerCase() + '. ¿Cuántas horas a la semana se van en esa tarea, más o menos?' },
+      { kind: 'chips', disabled: false, options: ['Menos de 5 h', 'Entre 5 y 15 h', 'Más de 15 h'].map((label) => ({ label })) }
+    ], { stage: 'horas', inputPlaceholder: 'p. ej. 10 horas' });
+  }
+
+  replyHoras(raw, t) {
+    let h = null;
+    const num = raw.match(/(\d+([.,]\d+)?)/);
+    if (num) h = parseFloat(num[1].replace(',', '.'));
+    else if (/menos de 5/.test(t)) h = 4;
+    else if (/entre 5|5 y 15/.test(t)) h = 10;
+    else if (/m[aá]s de 15/.test(t)) h = 20;
+    else if (/media jornada/.test(t)) h = 20;
+    else if (/jornada completa|todo el d[ií]a/.test(t)) h = 40;
+
+    if (h === null) {
+      return this.push([
+        { kind: 'bot', text: 'Dame un número aproximado de horas a la semana; con un rango me vale.' },
+        { kind: 'chips', disabled: false, options: ['Menos de 5 h', 'Entre 5 y 15 h', 'Más de 15 h'].map((label) => ({ label })) }
+      ]);
+    }
+    const anual = Math.round(h * 46);
+    this.push([
+      { kind: 'bot', text: 'Con ' + h + ' h a la semana son unas ' + new Intl.NumberFormat('es-ES').format(anual) + ' h al año dedicadas a esa tarea. En el diagnóstico calculamos qué parte se puede automatizar.' },
+      { kind: 'bot', text: '¿A qué email te lo enviamos?' }
+    ], { stage: 'email', inputPlaceholder: 'tu@empresa.com', inputType: 'email' });
+  }
+
+  replyEmail(raw) {
+    const token = raw.split(/\s+/).find((w) => w.includes('@')) || raw.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(token);
+    if (!ok) {
+      return this.push([{ kind: 'bot', text: 'Ese email no me cuadra. Escríbelo completo, con formato nombre@empresa.com.' }]);
+    }
+    this.push([
+      { kind: 'bot', text: 'Último paso: confirma el consentimiento y lo ponemos en marcha.' },
+      { kind: 'consent', disabled: false }
+    ], { stage: 'consent', inputDisabled: true, email: token });
+  }
+
+  shorten(text) {
+    const clean = text.replace(/\s+/g, ' ').trim();
+    return clean.length > 58 ? clean.slice(0, 55) + '…' : clean;
+  }
+
+  renderVals() {
+    const revealed = this.state.revealed;
+    const isMobile = this.state.isMobile;
+    const reveal = (id, base) => ({
+      ...base,
+      opacity: revealed[id] ? 1 : 0,
+      transform: revealed[id] ? 'translateY(0)' : 'translateY(16px)',
+      transition: 'opacity .55s ease, transform .55s ease'
+    });
+
+    const messages = this.state.messages.map((m) => {
+      const out = { ...m, isBot: m.kind === 'bot', isUser: m.kind === 'user', isChips: m.kind === 'chips', isTyping: m.kind === 'typing', isConsent: m.kind === 'consent' };
+      if (m.kind === 'chips') {
+        out.options = m.options.map((o) => ({
+          label: o.label,
+          onClick: () => this.selectChip(m.id, o.label),
+          style: {
+            fontFamily: 'Inter,sans-serif', fontSize: '.83rem', padding: '9px 14px', borderRadius: '20px',
+            border: '1px solid #e4e1d3', background: '#f1efe6', color: '#14161b',
+            cursor: m.disabled ? 'default' : 'pointer', opacity: m.disabled ? 0.45 : 1
+          }
+        }));
+      }
+      return out;
+    });
+
+    const active = CASES[this.state.openCase] || CASES[0];
+    const cases = CASES.map((c, i) => {
+      const on = this.state.openCase === i;
+      return {
+        sector: c.sector,
+        onSelect: () => this.setState({ openCase: i }),
+        navStyle: {
+          fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600,
+          fontSize: isMobile ? '1rem' : '1.15rem', letterSpacing: '-.015em',
+          textAlign: 'left', background: 'transparent', border: 'none', cursor: 'pointer',
+          padding: '16px 0 16px 22px', marginLeft: '-1px',
+          borderLeft: '2px solid ' + (on ? '#2d5b9e' : 'transparent'),
+          color: on ? '#14161b' : '#5b6570',
+          transition: 'color .18s ease, border-color .18s ease'
+        }
+      };
+    });
+
+    const narrow = this.state.isNarrow;
+    const iconStyle = (on) => ({
+      display: on ? 'block' : 'none',
+      width: narrow ? '120px' : '168px', height: 'auto', flexShrink: 0,
+      alignSelf: narrow ? 'flex-start' : 'center',
+      opacity: 1
+    });
+
+    const nf = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 });
+    const horasAnuales = this.state.horas * this.state.personas * 46;
+    const coste = horasAnuales * this.state.coste;
+
+    const stepCard = (id) => reveal(id, {
+      border: '1px solid #2c3138', borderRadius: '16px', padding: '26px 24px',
+      background: 'rgba(248,247,242,.04)'
+    });
+
+    return {
+      rootRef: this.rootRef,
+      chatBodyRef: this.chatBodyRef,
+      messages,
+      cases,
+      activeQuote: active.quote,
+      activeSolution: active.solution,
+      casePanelStyle: {
+        background: '#f1efe6', border: '1px solid #e4e1d3', borderRadius: '20px',
+        padding: narrow ? '30px 26px' : '40px 38px', minWidth: 0,
+        display: 'flex', flexDirection: narrow ? 'column' : 'row',
+        alignItems: narrow ? 'flex-start' : 'center', gap: narrow ? '18px' : '34px'
+      },
+      iconDatosStyle: iconStyle(active.icon === './icon-datos.png'),
+      iconEngranajesStyle: iconStyle(active.icon === './icon-engranajes.png'),
+      iconChatStyle: iconStyle(active.icon === './icon-chat.png'),
+      casesLayoutStyle: { display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : '250px minmax(0,1fr)', gap: isMobile ? '22px' : '48px', alignItems: 'start' },
+      inputValue: this.state.inputValue,
+      inputDisabled: this.state.inputDisabled,
+      inputType: this.state.inputType,
+      inputPlaceholder: this.state.inputPlaceholder,
+      onInputChange: (e) => this.setState({ inputValue: e.target.value }),
+      onInputKeyDown: (e) => { if (e.key === 'Enter') this.sendMessage(this.state.inputValue); },
+      onSendClick: () => this.sendMessage(this.state.inputValue),
+      consentChecked: this.state.consentChecked,
+      onConsentToggle: (e) => this.setState({ consentChecked: e.target.checked }),
+      consentSubmitDisabled: !this.state.consentChecked,
+      onConsentSubmit: () => {
+        if (!this.state.consentChecked) return;
+        try { sessionStorage.setItem('sira-email', this.state.email || ''); } catch (err) {}
+        window.location.href = './Sira%20gracias.dc.html';
+      },
+      consentBtnStyle: {
+        marginTop: '14px', width: '100%', fontFamily: 'Inter,sans-serif', fontWeight: 600, fontSize: '.9rem',
+        padding: '12px 18px', borderRadius: '10px', border: '1px solid #14161b',
+        background: this.state.consentChecked ? '#14161b' : '#e4e1d3',
+        color: this.state.consentChecked ? '#f8f7f2' : '#9a9d97',
+        borderColor: this.state.consentChecked ? '#14161b' : '#e4e1d3',
+        cursor: this.state.consentChecked ? 'pointer' : 'not-allowed'
+      },
+      inputRowOpacity: this.state.inputDisabled ? 0.4 : 1,
+      inputRowPointer: this.state.inputDisabled ? 'none' : 'auto',
+
+      horas: this.state.horas,
+      personas: this.state.personas,
+      coste: this.state.coste,
+      onHoras: (e) => this.setState({ horas: Number(e.target.value) }),
+      onPersonas: (e) => this.setState({ personas: Number(e.target.value) }),
+      onCoste: (e) => this.setState({ coste: Number(e.target.value) }),
+      ahorroTexto: nf.format(coste) + ' €',
+      horasTexto: nf.format(horasAnuales) + ' h',
+      semanasTexto: nf.format(horasAnuales / 8),
+
+      heroTextStyle: reveal('hero-text', {}),
+      chatShellStyle: reveal('hero-chat', { scrollMarginTop: '104px', background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '18px', boxShadow: '0 34px 74px -34px rgba(20,22,27,.28)', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }),
+      stepsHeadStyle: reveal('steps-head', { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '28px', marginBottom: '36px', flexWrap: 'wrap' }),
+      casesHeadStyle: reveal('cases-head', { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '24px', marginBottom: '30px', flexWrap: 'wrap' }),
+      step0Style: stepCard('step-0'),
+      step1Style: stepCard('step-1'),
+      step2Style: stepCard('step-2'),
+      faqLayoutStyle: { display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0,1fr)' : '.8fr 1.2fr', gap: isMobile ? '34px' : '64px', alignItems: 'start' },
+      faqMailCardStyle: { background: '#14161b', borderRadius: '18px', padding: '26px 28px', boxShadow: '0 26px 54px -34px rgba(20,22,27,.55)' },
+      faqMailLinkStyle: { fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 'clamp(1.3rem,2.2vw,1.7rem)', letterSpacing: '-.02em', color: '#f8f7f2', textDecoration: 'none', transition: 'color .2s ease' },
+      faqs: FAQS.map((item, i) => {
+        const open = this.state.openFaq === i;
+        return {
+          q: item.q, a: item.a, expanded: open ? 'true' : 'false',
+          num: '0' + (i + 1),
+          onToggle: () => this.setState((s) => ({ openFaq: s.openFaq === i ? null : i })),
+          wrapStyle: { borderTop: '1px solid ' + (open ? '#2d5b9e' : '#e4e1d3'), transition: 'border-color .25s ease' },
+          btnStyle: {
+            width: '100%', display: 'flex', alignItems: 'baseline', gap: '18px',
+            padding: '22px 4px', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left'
+          },
+          numStyle: { fontFamily: "'IBM Plex Mono',monospace", fontSize: '.72rem', letterSpacing: '.12em', color: open ? '#2d5b9e' : '#9a9d97', flexShrink: 0, transition: 'color .25s ease' },
+          qStyle: { flex: 1, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: 'clamp(1.02rem,1.5vw,1.18rem)', color: open ? '#2d5b9e' : '#14161b', letterSpacing: '-.015em', transition: 'color .25s ease' },
+          iconStyle: {
+            fontFamily: 'Inter,sans-serif', fontSize: '1.3rem', lineHeight: 1, color: open ? '#2d5b9e' : '#9a9d97',
+            flexShrink: 0, transform: open ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform .25s ease, color .25s ease'
+          },
+          aStyle: { margin: 0, padding: '0 40px 24px 50px', fontSize: '.98rem', color: '#5b6570', maxWidth: '58ch', textWrap: 'pretty' },
+          bodyStyle: { display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows .28s ease' }
+        };
+      }),
+      ctaStyle: reveal('cta', {}),
+      calcGridStyle: reveal('calc', { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '28px' : '56px', alignItems: 'stretch' }),
+
+      heroGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.08fr .92fr', gap: isMobile ? '36px' : '56px', alignItems: 'center' },
+      stepsGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '16px' },
+      navTextLinkStyle: { display: isMobile ? 'none' : 'inline', fontSize: '.9rem', color: '#5b6570', whiteSpace: 'nowrap' },
+      footerGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr 1fr', gap: isMobile ? '30px' : '48px' }
+    };
+  }
+}
+</script>
+</body>
+</html>

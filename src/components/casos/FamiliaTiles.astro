@@ -1,0 +1,382 @@
+---
+import { familias } from '../../data/soluciones';
+---
+
+<section class="casos-tiles">
+  <div class="container">
+    <div class="tiles-grid" aria-label="Familias de soluciones">
+      {
+        familias.map((f, i) => (
+          <button
+            type="button"
+            class:list={['tile', { 'is-active': i === 0 }]}
+            data-fam-select={i}
+            aria-current={i === 0 ? 'true' : 'false'}
+            aria-controls="familia-panel"
+          >
+            <span class={`tile-glyph tile-glyph--${i}`} aria-hidden="true">
+              <span /><span /><span />
+            </span>
+            <b class="tile-title">{f.label}</b>
+            <span class="tile-count">{f.items.length} soluciones</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="casos-panel" id="familia-panel" data-reveal>
+  <div class="container">
+    <div class="panel-grid">
+      <div class="panel-side">
+        {
+          familias.map((f, i) => (
+            <img
+              data-fam-icon={i}
+              src={`/icons/ic-${f.icono}.webp`}
+              alt=""
+              class="panel-icon"
+              style={i === 0 ? undefined : 'display:none'}
+              width="200"
+              height="200"
+              loading="lazy"
+            />
+          ))
+        }
+        <p class="panel-label" data-fam-label>
+          {familias[0].label}
+        </p>
+      </div>
+      <div class="panel-list" data-fam-list aria-live="polite">
+        {
+          familias[0].items.map((s) => (
+            <article class="solution-card">
+              <h3>{s.nombre}</h3>
+              <p>{s.linea}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="familias-data" is:inline set:html={JSON.stringify(familias)} />
+
+<script>
+  const dataEl = document.getElementById('familias-data');
+  if (dataEl?.textContent) {
+    const familias = JSON.parse(dataEl.textContent) as { label: string; icono: string; items: { nombre: string; linea: string }[] }[];
+    const tiles = document.querySelectorAll<HTMLButtonElement>('[data-fam-select]');
+    const icons = document.querySelectorAll<HTMLImageElement>('[data-fam-icon]');
+    const labelEl = document.querySelector('[data-fam-label]');
+    const listEl = document.querySelector('[data-fam-list]');
+
+    tiles.forEach((tile) => {
+      tile.addEventListener('click', () => {
+        const i = Number(tile.dataset.famSelect);
+        const f = familias[i];
+        if (!f || !labelEl || !listEl) return;
+
+        tiles.forEach((t) => {
+          const active = t === tile;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+
+        icons.forEach((img) => {
+          img.style.display = img.dataset.famIcon === String(i) ? '' : 'none';
+        });
+
+        labelEl.textContent = f.label;
+        listEl.innerHTML = f.items
+          .map(
+            (s) =>
+              `<article class="solution-card"><h3>${s.nombre}</h3><p>${s.linea}</p></article>`
+          )
+          .join('');
+      });
+    });
+  }
+</script>
+
+<style>
+  .casos-tiles {
+    padding: 0 0 20px;
+  }
+
+  .tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3-5);
+    align-items: flex-start;
+    padding: 22px 20px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--color-linea);
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      transform var(--duration-hover) ease;
+    font-family: var(--font-body);
+    color: var(--color-tinta);
+    text-align: left;
+  }
+
+  .tile:hover {
+    border-color: var(--color-zafiro);
+  }
+
+  .tile.is-active {
+    background: var(--color-crema-media);
+    border-color: var(--color-zafiro);
+    transform: translateY(-2px);
+  }
+
+  .tile-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.02rem;
+    letter-spacing: -0.015em;
+  }
+
+  .tile-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-gris-texto);
+  }
+
+  .tile-glyph {
+    display: flex;
+    height: 34px;
+    width: 100%;
+  }
+
+  /* 0: Documentos y datos — barras horizontales */
+  .tile-glyph--0 {
+    flex-direction: column;
+    gap: 5px;
+    width: 38px;
+    justify-content: center;
+  }
+  .tile-glyph--0 span:nth-child(1) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro);
+  }
+  .tile-glyph--0 span:nth-child(2) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro-claro);
+    width: 72%;
+  }
+  .tile-glyph--0 span:nth-child(3) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro-claro);
+    width: 48%;
+  }
+
+  /* 1: Clientes y comunicación — dos círculos */
+  .tile-glyph--1 {
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .tile-glyph--1 span:nth-child(1) {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro);
+  }
+  .tile-glyph--1 span:nth-child(2) {
+    width: 13px;
+    height: 13px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--1 span:nth-child(3) {
+    display: none;
+  }
+
+  /* 2: Procesos y sistemas — cuadrados superpuestos */
+  .tile-glyph--2 {
+    align-items: center;
+  }
+  .tile-glyph--2 span:nth-child(1) {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--color-zafiro);
+    border-radius: 5px;
+  }
+  .tile-glyph--2 span:nth-child(2) {
+    width: 22px;
+    height: 22px;
+    background: var(--color-zafiro-claro);
+    border-radius: 5px;
+    margin-left: -8px;
+  }
+  .tile-glyph--2 span:nth-child(3) {
+    display: none;
+  }
+
+  /* 3: Comercial y contenido — barras verticales */
+  .tile-glyph--3 {
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .tile-glyph--3 span:nth-child(1) {
+    width: 8px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--3 span:nth-child(2) {
+    width: 8px;
+    height: 22px;
+    border-radius: 2px;
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--3 span:nth-child(3) {
+    width: 8px;
+    height: 32px;
+    border-radius: 2px;
+    background: var(--color-zafiro);
+  }
+
+  /* 4: Operaciones y previsión — anillo */
+  .tile-glyph--4 {
+    align-items: center;
+  }
+  .tile-glyph--4 span:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    border: 6px solid var(--color-zafiro);
+    border-right-color: var(--color-zafiro-claro);
+    border-radius: var(--radius-full);
+  }
+  .tile-glyph--4 span:nth-child(2),
+  .tile-glyph--4 span:nth-child(3) {
+    display: none;
+  }
+
+  /* 5: Personas y talento — anillos superpuestos */
+  .tile-glyph--5 {
+    align-items: center;
+  }
+  .tile-glyph--5 span:nth-child(1) {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-zafiro);
+  }
+  .tile-glyph--5 span:nth-child(2) {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-zafiro-claro);
+    margin-left: -7px;
+  }
+  .tile-glyph--5 span:nth-child(3) {
+    display: none;
+  }
+
+  .casos-panel {
+    padding: 34px 0 var(--space-14);
+  }
+
+  .panel-grid {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .panel-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 4px;
+  }
+
+  .panel-icon {
+    width: 200px;
+    height: auto;
+  }
+
+  .panel-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-zafiro-oscuro);
+    margin: 18px 0 0;
+  }
+
+  .panel-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .panel-list :global(.solution-card) {
+    background: var(--color-crema);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    min-width: 0;
+    transition: border-color var(--duration-hover) ease, transform var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease;
+  }
+
+  .panel-list :global(.solution-card:hover) {
+    border-color: var(--color-zafiro);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -24px rgba(20, 22, 27, 0.22);
+  }
+
+  .panel-list :global(.solution-card h3) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.08rem;
+    letter-spacing: -0.018em;
+    line-height: 1.24;
+    margin: 0 0 8px;
+  }
+
+  .panel-list :global(.solution-card p) {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-gris-texto);
+  }
+
+  @media (max-width: 980px) {
+    .tiles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .panel-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .panel-side {
+      align-items: flex-start;
+    }
+
+    .panel-icon {
+      width: 140px;
+    }
+
+    .panel-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

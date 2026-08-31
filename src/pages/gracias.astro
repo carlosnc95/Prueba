@@ -1,0 +1,289 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OrganizationJsonLd from '../components/OrganizationJsonLd.astro';
+import { site, routes } from '../config/site';
+
+export const prerender = true;
+
+const timeline = [
+  { tag: 'AHORA', title: 'Revisamos tu caso', text: 'Lo lee una persona, no un formulario automático.' },
+  { tag: '< 48 H', title: 'Recibes el diagnóstico', text: 'Qué se puede automatizar, con qué alcance y qué retorno esperar.' },
+  { tag: 'DESPUÉS', title: 'Tú decides', text: 'Sin compromiso. Si encaja, empezamos por un proceso concreto.' },
+];
+
+const nextSteps = [
+  {
+    href: routes.casos,
+    icon: '/icons/ic-embudo.webp',
+    title: 'Mientras tanto, mira qué resolvemos',
+    text: '24 soluciones agrupadas en seis familias de procesos.',
+  },
+  {
+    href: routes.quienesSomos,
+    icon: '/icons/ic-equipo.webp',
+    title: 'Conoce con quién vas a hablar',
+    text: 'Ingeniería, datos y operaciones. Quien diagnostica es quien construye.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Solicitud recibida · ${site.name}`}
+  description="Hemos recibido tu caso. Te enviamos el diagnóstico en menos de 48 horas."
+  noindex
+  headerShowCta={false}
+  headerSticky={false}
+  footerVariant="minimal"
+>
+  <Fragment slot="head">
+    <OrganizationJsonLd />
+  </Fragment>
+
+  <section class="gracias">
+    <div class="container">
+      <div class="gracias__panel">
+        <div class="gracias__check">
+          <svg viewBox="0 0 56 56" width="60" height="60" fill="none" aria-hidden="true">
+            <circle cx="28" cy="28" r="26" stroke="#9fbde4" stroke-width="1.5" opacity="0.5"></circle>
+            <path
+              d="M17 29.5 24.5 37 39 20"
+              stroke="#9fbde4"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="gracias__check-path"
+            ></path>
+          </svg>
+        </div>
+        <p class="gracias__eyebrow">Solicitud recibida</p>
+        <h1 class="gracias__title">Ya estamos con tu diagnóstico</h1>
+        <p class="gracias__lead" data-gracias-lead>
+          Te escribimos en menos de 48 horas con el diagnóstico. Si no lo ves, revisa el correo no deseado.
+        </p>
+
+        <div class="gracias__timeline">
+          {
+            timeline.map((item) => (
+              <div class="gracias__tl-item">
+                <span class="gracias__tl-tag">{item.tag}</span>
+                <b class="gracias__tl-title">{item.title}</b>
+                <p class="gracias__tl-text">{item.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="gracias__next-grid">
+        {
+          nextSteps.map((step) => (
+            <a href={step.href} class="gracias__next-card">
+              <img src={step.icon} alt="" class="gracias__next-icon" width="78" height="78" loading="lazy" />
+              <b class="gracias__next-title">{step.title}</b>
+              <p class="gracias__next-text">{step.text}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="gracias__footnote">
+        ¿Te has equivocado en algo? <a href={`${routes.home}#diagnostico`}>Vuelve a empezar el diagnóstico</a> o
+        escríbenos a <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+    const nombre = params.get('nombre');
+    const leadEl = document.querySelector('[data-gracias-lead]');
+    if (leadEl && email) {
+      const saludo = nombre ? `Gracias, ${nombre}. ` : '';
+      leadEl.textContent = `${saludo}Te escribimos a ${email} en menos de 48 horas. Si no lo ves, revisa el correo no deseado.`;
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .gracias {
+    padding: var(--space-14) 0;
+  }
+
+  .gracias__panel {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-3xl);
+    padding: 52px 46px;
+    box-shadow: var(--shadow-card-dark);
+  }
+
+  .gracias__check {
+    animation: gracias-pop 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  }
+
+  .gracias__check-path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: gracias-tick 0.7s 0.25s ease-out both;
+  }
+
+  @keyframes gracias-pop {
+    0% {
+      transform: scale(0.86);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.04);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes gracias-tick {
+    from {
+      stroke-dashoffset: 48;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gracias__check,
+    .gracias__check-path {
+      animation: none;
+      opacity: 1;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .gracias__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-zafiro-claro);
+    margin: 26px 0 14px;
+  }
+
+  .gracias__title {
+    font-size: clamp(2.1rem, 4vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 20ch;
+    color: var(--color-crema);
+  }
+
+  .gracias__lead {
+    margin: var(--space-4) 0 0;
+    font-size: 1.06rem;
+    color: #c9cfd3;
+    max-width: 54ch;
+  }
+
+  .gracias__timeline {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .gracias__tl-item {
+    border-top: 1px solid var(--color-tinta-suave);
+    padding-top: var(--space-4);
+  }
+
+  .gracias__tl-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-zafiro-claro);
+  }
+
+  .gracias__tl-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.02rem;
+    display: block;
+    margin: 10px 0 6px;
+    color: var(--color-crema);
+  }
+
+  .gracias__tl-text {
+    margin: 0;
+    font-size: 0.93rem;
+    color: #9aa3a8;
+  }
+
+  .gracias__next-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .gracias__next-card {
+    display: block;
+    background: var(--color-crema-media);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-xl);
+    padding: 26px;
+    text-decoration: none;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .gracias__next-card:hover {
+    border-color: var(--color-zafiro);
+    transform: translateY(-2px);
+  }
+
+  .gracias__next-icon {
+    width: auto;
+    height: 78px;
+    object-fit: contain;
+    object-position: left bottom;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .gracias__next-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.06rem;
+    color: var(--color-tinta);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .gracias__next-text {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--color-gris-texto);
+  }
+
+  .gracias__footnote {
+    text-align: center;
+    margin: var(--space-6-5) 0 0;
+    font-size: 0.92rem;
+    color: var(--color-gris-texto);
+  }
+
+  .gracias__footnote a {
+    color: var(--color-zafiro);
+  }
+
+  @media (max-width: 980px) {
+    .gracias__panel {
+      padding: 38px 26px;
+    }
+
+    .gracias__timeline,
+    .gracias__next-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

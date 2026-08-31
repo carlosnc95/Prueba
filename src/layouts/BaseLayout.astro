@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappButton from '../components/WhatsappButton.astro';
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  footerVariant?: 'full' | 'compact' | 'minimal';
+  footerLinks?: { label: string; href: string }[];
+  headerNavItems?: { label: string; href: string }[];
+  headerShowCta?: boolean;
+  headerSticky?: boolean;
+  // 'always' — burbuja de WhatsApp visible en cualquier tamaño (páginas que
+  // no son la Home). 'mobile-only' — la Home: en desktop ya tiene el
+  // enlace propio en el hero, la burbuja solo hace falta en móvil.
+  whatsappBubble?: 'always' | 'mobile-only';
+}
+
+const {
+  title,
+  description,
+  noindex = false,
+  footerVariant = 'compact',
+  footerLinks,
+  headerNavItems,
+  headerShowCta = true,
+  headerSticky = true,
+  whatsappBubble = 'always',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.domain).toString();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#14161b" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.ogLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(site.ogImage, site.domain).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon placeholder: sustituir por logotipo definitivo al cerrar la marca -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={`data:image/svg+xml,${encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#14161b"/><circle cx="16" cy="16" r="6" fill="#2d5b9e"/></svg>'
+      )}`}
+    />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <Header navItems={headerNavItems} showCta={headerShowCta} sticky={headerSticky} />
+    <main>
+      <slot />
+    </main>
+    <Footer variant={footerVariant} links={footerLinks} />
+    <WhatsappButton mode={whatsappBubble} />
+    <script src="../scripts/reveal.ts"></script>
+  </body>
+</html>

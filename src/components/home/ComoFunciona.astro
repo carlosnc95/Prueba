@@ -1,0 +1,104 @@
+---
+const steps = [
+  { num: '01', title: 'Cuéntanos el caso', text: 'Sin jerga ni requisitos técnicos. Solo qué está ocurriendo hoy.' },
+  { num: '02', title: 'Diseñamos la solución', text: 'Alcance, plazos y retorno estimado sobre tu proceso real.' },
+  { num: '03', title: 'La construimos contigo', text: 'Integrada en tus herramientas y medida desde el primer día.' },
+];
+---
+
+<section id="como-funciona" class="como-funciona">
+  <div class="container">
+    <div class="como-funciona__card">
+      <div class="como-funciona__head" data-reveal>
+        <h2 class="como-funciona__title">Tres pasos, sin vueltas</h2>
+      </div>
+      <div class="como-funciona__grid">
+        {
+          steps.map((step, i) => (
+            <div class="como-funciona__step" data-reveal style={`transition-delay:${i * 90}ms`}>
+              <span class="como-funciona__num">{step.num}</span>
+              <h3 class="como-funciona__step-title">{step.title}</h3>
+              <p class="como-funciona__step-text">{step.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .como-funciona {
+    padding: 52px 0 var(--space-14);
+    position: relative;
+  }
+
+  .como-funciona__card {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-3xl);
+    padding: var(--space-10) 44px;
+    box-shadow: var(--shadow-card-dark);
+  }
+
+  .como-funciona__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-6-5);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  .como-funciona__title {
+    font-size: var(--text-h2);
+    letter-spacing: -0.025em;
+    margin: 0;
+    max-width: 20ch;
+    color: var(--color-crema);
+  }
+
+  .como-funciona__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .como-funciona__step {
+    border: 1px solid var(--color-tinta-suave);
+    border-radius: var(--radius-lg);
+    padding: 26px 24px;
+    background: rgba(248, 247, 242, 0.04);
+    transition: border-color var(--duration-hover) ease, opacity var(--duration-reveal) var(--ease-reveal),
+      transform var(--duration-reveal) var(--ease-reveal);
+  }
+
+  .como-funciona__step:hover {
+    border-color: #3f5f8f;
+  }
+
+  .como-funciona__num {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-zafiro-claro);
+  }
+
+  .como-funciona__step-title {
+    font-size: 1.14rem;
+    margin: 14px 0 10px;
+    color: var(--color-crema);
+  }
+
+  .como-funciona__step-text {
+    color: #c9cfd3;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  @media (max-width: 980px) {
+    .como-funciona__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

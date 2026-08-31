@@ -1,0 +1,225 @@
+---
+import { faqs } from '../../data/faqs';
+import { site } from '../../config/site';
+---
+
+<section id="faq" class="faq">
+  <div class="container">
+    <div class="faq__layout">
+      <div data-reveal>
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="faq__title">Lo que suelen preguntarnos antes de empezar</h2>
+        <div class="faq__mail-card">
+          <p class="faq__mail-eyebrow">¿Otra duda?</p>
+          <a href={`mailto:${site.email}`} class="faq__mail-link">{site.email}</a>
+          <p class="faq__mail-note">Responde una persona, no un formulario.</p>
+        </div>
+      </div>
+
+      <div class="faq__list">
+        {
+          faqs.map((item, i) => {
+            const num = String(i + 1).padStart(2, '0');
+            const panelId = `faq-panel-${i}`;
+            const triggerId = `faq-trigger-${i}`;
+            return (
+              <div class="faq__item" data-faq-item>
+                <button
+                  type="button"
+                  id={triggerId}
+                  class="faq__trigger"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                >
+                  <span class="faq__num">{num}</span>
+                  <span class="faq__question">{item.q}</span>
+                  <span class="faq__icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq__panel" id={panelId} role="region" aria-labelledby={triggerId} data-faq-panel>
+                  <div class="faq__panel-inner">
+                    <p class="faq__answer">{item.a}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll<HTMLElement>('[data-faq-item]');
+
+    items.forEach((item) => {
+      const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]');
+      trigger?.addEventListener('click', () => {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        items.forEach((other) => {
+          other.querySelector('[data-faq-trigger]')?.setAttribute('aria-expanded', 'false');
+          other.classList.remove('is-open');
+        });
+        if (!isOpen) {
+          trigger.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-open');
+        }
+      });
+    });
+  </script>
+</section>
+
+<style>
+  .faq {
+    padding: var(--space-14) 0;
+    border-top: 1px solid var(--color-linea);
+  }
+
+  .faq__layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .faq__title {
+    font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+    letter-spacing: -0.025em;
+    line-height: 1.06;
+    margin: 0 0 var(--space-7);
+    max-width: 20ch;
+  }
+
+  .faq__mail-card {
+    background: var(--color-tinta);
+    border-radius: var(--radius-xl);
+    padding: 26px 28px;
+    box-shadow: 0 26px 54px -34px rgba(20, 22, 27, 0.55);
+  }
+
+  .faq__mail-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-zafiro-claro);
+    margin: 0 0 var(--space-3);
+  }
+
+  .faq__mail-link {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    letter-spacing: -0.02em;
+    color: var(--color-crema);
+    text-decoration: none;
+    transition: color var(--duration-hover) ease;
+  }
+
+  .faq__mail-link:hover {
+    color: var(--color-zafiro-claro);
+  }
+
+  .faq__mail-note {
+    margin: var(--space-3) 0 0;
+    font-size: 0.93rem;
+    color: #9aa3a8;
+    max-width: 30ch;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq__item {
+    border-top: 1px solid var(--color-linea);
+    transition: border-color 0.25s ease;
+  }
+
+  .faq__item.is-open {
+    border-top-color: var(--color-zafiro);
+  }
+
+  .faq__trigger {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    padding: 22px 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .faq__num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--color-gris-oscuro-tenue);
+    flex-shrink: 0;
+    transition: color 0.25s ease;
+  }
+
+  .faq__item.is-open .faq__num {
+    color: var(--color-zafiro);
+  }
+
+  .faq__question {
+    flex: 1;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+    color: var(--color-tinta);
+    letter-spacing: -0.015em;
+    transition: color 0.25s ease;
+  }
+
+  .faq__item.is-open .faq__question {
+    color: var(--color-zafiro);
+  }
+
+  .faq__icon {
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--color-gris-oscuro-tenue);
+    flex-shrink: 0;
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+
+  .faq__item.is-open .faq__icon {
+    color: var(--color-zafiro);
+    transform: rotate(45deg);
+  }
+
+  .faq__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s ease;
+  }
+
+  .faq__item.is-open .faq__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .faq__panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .faq__answer {
+    margin: 0;
+    padding: 0 40px 24px 50px;
+    font-size: 0.98rem;
+    color: var(--color-gris-texto);
+    max-width: 58ch;
+  }
+
+  @media (max-width: 980px) {
+    .faq__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

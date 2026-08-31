@@ -1,0 +1,77 @@
+---
+import { site } from '../config/site';
+
+interface Props {
+  // 'always' — visible en cualquier viewport (páginas que no son la Home).
+  // 'mobile-only' — solo en móvil/tablet (<980px); en desktop la Home ya
+  // ofrece el enlace de WhatsApp integrado en el hero, y la burbuja sobraría.
+  mode?: 'always' | 'mobile-only';
+}
+
+const { mode = 'always' } = Astro.props;
+const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={['whatsapp-fab', { 'whatsapp-fab--mobile-only': mode === 'mobile-only' }]}
+  aria-label={`Escríbenos por WhatsApp — ${site.name}`}
+>
+  <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="currentColor">
+    <path
+      d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.94-.26-.1-.46-.15-.65.15-.2.29-.75.94-.92 1.13-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.37-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.5-.17-.01-.37-.01-.56-.01-.2 0-.51.07-.78.37-.26.29-1.02 1-1.02 2.43 0 1.43 1.05 2.82 1.19 3.01.15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"
+    ></path>
+    <path
+      d="M12.02 2C6.5 2 2.02 6.48 2.02 12c0 1.86.5 3.6 1.38 5.1L2 22l5.05-1.36A9.94 9.94 0 0 0 12.02 22C17.53 22 22 17.52 22 12S17.53 2 12.02 2Zm0 18.1c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-3 .81.8-2.92-.21-.3A8.09 8.09 0 0 1 3.92 12c0-4.48 3.64-8.1 8.1-8.1 4.47 0 8.1 3.63 8.1 8.1s-3.63 8.1-8.1 8.1Z"
+    ></path>
+  </svg>
+</a>
+
+<style>
+  .whatsapp-fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 70;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 28px -10px rgba(20, 22, 27, 0.45);
+    transition: transform var(--duration-hover) ease, box-shadow var(--duration-hover) ease;
+  }
+
+  .whatsapp-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -10px rgba(20, 22, 27, 0.55);
+  }
+
+  @media (max-width: 980px) {
+    .whatsapp-fab {
+      right: 16px;
+      bottom: 16px;
+      width: 52px;
+      height: 52px;
+    }
+  }
+
+  /* En la Home, la burbuja solo aparece en móvil/tablet: en desktop ya
+     está el botón integrado en el hero (ver Hero.astro). */
+  @media (min-width: 981px) {
+    .whatsapp-fab--mobile-only {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    @keyframes nexoBlink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+    body{margin:0;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:#2c4d8f}
+    a:hover{color:#1c3560}
+    ::selection{background:#2c4d8f;color:#fff}
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+
+<div ref="{{ rootRef }}" style="background:#f8f7f2;color:#14161b;font-family:Inter,sans-serif;line-height:1.55;overflow-x:hidden">
+
+  <header style="position:sticky;top:0;z-index:50;background:rgba(248,247,242,.85);backdrop-filter:blur(8px);border-bottom:1px solid #e4e1d3">
+    <div style="max-width:1140px;margin:0 auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between">
+      <a href="#inicio" aria-label="nexo, inicio" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;color:#14161b">
+        <span style="width:9px;height:9px;border-radius:50%;background:#2c4d8f;display:inline-block"></span>nexo
+      </a>
+      <nav style="{{ navLinksInlineStyle }}">
+        
+        <a href="#como-funciona" style="font-size: .92rem; color: #5b6570; width: 127px; height: 23px" style-hover="color:#14161b">Cómo funciona</a>
+        <a href="#resolvemos" style="font-size: .92rem; color: #5b6570; width: 132px; height: 24px" style-hover="color:#14161b">Qué resolvemos</a><a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:8px" style-hover="background:#2c4d8f;border-color:#2c4d8f;box-shadow:0 10px 22px -10px #2c4d8f70;transform:translateY(-1px)">Cuéntanos tu problema <span>→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section style="padding:96px 0 56px;position:relative" style-before="content:'';position:absolute;top:-120px;right:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,#2c4d8f22 0%,transparent 68%);pointer-events:none">
+      <div style="position:absolute;top:0;bottom:0;right:0;left:52%;z-index:0;overflow:hidden;mask-image:linear-gradient(90deg,transparent 0%,#000 38%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%)">
+        <image-slot id="hero-bg" shape="rect" fit="cover" placeholder="Fondo del hero — imagen abstracta y minimalista (tonos crema / azul)"></image-slot>
+      </div>
+      <div style="max-width:1140px;margin:0 auto;padding:0 32px;position:relative;z-index:1">
+        <div style="{{ heroGridStyle }}">
+          <div style="{{ heroTextStyle }}">
+            
+            <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.5rem,4.8vw,3.9rem);line-height:1.05;letter-spacing:-.02em;margin:0">¿Qué proceso está <span style="color:#2c4d8f">frenando</span> a tu empresa?</h1>
+            <p style="margin-top:24px;font-size:1.1rem;color:#5b6570;max-width:46ch">Cuéntanos qué tarea te hace perder tiempo o dinero. Nosotros medimos el proceso, diseñamos la solución de IA y la construimos contigo.</p>
+            <div style="margin-top:34px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+              <a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:8px;cursor:pointer" style-hover="background:#2c4d8f;border-color:#2c4d8f;box-shadow:0 10px 22px -10px #2c4d8f70;transform:translateY(-1px)">Cuéntanos tu problema <span>→</span></a>
+              <sc-if value="{{ showSecondaryCta }}" hint-placeholder-val="{{ true }}">
+                <a href="#como-funciona" style="font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:transparent;color:#14161b;border:1px solid #14161b;border-radius:8px;cursor:pointer" style-hover="background:#f1efe6">Ver cómo trabajamos</a>
+              </sc-if>
+            </div>
+            <p style="margin-top:16px;font-size:.85rem;color:#9a9d97">Gratis · Sin compromiso · No necesitas saber nada de IA</p>
+
+            <sc-if value="{{ showStatRow }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:36px;margin-top:48px;flex-wrap:wrap">
+                <div><b style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;display:block;letter-spacing:-.01em;color:#14161b">−78%</b><span style="font-size:.82rem;color:#9a9d97">trabajo manual eliminado</span></div>
+                <div><b style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;display:block;letter-spacing:-.01em;color:#14161b">3 min</b><span style="font-size:.82rem;color:#9a9d97">dura el diagnóstico</span></div>
+                <div><b style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;display:block;letter-spacing:-.01em;color:#14161b">4,2×</b><span style="font-size:.82rem;color:#9a9d97">retorno estimado</span></div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div id="diagnostico" style="{{ chatShellStyle }}">
+            
+
+            <div style="display:flex;align-items:center;gap:10px;padding:18px 22px;border-bottom:1px solid #e4e1d3">
+              <div style="width:32px;height:32px;border-radius:9px;background:#14161b;color:#f8f7f2;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem">n</div>
+              <div>
+                <b style="font-size:.92rem;display:block">Diagnóstico nexo</b>
+                <span style="font-size:.76rem;color:#9a9d97;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#3fcb6b;display:inline-block"></span>En línea</span>
+              </div>
+            </div><div style="padding:22px;display:flex;flex-direction:column;gap:12px;min-height:250px;max-height:400px;overflow-y:auto">
+              <sc-for list="{{ messages }}" as="m" hint-placeholder-count="2">
+                <sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="max-width:84%;padding:12px 16px;border-radius:14px;font-size:.92rem;line-height:1.5;background:#f1efe6;border-bottom-left-radius:4px">{{ m.text }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-end">
+                    <div style="max-width:84%;padding:12px 16px;border-radius:14px;font-size:.92rem;line-height:1.5;background:#14161b;color:#f8f7f2;border-bottom-right-radius:4px">{{ m.text }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isChips }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;max-width:100%">
+                      <sc-for list="{{ m.options }}" as="opt" hint-placeholder-count="3">
+                        <button type="button" onClick="{{ opt.onClick }}" disabled="{{ m.disabled }}" style="{{ opt.style }}" style-hover="background:#e9edf7;border-color:#2c4d8f">{{ opt.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isTyping }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;align-items:flex-start">
+                    <div style="display:flex;gap:4px;padding:12px 16px;background:#f1efe6;border-radius:14px;border-bottom-left-radius:4px;width:fit-content">
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite"></span>
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite .2s"></span>
+                      <span style="width:6px;height:6px;border-radius:50%;background:#9a9d97;display:inline-block;animation:nexoBlink 1.2s ease-in-out infinite .4s"></span>
+                    </div>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;gap:10px;padding:16px 18px;border-top:1px solid #e4e1d3;background:#f8f7f2;opacity:{{ inputRowOpacity }};pointer-events:{{ inputRowPointer }}">
+              <input type="{{ inputType }}" value="{{ inputValue }}" onChange="{{ onInputChange }}" onKeyDown="{{ onInputKeyDown }}" placeholder="{{ inputPlaceholder }}" disabled="{{ inputDisabled }}" autocomplete="off" aria-label="Describe tu problema" style="flex:1;border:1px solid #e4e1d3;border-radius:24px;padding:12px 18px;font-family:Inter,sans-serif;font-size:.92rem;background:#f1efe6;color:#14161b" style-focus="outline:2px solid #2c4d8f;outline-offset:2px">
+              <button onClick="{{ onSendClick }}" disabled="{{ inputDisabled }}" aria-label="Enviar mensaje" style="width:42px;height:42px;border-radius:50%;background:#14161b;border:none;color:#f8f7f2;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#2c4d8f">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" style="padding:56px 0 104px">
+      <div style="max-width:1140px;margin:0 auto;padding:0 32px">
+        <div style="{{ stepsHeadStyle }}" data-reveal-id="steps-head">
+          <div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.82rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#1c3560;margin-bottom:14px;display:block">01</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.1rem,3.6vw,3rem);line-height:1.08;max-width:22ch;letter-spacing:-.02em;margin:0">Tres pasos, sin vueltas</h2>
+          </div>
+          <p style="max-width: 38ch; color: #5b6570; font-size: .96rem; margin: 0; width: 490px; height: 45px">No nos quedamos en la propuesta: implementamos la solución.</p>
+        </div>
+        <div style="{{ stepsGridStyle }}">
+          <div style="{{ step0Style }}" data-reveal-id="step-0" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <div style="width:40px;height:40px;border-radius:10px;background:#e9edf7;display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg viewBox="0 0 24 24" fill="none" stroke="#1c3560" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 10px">Cuéntanos el problema</h3>
+            <p style="color:#5b6570;font-size:.93rem;margin:0">Sin jerga ni requisitos técnicos. Solo dinos qué está ocurriendo hoy en tu empresa.</p>
+          </div>
+          <div style="{{ step1Style }}" data-reveal-id="step-1" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <div style="width:40px;height:40px;border-radius:10px;background:#e9edf7;display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg viewBox="0 0 24 24" fill="none" stroke="#1c3560" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 10px">Diseñamos la solución</h3>
+            <p style="color:#5b6570;font-size:.93rem;margin:0">Analizamos el proceso y te proponemos un sistema viable, con alcance y retorno estimado.</p>
+          </div>
+          <div style="{{ step2Style }}" data-reveal-id="step-2" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <div style="width:40px;height:40px;border-radius:10px;background:#e9edf7;display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg viewBox="0 0 24 24" fill="none" stroke="#1c3560" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4z"></path></svg></div>
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 10px">La construimos contigo</h3>
+            <p style="color:#5b6570;font-size:.93rem;margin:0">Integramos la solución en tu negocio y medimos el ahorro desde el primer día.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resolvemos" style="padding:104px 0">
+      <div style="max-width:1140px;margin:0 auto;padding:0 32px">
+        <div style="{{ casesHeadStyle }}" data-reveal-id="cases-head">
+          <div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.82rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#1c3560;margin-bottom:14px;display:block">02</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.1rem,3.6vw,3rem);line-height:1.08;max-width:22ch;letter-spacing:-.02em;margin:0">Problemas reales, ya resueltos</h2>
+          </div>
+          <p style="max-width:38ch;color:#5b6570;font-size:1rem;margin:0">Una muestra de lo que suele llegar — y cómo se traduce en una solución.</p>
+        </div>
+        <div style="{{ caseGridStyle }}">
+          <div style="{{ case0Style }}" data-reveal-id="case-0" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <span style="display:inline-block;font-size:.72rem;font-weight:600;color:#1c3560;background:#e9edf7;padding:4px 10px;border-radius:20px;margin-bottom:18px">Industria</span>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Problema</p>
+            <p style="font-size:.94rem;margin:0 0 16px">"Revisamos cientos de documentos técnicos a mano cada semana."</p>
+            <p style="color:#2c4d8f;margin:0 0 16px;font-size:1rem">↓</p>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Solución</p>
+            <p style="font-size:.94rem;margin:0">Un sistema de IA clasifica, extrae y valida la información antes de que el equipo la revise.</p>
+          </div>
+          <div style="{{ case1Style }}" data-reveal-id="case-1" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <span style="display:inline-block;font-size:.72rem;font-weight:600;color:#1c3560;background:#e9edf7;padding:4px 10px;border-radius:20px;margin-bottom:18px">Operaciones</span>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Problema</p>
+            <p style="font-size:.94rem;margin:0 0 16px">"Introducimos los mismos datos en varios sistemas cada día."</p>
+            <p style="color:#2c4d8f;margin:0 0 16px;font-size:1rem">↓</p>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Solución</p>
+            <p style="font-size:.94rem;margin:0">Conectamos tus herramientas para que la información fluya sola entre ellas.</p>
+          </div>
+          <div style="{{ case2Style }}" data-reveal-id="case-2" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(20,22,27,.25);border-color:#9a9d97">
+            <span style="display:inline-block;font-size:.72rem;font-weight:600;color:#1c3560;background:#e9edf7;padding:4px 10px;border-radius:20px;margin-bottom:18px">Atención al cliente</span>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Problema</p>
+            <p style="font-size:.94rem;margin:0 0 16px">"Los clientes preguntan siempre lo mismo y tardamos en responder."</p>
+            <p style="color:#2c4d8f;margin:0 0 16px;font-size:1rem">↓</p>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#9a9d97;text-transform:uppercase;margin:0 0 6px">Solución</p>
+            <p style="font-size:.94rem;margin:0">Un asistente responde al instante y escala solo lo que de verdad necesita a una persona.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:104px 0;border-top:1px solid #e4e1d3;text-align:center">
+      <div style="{{ ctaStyle }}" data-reveal-id="cta">
+        <div style="max-width:1140px;margin:0 auto;padding:0 32px">
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#1c3560;margin-bottom:10px">03</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,3vw,2.4rem);max-width:none;text-align:center;margin:0 auto 30px;letter-spacing:-.015em">Tu problema puede ser<br>
+            <span style="color:#2c4d8f">tu próxima ventaja.</span>
+          </h2>
+          <div style="text-align:center">
+            <a href="#diagnostico" style="font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#14161b;color:#f8f7f2;border:1px solid #14161b;border-radius:8px;cursor:pointer" style-hover="background:#2c4d8f;border-color:#2c4d8f;box-shadow:0 10px 22px -10px #2c4d8f70;transform:translateY(-1px)">Empezar diagnóstico <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top:1px solid #e4e1d3;padding:40px 0">
+    <div style="max-width:1140px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <a href="#inicio" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;display:flex;align-items:center;gap:9px;color:#14161b">
+        <span style="width:9px;height:9px;border-radius:50%;background:#2c4d8f;display:inline-block"></span>nexo
+      </a>
+      <div style="display:flex;gap:24px">
+        <a href="#como-funciona" style="font-size:.84rem;color:#5b6570" style-hover="color:#14161b">Cómo funciona</a>
+        <a href="#resolvemos" style="font-size:.84rem;color:#5b6570" style-hover="color:#14161b">Qué resolvemos</a>
+      </div>
+      <p style="font-size:.82rem;color:#9a9d97;margin:0">© 2026 nexo · IA · Automatización · Datos · Software</p>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1400},&quot;showStatRow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;showSecondaryCta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
+class Component extends DCLogic {
+  state = {
+    messages: [
+      { id: 1, kind: 'bot', text: 'Hola 👋 ¿Qué tarea o proceso te gustaría eliminar, automatizar o hacer mucho más rápido?' },
+      { id: 2, kind: 'chips', disabled: false, options: [
+        { label: 'Revisamos muchos documentos' },
+        { label: 'Perdemos tiempo con informes' },
+        { label: 'Gestionamos muchos emails' }
+      ]}
+    ],
+    stage: 'problem',
+    inputValue: '',
+    inputDisabled: false,
+    inputType: 'text',
+    inputPlaceholder: 'Escribe tu problema...',
+    revealed: {},
+    isMobile: false
+  };
+
+  nextId = 3;
+  rootRef = React.createRef();
+
+  componentDidMount() {
+    this.mq = window.matchMedia('(max-width:860px)');
+    this.updateMQ = () => this.setState({ isMobile: this.mq.matches });
+    this.updateMQ();
+    this.mq.addEventListener('change', this.updateMQ);
+
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('data-reveal-id');
+          this.setState((s) => ({ revealed: { ...s.revealed, [id]: true } }));
+          this.io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    this.setState((s) => ({ revealed: { ...s.revealed, 'hero-text': true, 'hero-chat': true } }));
+
+    if (this.rootRef.current) {
+      this.rootRef.current.querySelectorAll('[data-reveal-id]').forEach((el) => this.io.observe(el));
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.mq && this.updateMQ) this.mq.removeEventListener('change', this.updateMQ);
+  }
+
+  disableAllChips() {
+    this.setState((s) => ({ messages: s.messages.map((m) => (m.kind === 'chips' ? { ...m, disabled: true } : m)) }));
+  }
+
+  selectChip(msgId, label) {
+    const msg = this.state.messages.find((m) => m.id === msgId);
+    if (msg && msg.disabled) return;
+    this.disableAllChips();
+    this.sendMessage(label);
+  }
+
+  sendMessage(text) {
+    const val = (text ?? this.state.inputValue).trim();
+    if (!val) return;
+    this.disableAllChips();
+    const uid = this.nextId++;
+    this.setState((s) => ({ messages: [...s.messages, { id: uid, kind: 'user', text: val }], inputValue: '' }));
+    this.advanceStage(val);
+  }
+
+  advanceStage(text) {
+    const stage = this.state.stage;
+    const typingId = this.nextId++;
+    this.setState((s) => ({ messages: [...s.messages, { id: typingId, kind: 'typing' }] }));
+    setTimeout(() => {
+      this.setState((s) => ({ messages: s.messages.filter((m) => m.id !== typingId) }));
+      if (stage === 'problem') {
+        const sectors = ['Industria', 'Ingeniería', 'Logística', 'Operaciones', 'Otro'];
+        this.setState((s) => ({
+          messages: [...s.messages,
+            { id: this.nextId++, kind: 'bot', text: 'Entendido. ¿En qué sector trabajas?' },
+            { id: this.nextId++, kind: 'chips', disabled: false, options: sectors.map((label) => ({ label })) }
+          ],
+          stage: 'sector'
+        }));
+      } else if (stage === 'sector') {
+        this.setState((s) => ({
+          messages: [...s.messages, { id: this.nextId++, kind: 'bot', text: 'Última cosa: ¿a qué email te enviamos el diagnóstico?' }],
+          stage: 'email', inputPlaceholder: 'tu@empresa.com', inputType: 'email'
+        }));
+      } else if (stage === 'email') {
+        this.setState((s) => ({
+          messages: [...s.messages, { id: this.nextId++, kind: 'bot', text: 'Perfecto ✓ Tu diagnóstico llega en menos de 48 horas a ese email. Gracias por contarnos tu caso.' }],
+          stage: 'done', inputDisabled: true
+        }));
+      }
+    }, 700);
+  }
+
+  renderVals() {
+    const revealed = this.state.revealed;
+    const reveal = (id, base) => ({
+      ...base,
+      opacity: revealed[id] ? 1 : 0,
+      transform: revealed[id] ? 'translateY(0)' : 'translateY(18px)',
+      transition: 'opacity .6s ease, transform .6s ease' + (base && base.transition ? ', ' + base.transition : '')
+    });
+
+    const messages = this.state.messages.map((m) => {
+      const out = { ...m, isBot: m.kind === 'bot', isUser: m.kind === 'user', isChips: m.kind === 'chips', isTyping: m.kind === 'typing' };
+      if (m.kind === 'chips') {
+        out.options = m.options.map((o) => ({
+          label: o.label,
+          onClick: () => this.selectChip(m.id, o.label),
+          style: {
+            fontFamily: 'Inter,sans-serif', fontSize: '.84rem', padding: '9px 14px', borderRadius: '20px',
+            border: '1px solid #e4e1d3', background: '#f1efe6', color: '#14161b',
+            cursor: m.disabled ? 'default' : 'pointer', opacity: m.disabled ? 0.45 : 1
+          }
+        }));
+      }
+      return out;
+    });
+
+    const isMobile = this.state.isMobile;
+
+    return {
+      rootRef: this.rootRef,
+      messages,
+      inputValue: this.state.inputValue,
+      inputDisabled: this.state.inputDisabled,
+      inputType: this.state.inputType,
+      inputPlaceholder: this.state.inputPlaceholder,
+      onInputChange: (e) => this.setState({ inputValue: e.target.value }),
+      onInputKeyDown: (e) => { if (e.key === 'Enter') this.sendMessage(this.state.inputValue); },
+      onSendClick: () => this.sendMessage(this.state.inputValue),
+      inputRowOpacity: this.state.inputDisabled ? 0.4 : 1,
+      inputRowPointer: this.state.inputDisabled ? 'none' : 'auto',
+      showStatRow: this.props.showStatRow ?? true,
+      showSecondaryCta: this.props.showSecondaryCta ?? true,
+
+      heroTextStyle: reveal('hero-text', {}),
+      chatShellStyle: reveal('hero-chat', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '18px', boxShadow: '0 30px 70px -32px rgba(20,22,27,.28)', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }),
+      stepsHeadStyle: reveal('steps-head', { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '24px', marginBottom: '56px', flexWrap: 'wrap' }),
+      casesHeadStyle: reveal('cases-head', { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '24px', marginBottom: '56px', flexWrap: 'wrap' }),
+      step0Style: reveal('step-0', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '32px 26px' }),
+      step1Style: reveal('step-1', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '32px 26px' }),
+      step2Style: reveal('step-2', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '32px 26px' }),
+      case0Style: reveal('case-0', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '28px 26px' }),
+      case1Style: reveal('case-1', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '28px 26px' }),
+      case2Style: reveal('case-2', { background: '#f8f7f2', border: '1px solid #e4e1d3', borderRadius: '14px', padding: '28px 26px' }),
+      ctaStyle: reveal('cta', {}),
+
+      heroGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.05fr .95fr', gap: '64px', alignItems: 'center', position: 'relative' },
+      stepsGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '24px' },
+      caseGridStyle: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '20px' },
+      navLinksInlineStyle: { display: isMobile ? 'none' : 'flex', alignItems: 'center', gap: '32px' }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+---
+import { site, nav as defaultNav, routes } from '../config/site';
+
+interface Props {
+  navItems?: { label: string; href: string }[];
+  showCta?: boolean;
+  sticky?: boolean;
+}
+
+const { navItems = defaultNav, showCta = true, sticky = true } = Astro.props;
+---
+
+<header class:list={['site-header', { 'site-header--sticky': sticky }]}>
+  <div class="container site-header__row">
+    <a href={routes.home} class="logo" aria-label={`${site.name} — inicio`}>
+      <span class="logo__dot" aria-hidden="true"></span>
+      {site.name.toUpperCase()}
+    </a>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      {navItems.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+      {showCta && (
+        <a href={`${routes.home}#diagnostico`} class="btn-cta">Cuéntanos tu caso →</a>
+      )}
+    </nav>
+
+    {
+      navItems.length > 0 && (
+        <button
+          type="button"
+          class="menu-toggle"
+          data-menu-toggle
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Abrir menú"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path data-icon-open d="M4 7h16M4 12h16M4 17h16" />
+            <path data-icon-close d="M6 6l12 12M18 6 6 18" style="display:none" />
+          </svg>
+        </button>
+      )
+    }
+  </div>
+
+  {
+    navItems.length > 0 && (
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Navegación móvil" data-mobile-nav hidden>
+        {showCta && (
+          <a href={`${routes.home}#diagnostico`} class="mobile-nav__cta">Cuéntanos tu caso →</a>
+        )}
+        {navItems.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+    )
+  }
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+
+  if (toggle && panel) {
+    const iconOpen = toggle.querySelector<SVGPathElement>('[data-icon-open]');
+    const iconClose = toggle.querySelector<SVGPathElement>('[data-icon-close]');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      panel.hidden = !open;
+      if (iconOpen) iconOpen.style.display = open ? 'none' : '';
+      if (iconClose) iconClose.style.display = open ? '' : 'none';
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-linea);
+  }
+
+  .site-header--sticky {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(248, 247, 242, 0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  .site-header__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--space-4);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.28rem;
+    letter-spacing: -0.01em;
+    color: var(--color-tinta);
+    text-decoration: none;
+  }
+
+  .logo__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro);
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6-5);
+  }
+
+  .site-nav > a:not(.btn-cta) {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-gris-texto);
+    text-decoration: none;
+    transition: color var(--duration-hover) ease;
+  }
+
+  .site-nav > a:not(.btn-cta):hover {
+    color: var(--color-tinta);
+  }
+
+  .btn-cta {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: var(--space-3) 18px;
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .btn-cta:hover {
+    background: var(--color-zafiro);
+    box-shadow: var(--shadow-btn-hover);
+    transform: translateY(-1px);
+  }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: var(--color-tinta);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--duration-hover) ease;
+  }
+
+  .menu-toggle:hover {
+    color: var(--color-zafiro);
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-linea);
+    padding: var(--space-3) var(--container-pad-narrow) var(--space-4);
+  }
+
+  .mobile-nav[hidden] {
+    display: none;
+  }
+
+  .mobile-nav a {
+    padding: 14px 4px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--color-tinta);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-linea);
+  }
+
+  .mobile-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-nav .mobile-nav__cta {
+    display: block;
+    text-align: center;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 13px 18px;
+    margin-bottom: var(--space-3);
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-sm);
+    border-bottom: none;
+    text-decoration: none;
+  }
+
+  @media (max-width: 980px) {
+    .site-nav {
+      gap: var(--space-4);
+    }
+
+    .site-nav > a:not(.btn-cta) {
+      display: none;
+    }
+
+    .site-nav > .btn-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+  }
+</style>

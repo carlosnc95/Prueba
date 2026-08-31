@@ -1,0 +1,70 @@
+<section class="cta-final">
+  <div class="container" data-reveal>
+    <div class="cta-final__box">
+      <p class="eyebrow cta-final__eyebrow">Siguiente paso</p>
+      <h2 class="cta-final__title">Empecemos por la tarea que más tiempo te ocupa.</h2>
+      <p class="cta-final__text">
+        Tres minutos de conversación y te decimos qué se puede automatizar, cómo y en qué orden.
+      </p>
+      <a href="#diagnostico" class="cta-final__btn">Empezar el diagnóstico <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    padding: var(--space-12) 0 var(--space-16);
+  }
+
+  .cta-final__box {
+    background: var(--color-crema-media);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-12) var(--space-8);
+    text-align: center;
+  }
+
+  .cta-final__eyebrow {
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-final__title {
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 auto 18px;
+    max-width: 24ch;
+  }
+
+  .cta-final__text {
+    margin: 0 auto 30px;
+    max-width: 52ch;
+    color: var(--color-gris-texto);
+    font-size: 1.02rem;
+  }
+
+  .cta-final__btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 16px 26px;
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border: 1px solid var(--color-tinta);
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .cta-final__btn:hover {
+    background: var(--color-zafiro);
+    border-color: var(--color-zafiro);
+    box-shadow: 0 14px 28px -14px #2d5b9e80;
+    transform: translateY(-1px);
+  }
+</style>

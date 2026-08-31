@@ -1,0 +1,212 @@
+---
+import { casosHome } from '../../data/casosHome';
+
+const iconMap: Record<string, string> = {
+  'icon-datos': '/icons/icon-datos.webp',
+  'icon-engranajes': '/icons/icon-engranajes.webp',
+  'icon-chat': '/icons/icon-chat.webp',
+};
+
+const cases = casosHome.map((c) => ({ ...c, iconSrc: iconMap[c.icon] }));
+---
+
+<section id="resolvemos" class="resolvemos">
+  <div class="container">
+    <div class="resolvemos__head" data-reveal>
+      <p class="eyebrow">Qué resolvemos</p>
+      <h2 class="resolvemos__title">Lo que nos suelen contar</h2>
+    </div>
+
+    <div class="resolvemos__layout">
+      <div class="resolvemos__nav" aria-label="Casos por sector">
+        {
+          cases.map((c, i) => (
+            <button
+              type="button"
+              class:list={['resolvemos__nav-btn', { 'is-active': i === 0 }]}
+              data-case-select={i}
+              aria-current={i === 0 ? 'true' : 'false'}
+              aria-controls="resolvemos-panel"
+            >
+              {c.sector}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="resolvemos__panel" id="resolvemos-panel">
+        <div class="resolvemos__panel-text" aria-live="polite">
+          <p class="resolvemos__kicker">Nos dicen</p>
+          <p class="resolvemos__quote" data-case-quote>“{cases[0].quote}”</p>
+          <p class="resolvemos__kicker resolvemos__kicker--accent">Cómo lo abordamos</p>
+          <p class="resolvemos__solution" data-case-solution>{cases[0].solution}</p>
+        </div>
+        <img data-case-icon src={cases[0].iconSrc} alt="" class="resolvemos__icon" width="168" height="168" loading="lazy" />
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" id="resolvemos-data" is:inline set:html={JSON.stringify(cases)} />
+
+  <script>
+    const dataEl = document.getElementById('resolvemos-data');
+    if (dataEl?.textContent) {
+      const cases = JSON.parse(dataEl.textContent) as { quote: string; solution: string; iconSrc: string }[];
+      const buttons = document.querySelectorAll<HTMLButtonElement>('[data-case-select]');
+      const quoteEl = document.querySelector('[data-case-quote]');
+      const solutionEl = document.querySelector('[data-case-solution]');
+      const iconEl = document.querySelector<HTMLImageElement>('[data-case-icon]');
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const i = Number(btn.dataset.caseSelect);
+          const c = cases[i];
+          if (!c || !quoteEl || !solutionEl || !iconEl) return;
+          quoteEl.textContent = '“' + c.quote + '”';
+          solutionEl.textContent = c.solution;
+          iconEl.src = c.iconSrc;
+          buttons.forEach((b) => {
+            const active = b === btn;
+            b.setAttribute('aria-current', active ? 'true' : 'false');
+            b.classList.toggle('is-active', active);
+          });
+        });
+      });
+    }
+  </script>
+</section>
+
+<style>
+  .resolvemos {
+    padding: var(--space-14) 0;
+  }
+
+  .resolvemos__head {
+    margin-bottom: var(--space-7);
+  }
+
+  .resolvemos__head .eyebrow {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .resolvemos__title {
+    font-size: var(--text-h2);
+    letter-spacing: -0.025em;
+    margin: 0;
+    max-width: 26ch;
+  }
+
+  .resolvemos__layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .resolvemos__nav {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--color-linea);
+  }
+
+  .resolvemos__nav-btn {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.015em;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    cursor: pointer;
+    padding: 16px 0 16px 22px;
+    color: var(--color-gris-texto);
+    transition: color var(--duration-hover) ease, border-color var(--duration-hover) ease;
+  }
+
+  .resolvemos__nav-btn:hover {
+    color: var(--color-tinta);
+  }
+
+  .resolvemos__nav-btn.is-active {
+    color: var(--color-tinta);
+    border-left-color: var(--color-zafiro);
+  }
+
+  .resolvemos__panel {
+    background: var(--color-crema-media);
+    border: 1px solid var(--color-linea);
+    border-radius: 20px;
+    padding: 40px 38px;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .resolvemos__panel-text {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .resolvemos__kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-gris-oscuro-tenue);
+    margin: 0 0 var(--space-4);
+  }
+
+  .resolvemos__kicker--accent {
+    color: var(--color-zafiro-oscuro);
+    margin-top: var(--space-6);
+  }
+
+  .resolvemos__quote {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 2.3vw, 1.85rem);
+    line-height: 1.26;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: min(34ch, 100%);
+  }
+
+  .resolvemos__solution {
+    margin: 0;
+    font-size: 1.02rem;
+    color: var(--color-gris-texto);
+    width: 100%;
+    max-width: min(56ch, 100%);
+  }
+
+  .resolvemos__icon {
+    width: 168px;
+    height: auto;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  @media (max-width: 980px) {
+    .resolvemos__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-5-5);
+    }
+
+    .resolvemos__panel {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 30px 26px;
+      gap: var(--space-4);
+    }
+
+    .resolvemos__icon {
+      width: 120px;
+      align-self: flex-start;
+    }
+  }
+</style>

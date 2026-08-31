@@ -1,0 +1,326 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OrganizationJsonLd from '../components/OrganizationJsonLd.astro';
+import { site, routes } from '../config/site';
+
+export const prerender = true;
+
+const headerNav = [
+  { label: 'Inicio', href: routes.home },
+  { label: 'Soluciones', href: routes.casos },
+];
+
+const footerLinks = [
+  { label: 'Soluciones', href: routes.casos },
+  { label: 'Calcula tu ahorro', href: `${routes.home}#calculadora` },
+  { label: site.email, href: `mailto:${site.email}` },
+  { label: 'WhatsApp', href: `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}` },
+  { label: 'Privacidad', href: routes.privacidad },
+];
+
+const perfil = [
+  { num: '01', title: 'Origen técnico', text: 'Quien diagnostica es quien construye. Nada se subcontrata.' },
+  { num: '02', title: 'Mirada de negocio', text: 'Medimos cada automatización en horas, errores o dinero.' },
+  { num: '03', title: 'Trato directo', text: 'Hablas siempre con quien lleva tu proyecto.' },
+];
+
+const valores = [
+  { icon: '/icons/ic-escudo.webp', title: 'Confidencialidad', text: 'Tratamos tus datos como lo que son: tuyos. Acuerdo firmado antes de ver nada.' },
+  { icon: '/icons/ic-reloj.webp', title: 'Plazos cortos', text: 'Diagnóstico en 48 horas y primeras entregas en semanas, no en trimestres.' },
+  { icon: '/icons/ic-cohete.webp', title: 'Puesta en marcha real', text: 'No buscamos una demo bonita: el proceso queda funcionando solo.' },
+];
+---
+
+<BaseLayout
+  title={`Quiénes somos · ${site.name}`}
+  description="Ingenieros con experiencia en defensa, aeroespacial, operaciones industriales y consultoría. Quien diagnostica tu proceso es quien lo construye."
+  headerNavItems={headerNav}
+  footerLinks={footerLinks}
+>
+  <Fragment slot="head">
+    <OrganizationJsonLd />
+  </Fragment>
+
+  <section class="qs-hero">
+    <div class="container qs-hero__grid">
+      <div>
+        <p class="eyebrow">Quiénes somos</p>
+        <h1 class="qs-hero__title">Somos ingenieros que han vivido el proceso por dentro</h1>
+        <p class="qs-hero__lead">
+          Venimos de la ingeniería: <b>defensa, aeroespacial, operaciones industriales y consultoría</b>. Entornos
+          donde un error sale caro y el tiempo del equipo es el recurso más escaso.
+        </p>
+      </div>
+      <img src="/icons/ic-panel.webp" alt="" class="qs-hero__img" width="380" height="380" />
+    </div>
+  </section>
+
+  <section class="qs-perfil">
+    <div class="container">
+      <div class="qs-perfil__panel">
+        <p class="qs-perfil__eyebrow">El perfil</p>
+        <p class="qs-perfil__lead">Ingeniería, datos y desarrollo, con años de operaciones y consultoría detrás.</p>
+        <p class="qs-perfil__sub">Sabemos leer un proceso de negocio y, además, programarlo.</p>
+      </div>
+      <div class="qs-perfil__row" data-reveal>
+        {
+          perfil.map((p) => (
+            <div class="qs-perfil__card">
+              <span class="qs-perfil__num">{p.num}</span>
+              <b class="qs-perfil__card-title">{p.title}</b>
+              <p class="qs-perfil__card-text">{p.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="qs-valores">
+    <div class="container qs-valores__grid" data-reveal>
+      {
+        valores.map((v) => (
+          <div class="qs-valor">
+            <img src={v.icon} alt="" class="qs-valor__img" width="160" height="132" loading="lazy" />
+            <b class="qs-valor__title">{v.title}</b>
+            <p class="qs-valor__text">{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="qs-cta">
+    <div class="container" data-reveal>
+      <div class="qs-cta__box">
+        <h2 class="qs-cta__title">La mejor forma de conocernos es un caso real</h2>
+        <p class="qs-cta__text">Cuéntanos la tarea que más tiempo os ocupa y te decimos qué haríamos con ella.</p>
+        <a href={`${routes.home}#diagnostico`} class="qs-cta__btn">Empezar el diagnóstico <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qs-hero {
+    padding: var(--space-12) 0 var(--space-8);
+  }
+
+  .qs-hero__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .qs-hero__title {
+    font-size: clamp(2.4rem, 4.6vw, 3.7rem);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  .qs-hero__lead {
+    margin-top: var(--space-5-5);
+    font-size: 1.1rem;
+    color: var(--color-gris-texto);
+    max-width: 52ch;
+  }
+
+  .qs-hero__lead b {
+    color: var(--color-tinta);
+    font-weight: 600;
+  }
+
+  .qs-hero__img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    justify-self: center;
+  }
+
+  .qs-perfil {
+    padding: var(--space-5) 0 var(--space-12);
+  }
+
+  .qs-perfil__panel {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-3xl);
+    padding: var(--space-10) 44px;
+    margin-bottom: var(--space-4);
+    box-shadow: var(--shadow-card-dark);
+  }
+
+  .qs-perfil__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-zafiro-claro);
+    margin: 0 0 var(--space-4);
+  }
+
+  .qs-perfil__lead {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.24;
+    letter-spacing: -0.025em;
+    color: var(--color-crema);
+    max-width: 30ch;
+  }
+
+  .qs-perfil__sub {
+    margin: var(--space-4) 0 0;
+    font-size: 1.05rem;
+    color: #c9cfd3;
+    max-width: 56ch;
+  }
+
+  .qs-perfil__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  .qs-perfil__card {
+    background: var(--color-crema);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .qs-perfil__num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-zafiro);
+  }
+
+  .qs-perfil__card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.06rem;
+    display: block;
+    margin: 12px 0 8px;
+  }
+
+  .qs-perfil__card-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-gris-texto);
+  }
+
+  .qs-valores {
+    padding: var(--space-14) 0;
+  }
+
+  .qs-valores__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .qs-valor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .qs-valor__img {
+    width: auto;
+    max-width: 160px;
+    height: 132px;
+    object-fit: contain;
+    object-position: left bottom;
+    margin-bottom: 14px;
+  }
+
+  .qs-valor__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.06rem;
+  }
+
+  .qs-valor__text {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--color-gris-texto);
+  }
+
+  .qs-cta {
+    padding: 0 0 var(--space-16);
+  }
+
+  .qs-cta__box {
+    background: var(--color-crema-media);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-2xl);
+    padding: 52px 40px;
+    text-align: center;
+  }
+
+  .qs-cta__title {
+    font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 auto 18px;
+    max-width: 24ch;
+  }
+
+  .qs-cta__text {
+    margin: 0 auto 30px;
+    max-width: 52ch;
+    color: var(--color-gris-texto);
+    font-size: 1.02rem;
+  }
+
+  .qs-cta__btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 16px 26px;
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border: 1px solid var(--color-tinta);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .qs-cta__btn:hover {
+    background: var(--color-zafiro);
+    border-color: var(--color-zafiro);
+    box-shadow: 0 14px 28px -14px #2d5b9e80;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 980px) {
+    .qs-hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .qs-hero__img {
+      max-width: 260px;
+      justify-self: flex-start;
+    }
+
+    .qs-perfil__row,
+    .qs-valores__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

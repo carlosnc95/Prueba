@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OrganizationJsonLd from '../components/OrganizationJsonLd.astro';
+import FaqJsonLd from '../components/FaqJsonLd.astro';
+import Hero from '../components/home/Hero.astro';
+import ComoFunciona from '../components/home/ComoFunciona.astro';
+import Resolvemos from '../components/home/Resolvemos.astro';
+import CalculadoraSection from '../components/home/CalculadoraSection.astro';
+import Faq from '../components/home/Faq.astro';
+import CtaFinal from '../components/home/CtaFinal.astro';
+import { site } from '../config/site';
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title={`${site.name} · Diagnóstico de IA para automatizar tus procesos`}
+  description="Cuéntanos la tarea que más tiempo os ocupa y te devolvemos en 48 horas un diagnóstico con qué se puede automatizar, el alcance y el retorno esperado. Sin coste."
+  footerVariant="full"
+  whatsappBubble="mobile-only"
+>
+  <Fragment slot="head">
+    <OrganizationJsonLd />
+    <FaqJsonLd />
+  </Fragment>
+
+  <Hero />
+  <ComoFunciona />
+  <Resolvemos />
+  <CalculadoraSection />
+  <Faq />
+  <CtaFinal />
+</BaseLayout>
