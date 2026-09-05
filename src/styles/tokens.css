@@ -18,11 +18,11 @@
   --color-gris-oscuro-tenue: #6f767c;
   --color-verde-online: #3fcb6b;
 
-  /* Color propio del logotipo (la "S" de MDS) — deliberadamente distinto
-     del azul zafiro de la UI. Es la marca dentro de la marca, no el acento
-     general del sitio: no lo reutilices en botones/enlaces/UI. */
-  --color-logo-indigo: #2e3fea;
-  --color-logo-indigo-claro: #7f92ff;
+  /* Color del logotipo (la "S" de MDS). Zafiro puro, más saturado que el
+     --color-zafiro de la UI para que la marca destaque sin desentonar.
+     Reservado al logotipo: no lo reutilices en botones/enlaces/UI. */
+  --color-logo-zafiro: #0f52ba;
+  --color-logo-zafiro-claro: #5b9bd9;
 
   /* Tipografía */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
