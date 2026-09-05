@@ -1,15 +1,11 @@
-// Placeholder de marca. Nombre, dominio, email y og image cambian juntos
-// el día que se cierre el naming definitivo (ver README > Fidelity).
 export const site = {
-  name: 'Sira',
-  domain: 'https://sira.ai',
-  email: 'hola@sira.ai',
+  name: 'MDS',
+  domain: 'https://mdsia.com',
+  email: 'hola@mdsia.com',
   ogImage: '/og.png',
   locale: 'es-ES',
   ogLocale: 'es_ES',
-  // Placeholder — sustituir por el número real (con prefijo de país, solo
-  // dígitos) cuando esté decidido. Usado para el botón flotante de WhatsApp.
-  whatsapp: '34600000000',
+  whatsapp: '34611980931',
   whatsappMessage: 'Hola, quiero contaros la tarea que más tiempo nos ocupa.',
 } as const;
 

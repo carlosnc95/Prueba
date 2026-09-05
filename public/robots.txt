@@ -1,6 +1,5 @@
-# Dominio provisional (ver src/config/site.ts) — actualizar al cerrar sira.ai.
 User-agent: *
 Allow: /
 Disallow: /gracias
 
-Sitemap: https://sira.ai/sitemap-index.xml
+Sitemap: https://mdsia.com/sitemap-index.xml
