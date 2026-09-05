@@ -13,8 +13,7 @@ const { navItems = defaultNav, showCta = true, sticky = true } = Astro.props;
 <header class:list={['site-header', { 'site-header--sticky': sticky }]}>
   <div class="container site-header__row">
     <a href={routes.home} class="logo" aria-label={`${site.name} — inicio`}>
-      <span class="logo__dot" aria-hidden="true"></span>
-      {site.name.toUpperCase()}
+      {site.name.slice(0, -1).toUpperCase()}<span class="logo__accent">{site.name.slice(-1).toUpperCase()}</span>
     </a>
 
     <nav class="site-nav" aria-label="Navegación principal">
@@ -109,21 +108,17 @@ const { navItems = defaultNav, showCta = true, sticky = true } = Astro.props;
 
   .logo {
     display: inline-flex;
-    align-items: center;
-    gap: var(--space-2-5);
+    align-items: baseline;
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.28rem;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
     color: var(--color-tinta);
     text-decoration: none;
   }
 
-  .logo__dot {
-    width: 9px;
-    height: 9px;
-    border-radius: var(--radius-full);
-    background: var(--color-zafiro);
+  .logo__accent {
+    color: var(--color-logo-indigo);
   }
 
   .site-nav {

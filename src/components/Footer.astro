@@ -38,8 +38,7 @@ const minimalLinks: Link[] = links ?? [
           <div class="site-footer__grid">
             <div>
               <a href={routes.home} class="site-footer__brand">
-                <span class="site-footer__dot" aria-hidden="true"></span>
-                {site.name.toUpperCase()}
+                {site.name.slice(0, -1).toUpperCase()}<span class="site-footer__accent">{site.name.slice(-1).toUpperCase()}</span>
               </a>
               <p class="site-footer__tagline">
                 Diagnosticamos el proceso, diseñamos la solución de IA y la construimos contigo.
@@ -79,8 +78,7 @@ const minimalLinks: Link[] = links ?? [
         <>
           <div class="site-footer__row">
             <a href={routes.home} class="site-footer__brand">
-              <span class="site-footer__dot" aria-hidden="true"></span>
-              {site.name.toUpperCase()}
+              {site.name.slice(0, -1).toUpperCase()}<span class="site-footer__accent">{site.name.slice(-1).toUpperCase()}</span>
             </a>
             <div class="site-footer__inline-links">
               {compactLinks.map((link) => (
@@ -135,20 +133,17 @@ const minimalLinks: Link[] = links ?? [
 
   .site-footer__brand {
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.15rem;
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
     display: inline-flex;
-    align-items: center;
-    gap: var(--space-2-5);
+    align-items: baseline;
     color: var(--color-crema);
     text-decoration: none;
   }
 
-  .site-footer__dot {
-    width: 9px;
-    height: 9px;
-    border-radius: var(--radius-full);
-    background: var(--color-zafiro-claro);
+  .site-footer__accent {
+    color: var(--color-logo-indigo-claro);
   }
 
   .site-footer__tagline {
