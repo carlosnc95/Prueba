@@ -3,6 +3,10 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsappButton from '../components/WhatsappButton.astro';
+// Analítica de Vercel: sin cookies ni almacenamiento en el dispositivo, así
+// que no obliga a banner de consentimiento (ver README > Privacidad). Si algún
+// día se añade Google Analytics o un píxel publicitario, eso cambia.
+import Analytics from '@vercel/analytics/astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -68,5 +72,6 @@ const canonical = new URL(Astro.url.pathname, site.domain).toString();
     <Footer variant={footerVariant} links={footerLinks} />
     <WhatsappButton mode={whatsappBubble} />
     <script src="../scripts/reveal.ts"></script>
+    <Analytics />
   </body>
 </html>
