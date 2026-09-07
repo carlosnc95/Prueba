@@ -7,7 +7,7 @@ export const prerender = true;
 const secciones = [
   {
     title: 'Qué recogemos',
-    text: 'Lo que escribes en el diagnóstico: descripción del proceso, sector, horas dedicadas, tu nombre y tu email. Además medimos visitas de forma agregada (páginas vistas, país, tipo de dispositivo y de dónde llegas) sin cookies, sin identificarte y sin cruzar esos datos con los del formulario. No hacemos seguimiento entre sitios ni perfilado publicitario.',
+    text: 'Lo que escribes en el diagnóstico: descripción del proceso, sector, horas dedicadas, tu nombre y tu email. Y, solo si aceptas las cookies de medición, datos de navegación agregados a través de Google Analytics: páginas vistas, tiempo en el sitio, país, tipo de dispositivo y de dónde llegas. Si las rechazas, no se instala ninguna cookie y no se recoge nada de eso.',
   },
   {
     title: 'Para qué',
@@ -18,8 +18,12 @@ const secciones = [
     text: 'Conservamos la información mientras dure la relación y, después, el plazo legal exigible. Puedes pedir su borrado en cualquier momento.',
   },
   {
+    title: 'Cookies',
+    text: 'Las únicas cookies que usamos son las de medición de Google Analytics, y no se instalan hasta que las aceptas: hasta entonces el script ni siquiera se descarga. Rechazarlas no limita nada de la web. Guardamos tu decisión en el navegador para no volver a preguntarte, y puedes cambiarla cuando quieras desde el botón que hay más abajo.',
+  },
+  {
     title: 'Con quién se comparte',
-    text: 'Con nadie con fines comerciales. Solo con los proveedores tecnológicos necesarios para prestar el servicio (alojamiento, envío de correo y analítica de visitas), sujetos a contrato de encargo de tratamiento.',
+    text: 'Con nadie con fines comerciales. Solo con los proveedores tecnológicos necesarios para prestar el servicio: alojamiento, envío de correo y, si las aceptas, Google Analytics. Google puede tratar esos datos fuera de la Unión Europea, amparado en las cláusulas contractuales tipo de la Comisión Europea. No usamos los datos para publicidad ni los cruzamos con los del formulario.',
   },
 ];
 ---
@@ -65,6 +69,23 @@ const secciones = [
           </div>
         ))
       }
+      {
+        site.ga4Id && (
+          <div class="privacidad__card">
+            <h2>Cambiar tu decisión sobre las cookies</h2>
+            <p>
+              Puedes revisar o retirar el consentimiento cuando quieras. Retirarlo es tan sencillo como
+              darlo.
+            </p>
+            <div class="privacidad__consent">
+              <button type="button" class="privacidad__btn" data-consent-open>
+                Cambiar preferencias
+              </button>
+              <span class="privacidad__estado" data-consent-estado />
+            </div>
+          </div>
+        )
+      }
       <div class="privacidad__card">
         <h2>Tus derechos</h2>
         <p>
@@ -77,6 +98,34 @@ const secciones = [
 
     <p class="privacidad__back"><a href={routes.home}>← Volver al inicio</a></p>
   </section>
+
+  <script>
+    // El banner (CookieBanner.astro) expone window.mdsCookies al cargarse.
+    const api = () => (window as unknown as { mdsCookies?: { abrir(): void; estado(): string | null } }).mdsCookies;
+
+    const btn = document.querySelector<HTMLButtonElement>('[data-consent-open]');
+    const estadoEl = document.querySelector<HTMLElement>('[data-consent-estado]');
+
+    // Se lee el almacenamiento directamente y no a través de window.mdsCookies:
+    // el script del banner puede no haberse ejecutado todavía cuando pintamos.
+    const pintarEstado = () => {
+      if (!estadoEl) return;
+      let v: string | null = null;
+      try {
+        v = localStorage.getItem('mds:consent:analytics');
+      } catch {
+        /* almacenamiento bloqueado */
+      }
+      estadoEl.textContent =
+        v === 'granted' ? 'Ahora mismo: aceptadas.' : v === 'denied' ? 'Ahora mismo: rechazadas.' : 'Aún no has elegido.';
+    };
+
+    btn?.addEventListener('click', () => {
+      api()?.abrir();
+    });
+
+    pintarEstado();
+  </script>
 </BaseLayout>
 
 <style>
@@ -131,6 +180,38 @@ const secciones = [
   .privacidad__card p {
     margin: 0;
     color: var(--color-gris-texto);
+  }
+
+  .privacidad__consent {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
+  }
+
+  .privacidad__btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 11px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-tinta);
+    background: transparent;
+    color: var(--color-tinta);
+    cursor: pointer;
+    transition: border-color var(--duration-hover) ease, color var(--duration-hover) ease;
+  }
+
+  .privacidad__btn:hover {
+    border-color: var(--color-zafiro);
+    color: var(--color-zafiro);
+  }
+
+  .privacidad__estado {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-gris-oscuro-tenue);
   }
 
   .privacidad__back {

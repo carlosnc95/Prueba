@@ -1,0 +1,254 @@
+---
+// Banner de consentimiento + carga de Google Analytics 4.
+//
+// Reglas que cumple (guía de cookies de la AEPD, art. 22.2 LSSI-CE):
+//  - Bloqueo previo: gtag.js NO se descarga hasta que hay un "Aceptar".
+//    No basta con cargarlo en modo denegado, porque la mera petición ya
+//    envía la IP del visitante a Google.
+//  - "Rechazar" tiene el mismo peso visual que "Aceptar". Nada de un
+//    enlace pequeño frente a un botón grande.
+//  - Seguir navegando NO es consentimiento: el banner espera una decisión.
+//  - El consentimiento se puede retirar después, desde /privacidad.
+//
+// La decisión se guarda en localStorage. Eso también es almacenamiento en
+// el dispositivo, pero está exento por ser estrictamente necesario: es lo
+// que evita volver a preguntar en cada página.
+import { site, routes } from '../config/site';
+
+const gaId = site.ga4Id;
+---
+
+{
+  gaId && (
+    <div
+      class="cookie-banner"
+      data-cookie-banner
+      data-ga-id={gaId}
+      role="dialog"
+      aria-label="Consentimiento de cookies"
+      aria-live="polite"
+      hidden
+    >
+      <div class="cookie-banner__inner">
+        <div class="cookie-banner__text">
+          <p class="cookie-banner__title">Cookies de medición</p>
+          <p class="cookie-banner__body">
+            Usamos Google Analytics para saber qué páginas se visitan y mejorar el sitio. Solo se activa si
+            lo aceptas. Si lo rechazas, la web funciona igual y no se instala ninguna cookie.{' '}
+            <a href={routes.privacidad}>Más detalle en la política de privacidad</a>.
+          </p>
+        </div>
+        <div class="cookie-banner__actions">
+          <button type="button" class="cookie-btn" data-cookie-reject>
+            Rechazar
+          </button>
+          <button type="button" class="cookie-btn" data-cookie-accept>
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const KEY = 'mds:consent:analytics';
+  const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+
+  if (banner) {
+    const gaId = banner.dataset.gaId ?? '';
+
+    const safeGet = () => {
+      try {
+        return localStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    };
+
+    const safeSet = (v: string) => {
+      try {
+        localStorage.setItem(KEY, v);
+      } catch {
+        /* modo privado o almacenamiento bloqueado: se preguntará otra vez */
+      }
+    };
+
+    let loaded = false;
+    const loadGA = () => {
+      if (loaded || !gaId) return;
+      loaded = true;
+
+      const w = window as unknown as { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void };
+      w.dataLayer = w.dataLayer || [];
+      const gtag = (...args: unknown[]) => {
+        w.dataLayer!.push(args);
+      };
+      w.gtag = gtag;
+
+      // Consent Mode: se concede solo analítica. Nada de publicidad.
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'granted',
+      });
+
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      document.head.appendChild(s);
+
+      gtag('js', new Date());
+      gtag('config', gaId);
+    };
+
+    const show = () => {
+      banner.hidden = false;
+      document.body.classList.add('has-cookie-banner');
+    };
+
+    const hide = () => {
+      banner.hidden = true;
+      document.body.classList.remove('has-cookie-banner');
+    };
+
+    const decide = (granted: boolean) => {
+      safeSet(granted ? 'granted' : 'denied');
+      hide();
+      if (granted) {
+        loadGA();
+      } else if (loaded) {
+        // Ya se había aceptado antes y ahora se retira: gtag está cargado en
+        // esta página y no se puede "descargar". Recargamos para que quede
+        // limpia de verdad, no solo a efectos de la próxima visita.
+        location.reload();
+      }
+    };
+
+    banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => decide(true));
+    banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => decide(false));
+
+    // Estado inicial: solo cargamos GA si ya había un "sí" previo.
+    const saved = safeGet();
+    if (saved === 'granted') loadGA();
+    else if (saved !== 'denied') show();
+
+    // Punto de entrada para retirar o cambiar el consentimiento (lo usa el
+    // botón de /privacidad). Cambiar a "rechazar" no puede descargar gtag
+    // de la página ya abierta, así que se recarga para dejarla limpia.
+    (window as unknown as { mdsCookies?: unknown }).mdsCookies = {
+      abrir: show,
+      estado: () => safeGet(),
+      revocar: () => {
+        safeSet('denied');
+        location.reload();
+      },
+    };
+  }
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    background: var(--color-crema);
+    border-top: 1px solid var(--color-linea);
+    box-shadow: 0 -18px 40px -30px rgba(20, 22, 27, 0.4);
+    padding: var(--space-4) 0;
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .cookie-banner__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.015em;
+    margin: 0 0 var(--space-2);
+  }
+
+  .cookie-banner__body {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-gris-texto);
+    max-width: 82ch;
+  }
+
+  .cookie-banner__body a {
+    color: var(--color-zafiro);
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  /* Los dos botones comparten tamaño, tipografía y peso: la AEPD exige que
+     rechazar sea tan fácil y tan visible como aceptar. */
+  .cookie-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 12px 24px;
+    min-width: 124px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-tinta);
+    background: transparent;
+    color: var(--color-tinta);
+    cursor: pointer;
+    transition: background var(--duration-hover) ease, color var(--duration-hover) ease,
+      border-color var(--duration-hover) ease;
+  }
+
+  .cookie-btn:hover {
+    border-color: var(--color-zafiro);
+    color: var(--color-zafiro);
+  }
+
+  .cookie-btn[data-cookie-accept] {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+  }
+
+  .cookie-btn[data-cookie-accept]:hover {
+    background: var(--color-zafiro);
+    border-color: var(--color-zafiro);
+    color: var(--color-crema);
+  }
+
+  @media (max-width: 980px) {
+    .cookie-banner__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-4);
+      padding: 0 var(--container-pad-narrow);
+    }
+
+    .cookie-banner__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .cookie-btn {
+      min-width: 0;
+    }
+  }
+</style>

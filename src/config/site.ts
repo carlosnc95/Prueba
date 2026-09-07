@@ -7,6 +7,10 @@ export const site = {
   ogLocale: 'es_ES',
   whatsapp: '34611980931',
   whatsappMessage: 'Hola, quiero contaros la tarea que más tiempo nos ocupa.',
+  // ID de medición de Google Analytics 4 (formato G-XXXXXXXXXX). No es un
+  // secreto: acaba en el HTML igualmente. Si se deja vacío, ni GA4 ni el
+  // banner de cookies se cargan, y el sitio vuelve a no usar cookies.
+  ga4Id: '',
 } as const;
 
 export const nav = [
