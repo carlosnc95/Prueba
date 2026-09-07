@@ -10,7 +10,7 @@ export const site = {
   // ID de medición de Google Analytics 4 (formato G-XXXXXXXXXX). No es un
   // secreto: acaba en el HTML igualmente. Si se deja vacío, ni GA4 ni el
   // banner de cookies se cargan, y el sitio vuelve a no usar cookies.
-  ga4Id: '',
+  ga4Id: 'G-W0Y6TE0FPD',
 } as const;
 
 export const nav = [
