@@ -38,16 +38,22 @@ const secciones = [
   <section class="privacidad">
     <p class="privacidad__eyebrow">Legal</p>
     <h1 class="privacidad__title">Política de privacidad</h1>
+    {/*
+      PENDIENTE: falta la identificación completa del responsable (razón social
+      o nombre completo, NIF y domicilio fiscal), obligatoria por el art. 13
+      del RGPD y el art. 10 de la LSSI-CE. Hasta añadirla, esta página informa
+      del tratamiento pero NO cumple del todo. Completar antes de invertir en
+      captación de tráfico.
+    */}
     <p class="privacidad__intro">
-      Borrador de trabajo. Antes de publicar debe revisarlo un asesor legal y completarse con los datos de la
-      sociedad.
+      Qué datos recogemos cuando nos cuentas tu caso, para qué los usamos y cómo puedes controlarlos.
     </p>
 
     <div class="privacidad__cards">
       <div class="privacidad__card">
         <h2>Quién trata tus datos</h2>
         <p>
-          {site.name} (pendiente de completar con razón social, NIF y domicilio). Contacto:{' '}
+          {site.name}. Para cualquier cuestión sobre tus datos, escribe a{' '}
           <a href={`mailto:${site.email}`}>{site.email}</a>.
         </p>
       </div>
