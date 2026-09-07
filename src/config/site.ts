@@ -10,14 +10,17 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: 'Soluciones', href: '/casos' },
+  { label: 'Soluciones', href: '/soluciones' },
   { label: 'Quiénes somos', href: '/quienes-somos' },
 ] as const;
 
 export const routes = {
   home: '/',
-  casos: '/casos',
+  soluciones: '/soluciones',
   quienesSomos: '/quienes-somos',
   gracias: '/gracias',
   privacidad: '/privacidad',
 } as const;
+
+/** URL de la página de una familia de soluciones. */
+export const familiaHref = (slug: string) => `${routes.soluciones}/${slug}`;

@@ -1,5 +1,5 @@
 // Casos de la sección #resolvemos de la Home ("Lo que nos suelen contar").
-// No confundir con las 24 soluciones de /casos (src/data/soluciones.ts).
+// No confundir con las 24 soluciones de /soluciones (src/data/soluciones.ts).
 export const casosHome = [
   {
     icon: 'icon-datos',

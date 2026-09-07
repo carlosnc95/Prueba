@@ -1,0 +1,255 @@
+---
+// Rejilla de las 6 familias del catálogo. Sustituye al antiguo selector con
+// JS de /casos: ahora cada familia tiene página propia, así que las tarjetas
+// son enlaces reales y las seis quedan en el HTML (antes solo una era
+// rastreable; las otras cinco aparecían al pulsar).
+import { familias } from '../../data/soluciones';
+import { familiaHref } from '../../config/site';
+---
+
+<section class="fam-grid-section">
+  <div class="container">
+    <div class="fam-grid" data-reveal>
+      {
+        familias.map((f, i) => (
+          <a href={familiaHref(f.slug)} class="fam-card">
+            <span class={`tile-glyph tile-glyph--${i}`} aria-hidden="true">
+              <span /><span /><span />
+            </span>
+            <h2 class="fam-card__title">{f.label}</h2>
+            <p class="fam-card__intro">{f.intro}</p>
+            <ul class="fam-card__list">
+              {f.items.map((s) => (
+                <li>{s.nombre}</li>
+              ))}
+            </ul>
+            <span class="fam-card__more">
+              Ver la familia <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .fam-grid-section {
+    padding: 0 0 var(--space-14);
+  }
+
+  .fam-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .fam-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3-5);
+    padding: 26px 24px 22px;
+    background: var(--color-crema);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-tinta);
+    min-width: 0;
+    transition: border-color var(--duration-hover) ease, transform var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease;
+  }
+
+  .fam-card:hover {
+    border-color: var(--color-zafiro);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -24px rgba(20, 22, 27, 0.22);
+  }
+
+  .fam-card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.18rem;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .fam-card__intro {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--color-gris-texto);
+  }
+
+  .fam-card__list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-3-5) 0 0;
+    border-top: 1px solid var(--color-linea);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .fam-card__list li {
+    font-size: 0.9rem;
+    color: var(--color-tinta);
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .fam-card__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.52em;
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro-claro);
+  }
+
+  .fam-card__more {
+    margin-top: auto;
+    padding-top: var(--space-3-5);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-zafiro);
+  }
+
+  /* Glifos: mismos que tenía el selector anterior, uno por familia. */
+  .tile-glyph {
+    display: flex;
+    height: 34px;
+  }
+
+  .tile-glyph--0 {
+    flex-direction: column;
+    gap: 5px;
+    width: 38px;
+    justify-content: center;
+  }
+  .tile-glyph--0 span:nth-child(1) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro);
+  }
+  .tile-glyph--0 span:nth-child(2) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro-claro);
+    width: 72%;
+  }
+  .tile-glyph--0 span:nth-child(3) {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--color-zafiro-claro);
+    width: 48%;
+  }
+
+  .tile-glyph--1 {
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .tile-glyph--1 span:nth-child(1) {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro);
+  }
+  .tile-glyph--1 span:nth-child(2) {
+    width: 13px;
+    height: 13px;
+    border-radius: var(--radius-full);
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--1 span:nth-child(3) {
+    display: none;
+  }
+
+  .tile-glyph--2 {
+    align-items: center;
+  }
+  .tile-glyph--2 span:nth-child(1) {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--color-zafiro);
+    border-radius: 5px;
+  }
+  .tile-glyph--2 span:nth-child(2) {
+    width: 22px;
+    height: 22px;
+    background: var(--color-zafiro-claro);
+    border-radius: 5px;
+    margin-left: -8px;
+  }
+  .tile-glyph--2 span:nth-child(3) {
+    display: none;
+  }
+
+  .tile-glyph--3 {
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .tile-glyph--3 span:nth-child(1) {
+    width: 8px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--3 span:nth-child(2) {
+    width: 8px;
+    height: 22px;
+    border-radius: 2px;
+    background: var(--color-zafiro-claro);
+  }
+  .tile-glyph--3 span:nth-child(3) {
+    width: 8px;
+    height: 32px;
+    border-radius: 2px;
+    background: var(--color-zafiro);
+  }
+
+  .tile-glyph--4 {
+    align-items: center;
+  }
+  .tile-glyph--4 span:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    border: 6px solid var(--color-zafiro);
+    border-right-color: var(--color-zafiro-claro);
+    border-radius: var(--radius-full);
+  }
+  .tile-glyph--4 span:nth-child(2),
+  .tile-glyph--4 span:nth-child(3) {
+    display: none;
+  }
+
+  .tile-glyph--5 {
+    align-items: center;
+  }
+  .tile-glyph--5 span:nth-child(1) {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-zafiro);
+  }
+  .tile-glyph--5 span:nth-child(2) {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-zafiro-claro);
+    margin-left: -7px;
+  }
+  .tile-glyph--5 span:nth-child(3) {
+    display: none;
+  }
+
+  @media (max-width: 980px) {
+    .fam-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

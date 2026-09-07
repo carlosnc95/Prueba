@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { familias } from '../../data/soluciones';
+import { site, routes, familiaHref } from '../../config/site';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return familias.map((familia) => ({
+    params: { slug: familia.slug },
+    props: { familia },
+  }));
+}
+
+const { familia } = Astro.props;
+
+const headerNav = [
+  { label: 'Inicio', href: routes.home },
+  { label: 'Soluciones', href: routes.soluciones },
+  { label: 'Quiénes somos', href: routes.quienesSomos },
+];
+
+// El resto de familias, para enlazar entre ellas al pie de la página.
+const otras = familias.filter((f) => f.slug !== familia.slug);
+
+const canonical = new URL(familiaHref(familia.slug), site.domain).toString();
+
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: site.domain },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Soluciones',
+      item: new URL(routes.soluciones, site.domain).toString(),
+    },
+    { '@type': 'ListItem', position: 3, name: familia.label, item: canonical },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${familia.metaTitle} · ${site.name}`}
+  description={familia.metaDescription}
+  headerNavItems={headerNav}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbs)} />
+  </Fragment>
+
+  <section class="fam-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Ruta de navegación">
+        <a href={routes.home}>Inicio</a>
+        <span aria-hidden="true">/</span>
+        <a href={routes.soluciones}>Soluciones</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{familia.label}</span>
+      </nav>
+
+      <div class="fam-hero__grid">
+        <div>
+          <p class="eyebrow">{familia.label}</p>
+          <h1 class="fam-hero__title">{familia.titulo}</h1>
+          <p class="fam-hero__lead">{familia.intro}</p>
+        </div>
+        <img
+          src={`/icons/ic-${familia.icono}.webp`}
+          alt=""
+          class="fam-hero__icon"
+          width="200"
+          height="200"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="fam-contexto">
+    <div class="container">
+      <div class="fam-contexto__box" data-reveal>
+        <h2 class="fam-contexto__title">Por qué duele</h2>
+        <p class="fam-contexto__text">{familia.contexto}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fam-items">
+    <div class="container">
+      <h2 class="fam-items__heading">
+        {familia.items.length} soluciones de esta familia
+      </h2>
+      <div class="fam-items__list">
+        {
+          familia.items.map((s, i) => (
+            <article class="fam-item" data-reveal>
+              <span class="fam-item__num">{String(i + 1).padStart(2, '0')}</span>
+              <div class="fam-item__body">
+                <h3 class="fam-item__title">{s.nombre}</h3>
+                <p class="fam-item__linea">{s.linea}</p>
+                <p class="fam-item__detalle">{s.detalle}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="fam-cta">
+    <div class="container" data-reveal>
+      <div class="fam-cta__box">
+        <h2 class="fam-cta__title">¿Alguna se parece a lo tuyo?</h2>
+        <p class="fam-cta__text">
+          Cuéntanos el proceso concreto y te decimos qué parte se puede automatizar, con qué alcance y en qué
+          plazo. Gratis y por escrito en menos de 48 horas.
+        </p>
+        <a href={`${routes.home}#diagnostico`} class="fam-cta__btn"
+          >Empezar el diagnóstico <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="fam-otras">
+    <div class="container">
+      <h2 class="fam-otras__heading">Otras familias</h2>
+      <div class="fam-otras__grid">
+        {
+          otras.map((f) => (
+            <a href={familiaHref(f.slug)} class="fam-otras__card">
+              <b>{f.label}</b>
+              <span>{f.intro}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .fam-hero {
+    padding: var(--space-8) 0 var(--space-10);
+  }
+
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--color-gris-oscuro-tenue);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  .crumbs a {
+    color: var(--color-gris-oscuro-tenue);
+    text-decoration: none;
+    transition: color var(--duration-hover) ease;
+  }
+
+  .crumbs a:hover {
+    color: var(--color-zafiro);
+  }
+
+  .crumbs [aria-current='page'] {
+    color: var(--color-tinta);
+  }
+
+  .fam-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .fam-hero__title {
+    font-size: var(--text-h1-interior);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  .fam-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--text-body-lg);
+    color: var(--color-gris-texto);
+    max-width: 50ch;
+  }
+
+  .fam-hero__icon {
+    width: 200px;
+    height: auto;
+    justify-self: end;
+  }
+
+  .fam-contexto {
+    padding-bottom: var(--space-12);
+  }
+
+  .fam-contexto__box {
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border-radius: var(--radius-2xl);
+    padding: 44px 40px;
+  }
+
+  .fam-contexto__title {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-zafiro-claro);
+    margin: 0 0 var(--space-4);
+    font-weight: 500;
+  }
+
+  .fam-contexto__text {
+    margin: 0;
+    font-size: 1.16rem;
+    line-height: 1.6;
+    max-width: 68ch;
+    color: var(--color-crema);
+  }
+
+  .fam-items {
+    padding-bottom: var(--space-12);
+  }
+
+  .fam-items__heading {
+    font-size: var(--text-h2-menor);
+    letter-spacing: var(--tracking-heading);
+    margin: 0 0 var(--space-8);
+  }
+
+  .fam-items__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .fam-item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: var(--space-4);
+    background: var(--color-crema);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    padding: 28px 30px;
+    transition: border-color var(--duration-hover) ease;
+  }
+
+  .fam-item:hover {
+    border-color: var(--color-zafiro);
+  }
+
+  .fam-item__num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-zafiro);
+    padding-top: 4px;
+  }
+
+  .fam-item__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.24rem;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .fam-item__linea {
+    margin: var(--space-2) 0 0;
+    font-size: 1rem;
+    color: var(--color-zafiro-oscuro);
+    font-weight: 500;
+  }
+
+  .fam-item__detalle {
+    margin: var(--space-3-5) 0 0;
+    font-size: 0.98rem;
+    line-height: var(--leading-body);
+    color: var(--color-gris-texto);
+    max-width: 74ch;
+  }
+
+  .fam-cta {
+    padding-bottom: var(--space-12);
+  }
+
+  .fam-cta__box {
+    background: var(--color-crema-media);
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-2xl);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .fam-cta__title {
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    margin: 0 auto var(--space-4);
+    max-width: 20ch;
+  }
+
+  .fam-cta__text {
+    margin: 0 auto var(--space-6);
+    max-width: 54ch;
+    color: var(--color-gris-texto);
+    font-size: 1rem;
+  }
+
+  .fam-cta__btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 16px 26px;
+    background: var(--color-tinta);
+    color: var(--color-crema);
+    border: 1px solid var(--color-tinta);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background var(--duration-hover) ease, border-color var(--duration-hover) ease,
+      box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .fam-cta__btn:hover {
+    background: var(--color-zafiro);
+    border-color: var(--color-zafiro);
+    box-shadow: 0 14px 28px -14px #2d5b9e80;
+    transform: translateY(-1px);
+  }
+
+  .fam-otras {
+    padding-bottom: var(--space-16);
+  }
+
+  .fam-otras__heading {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-gris-oscuro-tenue);
+    font-weight: 500;
+    margin: 0 0 var(--space-5);
+  }
+
+  .fam-otras__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .fam-otras__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: 20px 18px;
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-tinta);
+    transition: border-color var(--duration-hover) ease, transform var(--duration-hover) ease;
+  }
+
+  .fam-otras__card:hover {
+    border-color: var(--color-zafiro);
+    transform: translateY(-2px);
+  }
+
+  .fam-otras__card b {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: -0.015em;
+  }
+
+  .fam-otras__card span {
+    font-size: 0.84rem;
+    color: var(--color-gris-texto);
+    line-height: 1.45;
+  }
+
+  @media (max-width: 980px) {
+    .fam-hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .fam-hero__icon {
+      width: 140px;
+      justify-self: start;
+      order: -1;
+    }
+
+    .fam-contexto__box {
+      padding: 32px 24px;
+    }
+
+    .fam-contexto__text {
+      font-size: 1.05rem;
+    }
+
+    .fam-item {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+      padding: 24px 22px;
+    }
+
+    .fam-cta__box {
+      padding: 36px 24px;
+    }
+
+    .fam-otras__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

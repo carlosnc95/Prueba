@@ -14,6 +14,12 @@ export default defineConfig({
   // 5 rutas sigan siendo estáticas y solo /api/diagnostico sea dinámica.
   output: 'server',
   adapter: vercel(),
+  // El catálogo vivía en /casos antes de separarlo por familias. Se mantiene
+  // la redirección permanente para no perder los enlaces ya publicados ni lo
+  // que Google hubiera rastreado.
+  redirects: {
+    '/casos': { status: 301, destination: '/soluciones' },
+  },
   integrations: [
     react(),
     sitemap({

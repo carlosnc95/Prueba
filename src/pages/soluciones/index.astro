@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import OrganizationJsonLd from '../components/OrganizationJsonLd.astro';
-import FamiliaTiles from '../components/casos/FamiliaTiles.astro';
-import { site, routes } from '../config/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import OrganizationJsonLd from '../../components/OrganizationJsonLd.astro';
+import FamiliaGrid from '../../components/soluciones/FamiliaGrid.astro';
+import { site, routes } from '../../config/site';
 
 export const prerender = true;
 
@@ -27,27 +27,30 @@ const criterios = [
     <OrganizationJsonLd />
   </Fragment>
 
-  <section class="casos-hero">
+  <section class="sol-hero">
     <div class="container">
       <p class="eyebrow">Catálogo</p>
-      <h1 class="casos-hero__title">Qué se puede automatizar con IA</h1>
-      <p class="casos-hero__lead">Elige una familia y mira las soluciones que montamos.</p>
+      <h1 class="sol-hero__title">Qué se puede automatizar con IA</h1>
+      <p class="sol-hero__lead">
+        Seis familias de procesos y 24 soluciones que montamos sobre las herramientas que ya usáis. Entra en
+        la que se parezca a tu caso.
+      </p>
     </div>
   </section>
 
-  <FamiliaTiles />
+  <FamiliaGrid />
 
-  <section class="casos-criterios">
+  <section class="sol-criterios">
     <div class="container">
-      <div class="casos-criterios__grid" data-reveal>
+      <div class="sol-criterios__grid" data-reveal>
         <div>
-          <h2 class="casos-criterios__title">Qué automatizamos primero</h2>
+          <h2 class="sol-criterios__title">Qué automatizamos primero</h2>
         </div>
         {
           criterios.map((c) => (
-            <div class="casos-criterios__item">
-              <span class="casos-criterios__num">{c.num}</span>
-              <p class="casos-criterios__text">{c.text}</p>
+            <div class="sol-criterios__item">
+              <span class="sol-criterios__num">{c.num}</span>
+              <p class="sol-criterios__text">{c.text}</p>
             </div>
           ))
         }
@@ -55,22 +58,24 @@ const criterios = [
     </div>
   </section>
 
-  <section class="casos-cta">
+  <section class="sol-cta">
     <div class="container" data-reveal>
-      <div class="casos-cta__box">
-        <h2 class="casos-cta__title">¿No ves tu caso aquí? Cuéntanoslo.</h2>
-        <a href={`${routes.home}#diagnostico`} class="casos-cta__btn">Empezar el diagnóstico <span aria-hidden="true">→</span></a>
+      <div class="sol-cta__box">
+        <h2 class="sol-cta__title">¿No ves tu caso aquí? Cuéntanoslo.</h2>
+        <a href={`${routes.home}#diagnostico`} class="sol-cta__btn"
+          >Empezar el diagnóstico <span aria-hidden="true">→</span></a
+        >
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .casos-hero {
+  .sol-hero {
     padding: var(--space-12) 0 34px;
   }
 
-  .casos-hero__title {
+  .sol-hero__title {
     font-size: clamp(2.5rem, 4.8vw, 3.9rem);
     line-height: 1.02;
     letter-spacing: -0.03em;
@@ -78,27 +83,27 @@ const criterios = [
     max-width: 22ch;
   }
 
-  .casos-hero__lead {
+  .sol-hero__lead {
     margin-top: var(--space-5);
     font-size: 1.1rem;
     color: var(--color-gris-texto);
-    max-width: 44ch;
+    max-width: 52ch;
   }
 
-  .casos-criterios {
+  .sol-criterios {
     background: var(--color-tinta);
     color: var(--color-crema);
     padding: var(--space-12) 0;
   }
 
-  .casos-criterios__grid {
+  .sol-criterios__grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1fr;
     gap: 26px 32px;
     align-items: start;
   }
 
-  .casos-criterios__title {
+  .sol-criterios__title {
     font-size: clamp(1.7rem, 2.8vw, 2.2rem);
     letter-spacing: -0.025em;
     margin: 0;
@@ -106,29 +111,29 @@ const criterios = [
     color: var(--color-crema);
   }
 
-  .casos-criterios__item {
+  .sol-criterios__item {
     border-top: 1px solid var(--color-tinta-suave);
     padding-top: var(--space-4);
   }
 
-  .casos-criterios__num {
+  .sol-criterios__num {
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: var(--tracking-eyebrow);
     color: var(--color-zafiro-claro);
   }
 
-  .casos-criterios__text {
+  .sol-criterios__text {
     margin: 10px 0 0;
     font-size: 0.95rem;
     color: #c9cfd3;
   }
 
-  .casos-cta {
+  .sol-cta {
     padding: var(--space-12) 0 var(--space-16);
   }
 
-  .casos-cta__box {
+  .sol-cta__box {
     background: var(--color-crema-media);
     border: 1px solid var(--color-linea);
     border-radius: var(--radius-2xl);
@@ -136,7 +141,7 @@ const criterios = [
     text-align: center;
   }
 
-  .casos-cta__title {
+  .sol-cta__title {
     font-size: clamp(1.9rem, 3.6vw, 2.8rem);
     letter-spacing: -0.03em;
     line-height: 1.05;
@@ -144,7 +149,7 @@ const criterios = [
     max-width: 24ch;
   }
 
-  .casos-cta__btn {
+  .sol-cta__btn {
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 1rem;
@@ -161,7 +166,7 @@ const criterios = [
       box-shadow var(--duration-hover) ease, transform var(--duration-hover) ease;
   }
 
-  .casos-cta__btn:hover {
+  .sol-cta__btn:hover {
     background: var(--color-zafiro);
     border-color: var(--color-zafiro);
     box-shadow: 0 14px 28px -14px #2d5b9e80;
@@ -169,7 +174,7 @@ const criterios = [
   }
 
   @media (max-width: 980px) {
-    .casos-criterios__grid {
+    .sol-criterios__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
