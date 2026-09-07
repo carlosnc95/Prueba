@@ -77,9 +77,17 @@ const gaId = site.ga4Id;
 
       const w = window as unknown as { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void };
       w.dataLayer = w.dataLayer || [];
-      const gtag = (...args: unknown[]) => {
-        w.dataLayer!.push(args);
-      };
+
+      // OJO: gtag.js solo interpreta como comando las entradas del dataLayer
+      // que son el objeto `arguments`. Si se empuja un array normal (lo que
+      // pasa al usar parámetros rest o una arrow function), el tag se carga
+      // y `gtag` existe, pero 'js' y 'config' se ignoran en silencio: no se
+      // envía ningún page_view ni se crean las cookies _ga. Por eso esto
+      // tiene que ser una función clásica que empuje `arguments`.
+      function gtagRaw() {
+        w.dataLayer!.push(arguments);
+      }
+      const gtag = gtagRaw as unknown as (...args: unknown[]) => void;
       w.gtag = gtag;
 
       // Consent Mode: se concede solo analítica. Nada de publicidad.
