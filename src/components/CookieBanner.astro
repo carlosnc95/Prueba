@@ -29,23 +29,19 @@ const gaId = site.ga4Id;
       aria-live="polite"
       hidden
     >
-      <div class="cookie-banner__inner">
-        <div class="cookie-banner__text">
-          <p class="cookie-banner__title">Cookies de medición</p>
-          <p class="cookie-banner__body">
-            Usamos Google Analytics para saber qué páginas se visitan y mejorar el sitio. Solo se activa si
-            lo aceptas. Si lo rechazas, la web funciona igual y no se instala ninguna cookie.{' '}
-            <a href={routes.privacidad}>Más detalle en la política de privacidad</a>.
-          </p>
-        </div>
-        <div class="cookie-banner__actions">
-          <button type="button" class="cookie-btn" data-cookie-reject>
-            Rechazar
-          </button>
-          <button type="button" class="cookie-btn" data-cookie-accept>
-            Aceptar
-          </button>
-        </div>
+      <p class="cookie-banner__title">Cookies de medición</p>
+      <p class="cookie-banner__body">
+        Usamos Google Analytics para ver qué páginas se visitan. Si lo rechazas no se instala ninguna cookie
+        y la web funciona igual.{' '}
+        <a href={routes.privacidad}>Más detalle</a>.
+      </p>
+      <div class="cookie-banner__actions">
+        <button type="button" class="cookie-btn" data-cookie-reject>
+          Rechazar
+        </button>
+        <button type="button" class="cookie-btn" data-cookie-accept>
+          Aceptar
+        </button>
       </div>
     </div>
   )
@@ -149,46 +145,38 @@ const gaId = site.ga4Id;
 </script>
 
 <style>
+  /* Tarjeta compacta anclada abajo a la izquierda. Deja libre la esquina
+     inferior derecha, que es donde vive el botón de WhatsApp. */
   .cookie-banner {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 20px;
+    bottom: 20px;
     z-index: 90;
+    width: min(340px, calc(100vw - 40px));
     background: var(--color-crema);
-    border-top: 1px solid var(--color-linea);
-    box-shadow: 0 -18px 40px -30px rgba(20, 22, 27, 0.4);
-    padding: var(--space-4) 0;
+    border: 1px solid var(--color-linea);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 48px -24px rgba(20, 22, 27, 0.32);
+    padding: 18px 20px 16px;
   }
 
   .cookie-banner[hidden] {
     display: none;
   }
 
-  .cookie-banner__inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--container-pad);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-
   .cookie-banner__title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.94rem;
     letter-spacing: -0.015em;
-    margin: 0 0 var(--space-2);
+    margin: 0 0 6px;
   }
 
   .cookie-banner__body {
-    margin: 0;
-    font-size: 0.9rem;
+    margin: 0 0 var(--space-4);
+    font-size: 0.82rem;
     line-height: 1.5;
     color: var(--color-gris-texto);
-    max-width: 82ch;
   }
 
   .cookie-banner__body a {
@@ -196,9 +184,9 @@ const gaId = site.ga4Id;
   }
 
   .cookie-banner__actions {
-    display: flex;
-    gap: var(--space-3);
-    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
   }
 
   /* Los dos botones comparten tamaño, tipografía y peso: la AEPD exige que
@@ -206,9 +194,8 @@ const gaId = site.ga4Id;
   .cookie-btn {
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 0.92rem;
-    padding: 12px 24px;
-    min-width: 124px;
+    font-size: 0.85rem;
+    padding: 9px 12px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-tinta);
     background: transparent;
@@ -235,20 +222,11 @@ const gaId = site.ga4Id;
   }
 
   @media (max-width: 980px) {
-    .cookie-banner__inner {
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--space-4);
-      padding: 0 var(--container-pad-narrow);
-    }
-
-    .cookie-banner__actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .cookie-btn {
-      min-width: 0;
+    .cookie-banner {
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      width: auto;
     }
   }
 </style>

@@ -47,12 +47,6 @@ const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.what
     transition: transform var(--duration-hover) ease, box-shadow var(--duration-hover) ease;
   }
 
-  /* Mientras se pide el consentimiento, el banner ocupa la franja inferior:
-     el botón flotante se aparta para no taparlo ni ser tapado. */
-  :global(body.has-cookie-banner) .whatsapp-fab {
-    display: none;
-  }
-
   .whatsapp-fab:hover {
     transform: translateY(-2px);
     box-shadow: 0 16px 32px -10px rgba(20, 22, 27, 0.55);
@@ -64,6 +58,13 @@ const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.what
       bottom: 16px;
       width: 52px;
       height: 52px;
+    }
+
+    /* Solo en móvil: ahí el banner de consentimiento ocupa todo el ancho
+       inferior y se pisaría con la burbuja. En desktop el banner está a la
+       izquierda y la burbuja a la derecha, así que conviven. */
+    :global(body.has-cookie-banner) .whatsapp-fab {
+      display: none;
     }
   }
 
