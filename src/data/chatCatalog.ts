@@ -32,7 +32,7 @@ export const intents: Intent[] = [
       'Un ejemplo: cada lunes a primera hora tenéis el informe en el correo con los datos ya cruzados, y señalado lo que se sale de lo normal.',
   },
   {
-    re: /email|correo|mail|bandeja|whatsapp|ticket|soporte|consulta|cliente|atenci|reclamaci|queja|incidenc|chat en vivo|call center|centralita|telefon/i,
+    re: /email|correo|mail|bandeja|whatsapp|ticket|soporte|consulta|atenci[oó]n al cliente|atender|reclamaci|queja|incidenc|chat en vivo|call center|centralita|telefon/i,
     reply:
       'Ahí encaja un asistente que responde con vuestra documentación y escala a una persona solo lo que lo necesita, sin perder el tono de la casa.',
     ejemplo:
@@ -74,7 +74,7 @@ export const intents: Intent[] = [
       'Un ejemplo: alguien avisa de que no viene y el cuadrante se rehace solo respetando descansos y preferencias, listo para que le deis el visto bueno.',
   },
   {
-    re: /llamad|\bcita\b|agenda|reserva|recordatorio|cancelaci[oó]n|no-show|no show/i,
+    re: /llamad|\bcitas?\b|agenda|reserva|recordatorio|cancela|no-show|no show/i,
     reply:
       'Agendar y confirmar citas es un flujo cerrado: se puede automatizar de punta a punta, con avisos y reprogramación incluidos.',
     ejemplo:
@@ -95,7 +95,7 @@ export const intents: Intent[] = [
       'Un ejemplo: a partir de una ficha técnica salen el texto de la web, el del catálogo y el del correo comercial, los tres en vuestro estilo.',
   },
   {
-    re: /cobro|pago|conciliaci[oó]n bancaria|morosidad|domicili|recordatorio de pago|impagad|remesa/i,
+    re: /cobro|cobrar|pago|pagan?\b|concilia|banco|morosidad|deuda|domicili|recordatorio de pago|impag|remesa/i,
     reply:
       'La gestión de cobros y pagos se puede automatizar casi entera: conciliación con el banco, avisos de vencimiento y solo las excepciones a mano.',
     ejemplo:
