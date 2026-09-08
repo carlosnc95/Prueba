@@ -12,10 +12,14 @@
   --color-crema-media: #f1efe6;
   --color-linea: #e4e1d3;
   --color-gris-texto: #5b6570;
-  /* Contraste límite de AA en tamaños pequeños sobre crema (ver README > Accesibilidad).
-     Usar --color-gris-oscuro-tenue en su lugar si el texto es pequeño. */
+  /* No apto para texto: contraste insuficiente sobre crema. Solo decorativo
+     (separadores, iconos sin significado). Para texto usa los dos de abajo. */
   --color-gris-tenue: #9a9d97;
-  --color-gris-oscuro-tenue: #6f767c;
+  /* Gris secundario para texto pequeño. Hay dos porque ningún gris cumple el
+     4.5:1 de la AA sobre crema Y sobre tinta a la vez: el que se lee bien
+     sobre uno se pierde sobre el otro. Elige según el fondo del bloque. */
+  --color-gris-oscuro-tenue: #666d72; /* sobre fondos claros: 4.56-4.90:1 */
+  --color-gris-sobre-oscuro: #7d848a; /* sobre --color-tinta: 4.72:1 */
   --color-verde-online: #3fcb6b;
 
   /* Color del logotipo (la "S" de MDS). Zafiro puro, más saturado que el
