@@ -10,6 +10,12 @@
 //  - Seguir navegando NO es consentimiento: el banner espera una decisión.
 //  - El consentimiento se puede retirar después, desde /privacidad.
 //
+// Accesibilidad: es role="region", no role="dialog". Un dialog implica que
+// el foco se mueve dentro y queda atrapado; aquí no bloqueamos la página, y
+// anunciarlo como diálogo sin gestionar el foco confunde a los lectores de
+// pantalla. Como región con nombre es navegable, y el aria-live avisa
+// cuando aparece.
+//
 // La decisión se guarda en localStorage. Eso también es almacenamiento en
 // el dispositivo, pero está exento por ser estrictamente necesario: es lo
 // que evita volver a preguntar en cada página.
@@ -24,7 +30,7 @@ const gaId = site.ga4Id;
       class="cookie-banner"
       data-cookie-banner
       data-ga-id={gaId}
-      role="dialog"
+      role="region"
       aria-label="Consentimiento de cookies"
       aria-live="polite"
       hidden
@@ -33,7 +39,7 @@ const gaId = site.ga4Id;
       <p class="cookie-banner__body">
         Usamos Google Analytics para ver qué páginas se visitan. Si lo rechazas no se instala ninguna cookie
         y la web funciona igual.{' '}
-        <a href={routes.privacidad}>Más detalle</a>.
+        <a href={routes.privacidad} aria-label="Más detalle en la política de privacidad">Más detalle</a>.
       </p>
       <div class="cookie-banner__actions">
         <button type="button" class="cookie-btn" data-cookie-reject>
