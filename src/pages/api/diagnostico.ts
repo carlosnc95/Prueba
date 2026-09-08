@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
-import { site } from '../../config/site';
+import { site, routes } from '../../config/site';
+import { fechaEntregaDiagnostico } from '../../lib/fechas';
 
 export const prerender = false;
 
@@ -76,16 +77,17 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return json({ error: 'Datos incompletos' }, 400);
   }
 
+  let resend: Resend;
   try {
     // Se instancia aquí (no a nivel de módulo): el SDK de Resend lanza en
     // el constructor si falta la API key, y eso no debe tumbar el endpoint
     // completo antes de llegar a las validaciones/honeypot/rate limit.
-    const resend = new Resend(import.meta.env.RESEND_API_KEY);
+    resend = new Resend(import.meta.env.RESEND_API_KEY);
     // El SDK de Resend NO lanza en errores de la API: devuelve
     // { data, error }. Hay que comprobar `error` explícitamente o un 403
     // (p. ej. dominio sin verificar) se trataría como éxito.
     const { error } = await resend.emails.send({
-      from: import.meta.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+      from: remitente(),
       to: import.meta.env.RESEND_TO_EMAIL || site.email,
       replyTo: email,
       subject: `Nuevo diagnóstico: ${nombre} (${sector})`,
@@ -114,6 +116,11 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return json({ error: 'No se pudo enviar el email' }, 502);
   }
 
+  // El lead ya está capturado. La confirmación es cortesía: si falla, se
+  // registra y se devuelve 200 igualmente, porque perder el aviso interno
+  // por un fallo en el acuse de recibo sería mucho peor que no acusarlo.
+  await enviarConfirmacionAlLead(resend, { nombre, email, sector, horas, problema });
+
   return json({ ok: true }, 200);
 };
 
@@ -122,4 +129,132 @@ function json(data: unknown, status: number) {
     status,
     headers: { 'Content-Type': 'application/json' },
   });
+}
+
+function remitente(): string {
+  return import.meta.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+}
+
+/** Dominio sin protocolo, para mostrarlo dentro del texto: "mdsia.com". */
+const dominioVisible = site.domain.replace(/^https?:\/\//, '');
+const urlSoluciones = `${site.domain}${routes.soluciones}`;
+const urlPrivacidad = `${site.domain}${routes.privacidad}`;
+
+export function escaparHtml(valor: string): string {
+  return valor
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+const esperar = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * El plan gratuito de Resend limita a 2 peticiones por segundo y aquí van
+ * dos envíos seguidos, así que este error concreto es esperable y merece
+ * un reintento. El SDK lo devuelve en `error`, no lo lanza.
+ */
+function esErrorDeRateLimit(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false;
+  const e = error as { name?: string; statusCode?: number; message?: string };
+  return (
+    e.statusCode === 429 ||
+    e.name === 'rate_limit_exceeded' ||
+    /rate limit|too many requests/i.test(e.message ?? '')
+  );
+}
+
+interface DatosLead {
+  nombre: string;
+  email: string;
+  sector: string;
+  horas: string;
+  problema: string;
+}
+
+async function enviarConfirmacionAlLead(resend: Resend, lead: DatosLead): Promise<void> {
+  try {
+    const fecha = fechaEntregaDiagnostico();
+    const mensaje = {
+      from: remitente(),
+      to: lead.email,
+      // Las respuestas van al buzón real, no al remitente técnico desde el
+      // que envía Resend.
+      replyTo: site.email,
+      subject: `Hemos recibido tu caso — te escribimos antes del ${fecha}`,
+      text: textoConfirmacion(lead, fecha),
+      html: htmlConfirmacion(lead, fecha),
+    };
+
+    let { error } = await resend.emails.send(mensaje);
+    if (error && esErrorDeRateLimit(error)) {
+      await esperar(600);
+      ({ error } = await resend.emails.send(mensaje));
+    }
+    if (error) {
+      console.error('No se pudo enviar la confirmación al lead:', error);
+    }
+  } catch (err) {
+    console.error('Error enviando la confirmación al lead:', err);
+  }
+}
+
+export function textoConfirmacion(lead: DatosLead, fecha: string): string {
+  return [
+    `Hola ${lead.nombre},`,
+    '',
+    'Gracias por contárnoslo. Esto es lo que hemos registrado:',
+    '',
+    `· Proceso: ${lead.problema}`,
+    `· Sector: ${lead.sector}`,
+    `· Horas a la semana: ${lead.horas || 'no indicado'}`,
+    '',
+    `Lo miramos con calma y te escribimos con el diagnóstico antes del ${fecha}. Te llegará en dos páginas: lo que ese proceso os cuesta hoy en horas y en euros al año, qué parte se puede automatizar y cuál no, el plazo y un rango de inversión.`,
+    '',
+    'Si mientras tanto quieres añadir algo, responde directamente a este correo.',
+    '',
+    `Mientras tanto, en ${dominioVisible}${routes.soluciones} tienes ejemplos de lo que solemos automatizar.`,
+    '',
+    site.firma,
+    `${site.name} · ${dominioVisible}`,
+    '',
+    '---',
+    `Usamos tus datos únicamente para responderte a este diagnóstico. Puedes pedirnos que los borremos escribiendo a ${site.email}. Más información en ${dominioVisible}${routes.privacidad}.`,
+  ].join('\n');
+}
+
+export function htmlConfirmacion(lead: DatosLead, fecha: string): string {
+  // Estilos en línea: los clientes de correo descartan el <style> del head.
+  const nombre = escaparHtml(lead.nombre);
+  const problema = escaparHtml(lead.problema);
+  const sector = escaparHtml(lead.sector);
+  const horas = escaparHtml(lead.horas || 'no indicado');
+
+  // Comillas simples en "Segoe UI": el atributo style va entre dobles y
+  // unas dobles anidadas lo cortarían por la mitad.
+  const cuerpo =
+    "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+  const p = 'margin:0 0 16px;font-size:16px;line-height:1.6;color:#14161b';
+  const enlace = 'color:#2d5b9e;text-decoration:underline';
+  const dato = 'margin:0 0 6px;font-size:15px;line-height:1.5;color:#14161b';
+  const etiqueta = 'color:#5b6570';
+
+  return `<div style="background:#f8f7f2;padding:32px 16px;${cuerpo}">
+  <div style="max-width:560px;margin:0 auto">
+    <p style="${p}">Hola ${nombre},</p>
+    <p style="${p}">Gracias por contárnoslo. Esto es lo que hemos registrado:</p>
+    <div style="border-left:3px solid #2d5b9e;padding:2px 0 2px 16px;margin:0 0 24px">
+      <p style="${dato}"><span style="${etiqueta}">Proceso:</span> ${problema}</p>
+      <p style="${dato}"><span style="${etiqueta}">Sector:</span> ${sector}</p>
+      <p style="margin:0;font-size:15px;line-height:1.5;color:#14161b"><span style="${etiqueta}">Horas a la semana:</span> ${horas}</p>
+    </div>
+    <p style="${p}">Lo miramos con calma y te escribimos con el diagnóstico antes del <strong>${fecha}</strong>. Te llegará en dos páginas: lo que ese proceso os cuesta hoy en horas y en euros al año, qué parte se puede automatizar y cuál no, el plazo y un rango de inversión.</p>
+    <p style="${p}">Si mientras tanto quieres añadir algo, responde directamente a este correo.</p>
+    <p style="${p}">Mientras tanto, en <a href="${urlSoluciones}" style="${enlace}">${dominioVisible}${routes.soluciones}</a> tienes ejemplos de lo que solemos automatizar.</p>
+    <p style="margin:32px 0 0;font-size:16px;line-height:1.6;color:#14161b">${site.firma}<br /><span style="${etiqueta}">${site.name} · <a href="${site.domain}" style="${enlace}">${dominioVisible}</a></span></p>
+    <p style="margin:32px 0 0;padding-top:16px;border-top:1px solid #e4e1d3;font-size:13px;line-height:1.5;color:#5b6570">Usamos tus datos únicamente para responderte a este diagnóstico. Puedes pedirnos que los borremos escribiendo a <a href="mailto:${site.email}" style="${enlace}">${site.email}</a>. Más información en <a href="${urlPrivacidad}" style="${enlace}">${dominioVisible}${routes.privacidad}</a>.</p>
+  </div>
+</div>`;
 }

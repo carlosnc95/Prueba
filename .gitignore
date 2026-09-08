@@ -19,3 +19,6 @@ npm-debug.log*
 # Recursos generados para campañas de Google Ads. No forman parte del sitio
 # (no están en public/, así que no se publican). Se regeneran cuando haga falta.
 assets-anuncios/
+
+# Salida de scripts/previsualizar-email.mjs
+previsualizacion-email.html
