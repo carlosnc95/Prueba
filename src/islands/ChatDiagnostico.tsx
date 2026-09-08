@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { matchIntent, sectores } from '../data/chatCatalog';
+import { guardias, matchIntent, sectores, type Guardia } from '../data/chatCatalog';
 import { site } from '../config/site';
 import './ChatDiagnostico.css';
 
@@ -100,16 +100,32 @@ export default function ChatDiagnostico() {
     timeouts.current.push(t);
   }
 
-  function askSector(intro: string, raw: string) {
+  function askSector(intro: string, ejemplo: string | null, raw: string) {
     problema.current = raw;
-    solucion.current = intro;
-    push([
-      { kind: 'bot', text: intro },
-      { kind: 'bot', text: '¿En qué sector trabajas?' },
-      { kind: 'chips', disabled: false, options: sectores },
-    ]);
+    // El email que recibe MDS lleva las dos frases: sitúan el caso de un vistazo.
+    solucion.current = ejemplo ? intro + ' ' + ejemplo : intro;
+    const mensajes: NewMessage[] = [{ kind: 'bot', text: intro }];
+    if (ejemplo) mensajes.push({ kind: 'bot', text: ejemplo });
+    mensajes.push({ kind: 'bot', text: '¿En qué sector trabajas?' });
+    mensajes.push({ kind: 'chips', disabled: false, options: sectores });
+    push(mensajes);
     setStage('sector');
     setInputPlaceholder('Tu sector...');
+  }
+
+  // Respuestas a lo que no es un problema de proceso (bromas, spam, insultos,
+  // galimatías, intentos de darle instrucciones al bot...). No avanzan de
+  // etapa: reconducen. Si se acumulan, se ofrece hablar con una persona en
+  // lugar de dejar al visitante dando vueltas.
+  function responderGuardia(g: Guardia) {
+    const fallos = misses + 1;
+    setMisses(fallos);
+    const mensajes: NewMessage[] = g.textos.map((text) => ({ kind: 'bot', text }) as NewMessage);
+    if (g.ofreceContacto || fallos >= 3) {
+      mensajes.push({ kind: 'bot', text: `Si lo prefieres, escríbenos a ${site.email} y te contesta una persona.` });
+    }
+    if (g.chips) mensajes.push({ kind: 'chips', disabled: false, options: g.chips });
+    push(mensajes);
   }
 
   function reply(text: string) {
@@ -155,15 +171,25 @@ export default function ChatDiagnostico() {
       ]);
     }
 
-    const matched = matchIntent(raw);
-    if (matched) return askSector(matched, raw);
+    const guardia = guardias.find((g) => g.test(raw));
+    if (guardia) return responderGuardia(guardia);
+
+    const intent = matchIntent(raw);
+    if (intent) return askSector(intent.reply, intent.ejemplo, raw);
 
     const words = raw.split(/\s+/).filter(Boolean).length;
     if (words < 3 && misses < 1) {
       setMisses((m) => m + 1);
       return push([{ kind: 'bot', text: 'Cuéntame un poco más: ¿quién lo hace, con qué herramienta y cada cuánto? Con eso ya puedo situarlo.' }]);
     }
-    return askSector('Entendido: "' + shorten(raw) + '". Suena a un proceso repetitivo con datos de por medio, y eso se puede medir.', raw);
+    // No encaja en ningún tema del catálogo, pero es una respuesta legítima:
+    // se acepta y se avanza. Filtrar de más costaría más leads que aceptar
+    // alguno raro, y al final lo lee una persona.
+    return askSector(
+      'Entendido: "' + shorten(raw) + '". Suena a un proceso repetitivo con datos de por medio, y eso se puede medir.',
+      'No es de los casos que más repetimos, así que prefiero no aventurar una solución: lo mira una persona y te dice si merece la pena automatizarlo o no.',
+      raw,
+    );
   }
 
   function replySector(raw: string) {
