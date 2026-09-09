@@ -100,15 +100,14 @@ export default function ChatDiagnostico() {
     timeouts.current.push(t);
   }
 
-  function askSector(intro: string, ejemplo: string | null, raw: string) {
+  function askSector(intro: string, raw: string) {
     problema.current = raw;
-    // El email que recibe MDS lleva las dos frases: sitúan el caso de un vistazo.
-    solucion.current = ejemplo ? intro + ' ' + ejemplo : intro;
-    const mensajes: NewMessage[] = [{ kind: 'bot', text: intro }];
-    if (ejemplo) mensajes.push({ kind: 'bot', text: ejemplo });
-    mensajes.push({ kind: 'bot', text: '¿En qué sector trabajas?' });
-    mensajes.push({ kind: 'chips', disabled: false, options: sectores });
-    push(mensajes);
+    solucion.current = intro;
+    push([
+      { kind: 'bot', text: intro },
+      { kind: 'bot', text: '¿En qué sector trabajas?' },
+      { kind: 'chips', disabled: false, options: sectores },
+    ]);
     setStage('sector');
     setInputPlaceholder('Tu sector...');
   }
@@ -120,10 +119,16 @@ export default function ChatDiagnostico() {
   function responderGuardia(g: Guardia) {
     const fallos = misses + 1;
     setMisses(fallos);
-    const mensajes: NewMessage[] = g.textos.map((text) => ({ kind: 'bot', text }) as NewMessage);
-    if (g.ofreceContacto || fallos >= 3) {
-      mensajes.push({ kind: 'bot', text: `Si lo prefieres, escríbenos a ${site.email} y te contesta una persona.` });
-    }
+    // Todo en una burbuja: el contacto se añade al mismo texto en lugar de
+    // abrir otro mensaje.
+    // Dos redacciones para que no chirríe: la guardia ya suele nombrar a la
+    // persona, y el aviso por acumulación llega sin contexto previo.
+    const contacto = g.ofreceContacto
+      ? ` Escríbenos a ${site.email}.`
+      : fallos >= 3
+        ? ` Si prefieres, escríbenos a ${site.email} y te contesta una persona.`
+        : '';
+    const mensajes: NewMessage[] = [{ kind: 'bot', text: g.texto + contacto }];
     if (g.chips) mensajes.push({ kind: 'chips', disabled: false, options: g.chips });
     push(mensajes);
   }
@@ -141,11 +146,11 @@ export default function ChatDiagnostico() {
     const t = raw.toLowerCase();
 
     if (/^(hola|buenas|hey|qu[eé] tal|buenos d[ií]as|buenas tardes)[\s!.]*$/i.test(t)) {
-      return push([{ kind: 'bot', text: '¡Hola! Cuéntame en una frase qué tarea os está costando más tiempo esta semana.' }]);
+      return push([{ kind: 'bot', text: '¡Hola! ¿Qué tarea os está costando más tiempo esta semana?' }]);
     }
     if (/(no s[eé]|no lo s[eé]|ni idea|no estoy seguro|varias cosas|de todo)/i.test(t)) {
       return push([
-        { kind: 'bot', text: 'Sin problema. Empecemos por lo más repetitivo: ¿qué es lo que más veces al día hace alguien del equipo con datos, documentos o mensajes?' },
+        { kind: 'bot', text: 'Sin problema. ¿Qué es lo que más veces al día hace alguien del equipo con datos, documentos o mensajes?' },
         {
           kind: 'chips',
           disabled: false,
@@ -157,7 +162,7 @@ export default function ChatDiagnostico() {
       return push([
         {
           kind: 'bot',
-          text: 'El diagnóstico es gratis y son 3 minutos: medimos el proceso y te decimos qué se puede automatizar y con qué retorno. Para eso, cuéntame qué tarea te está costando más tiempo.',
+          text: 'Es gratis y son 3 minutos: medimos el proceso y te decimos qué se puede automatizar y con qué retorno. ¿Qué tarea os está costando más tiempo?',
         },
       ]);
     }
@@ -166,7 +171,7 @@ export default function ChatDiagnostico() {
       return push([
         {
           kind: 'bot',
-          text: 'Me alegro de que eso vaya bien. Pero seguro que hay algo que os quita tiempo aunque no sea "un problema" — ¿qué tarea repetís cada semana sin pensarlo?',
+          text: 'Me alegro. Aun así, ¿qué tarea repetís cada semana sin pensarlo? No hace falta que sea un problema para que coma horas.',
         },
       ]);
     }
@@ -175,19 +180,18 @@ export default function ChatDiagnostico() {
     if (guardia) return responderGuardia(guardia);
 
     const intent = matchIntent(raw);
-    if (intent) return askSector(intent.reply, intent.ejemplo, raw);
+    if (intent) return askSector(intent.reply, raw);
 
     const words = raw.split(/\s+/).filter(Boolean).length;
     if (words < 3 && misses < 1) {
       setMisses((m) => m + 1);
-      return push([{ kind: 'bot', text: 'Cuéntame un poco más: ¿quién lo hace, con qué herramienta y cada cuánto? Con eso ya puedo situarlo.' }]);
+      return push([{ kind: 'bot', text: 'Cuéntame un poco más: ¿quién lo hace, con qué herramienta y cada cuánto?' }]);
     }
     // No encaja en ningún tema del catálogo, pero es una respuesta legítima:
     // se acepta y se avanza. Filtrar de más costaría más leads que aceptar
     // alguno raro, y al final lo lee una persona.
     return askSector(
-      'Entendido: "' + shorten(raw) + '". Suena a un proceso repetitivo con datos de por medio, y eso se puede medir.',
-      'No es de los casos que más repetimos, así que prefiero no aventurar una solución: lo mira una persona y te dice si merece la pena automatizarlo o no.',
+      'Entendido: "' + shorten(raw) + '". Suena a un proceso repetitivo y eso se puede medir; lo mira una persona y te dice si merece la pena automatizarlo.',
       raw,
     );
   }
