@@ -160,7 +160,15 @@ export async function registrarLeadEnHubspot(lead: LeadCrm): Promise<void> {
       // Aviso explícito: antes esto salía en silencio, y como el camino de
       // éxito tampoco escribía nada, en los logs no había forma de
       // distinguir "no está configurado" de "funcionó".
-      console.warn('HubSpot: falta HUBSPOT_TOKEN, el lead no se registra en el CRM');
+      // DIAGNÓSTICO TEMPORAL: lista qué variables ve realmente la función,
+      // solo los nombres. Las de Resend hacen de grupo de control: si esas
+      // aparecen y las de HubSpot no, el problema es la variable en Vercel
+      // (nombre o entorno), no la forma de leerla.
+      const visibles =
+        typeof process !== 'undefined' && process.env
+          ? Object.keys(process.env).filter((k) => /HUBSPOT|RESEND/i.test(k)).sort()
+          : ['(sin process.env)'];
+      console.warn('HubSpot: falta HUBSPOT_TOKEN. Variables visibles:', JSON.stringify(visibles));
       return;
     }
     console.log('HubSpot: registrando lead (longitud del token:', token.length, ')');
