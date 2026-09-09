@@ -156,13 +156,21 @@ async function asociar(token: string, negocioId: string, contactoId: string): Pr
 export async function registrarLeadEnHubspot(lead: LeadCrm): Promise<void> {
   try {
     const token = leerEnv('HUBSPOT_TOKEN', import.meta.env.HUBSPOT_TOKEN);
-    if (!token) return;
+    if (!token) {
+      // Aviso explícito: antes esto salía en silencio, y como el camino de
+      // éxito tampoco escribía nada, en los logs no había forma de
+      // distinguir "no está configurado" de "funcionó".
+      console.warn('HubSpot: falta HUBSPOT_TOKEN, el lead no se registra en el CRM');
+      return;
+    }
+    console.log('HubSpot: registrando lead (longitud del token:', token.length, ')');
 
     const contactoId = await crearOActualizarContacto(token, lead);
     const negocioId = await crearNegocio(token, lead);
     // Sin contacto o sin negocio no hay nada que asociar, pero lo que sí se
     // haya creado se queda: mejor un registro suelto que ninguno.
     if (contactoId && negocioId) await asociar(token, negocioId, contactoId);
+    console.log('HubSpot: resultado', { contactoId, negocioId });
   } catch (err) {
     console.error('HubSpot: error registrando el lead', err);
   }
