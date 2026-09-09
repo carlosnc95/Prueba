@@ -8,6 +8,8 @@
 // Sin SDK: la API de HubSpot es REST y `fetch` es global en el runtime de
 // Vercel. Una dependencia menos que mantener.
 
+import { leerEnv } from './entorno';
+
 const API = 'https://api.hubapi.com';
 const TIMEOUT_MS = 5000;
 
@@ -121,8 +123,8 @@ async function crearNegocio(token: string, lead: LeadCrm): Promise<string | null
     dealname: `Diagnóstico — ${lead.nombre} (${lead.sector})`,
     description: descripcionNegocio(lead),
   };
-  const pipeline = import.meta.env.HUBSPOT_PIPELINE_ID;
-  const etapa = import.meta.env.HUBSPOT_DEALSTAGE_ID;
+  const pipeline = leerEnv('HUBSPOT_PIPELINE_ID', import.meta.env.HUBSPOT_PIPELINE_ID);
+  const etapa = leerEnv('HUBSPOT_DEALSTAGE_ID', import.meta.env.HUBSPOT_DEALSTAGE_ID);
   if (pipeline) propiedades.pipeline = pipeline;
   if (etapa) propiedades.dealstage = etapa;
 
@@ -153,7 +155,7 @@ async function asociar(token: string, negocioId: string, contactoId: string): Pr
  */
 export async function registrarLeadEnHubspot(lead: LeadCrm): Promise<void> {
   try {
-    const token = import.meta.env.HUBSPOT_TOKEN;
+    const token = leerEnv('HUBSPOT_TOKEN', import.meta.env.HUBSPOT_TOKEN);
     if (!token) return;
 
     const contactoId = await crearOActualizarContacto(token, lead);

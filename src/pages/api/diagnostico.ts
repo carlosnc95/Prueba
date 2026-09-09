@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import { site, routes } from '../../config/site';
 import { fechaEntregaDiagnostico } from '../../lib/fechas';
 import { registrarLeadEnHubspot } from '../../lib/hubspot';
+import { leerEnv } from '../../lib/entorno';
 
 export const prerender = false;
 
@@ -83,13 +84,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     // Se instancia aquí (no a nivel de módulo): el SDK de Resend lanza en
     // el constructor si falta la API key, y eso no debe tumbar el endpoint
     // completo antes de llegar a las validaciones/honeypot/rate limit.
-    resend = new Resend(import.meta.env.RESEND_API_KEY);
+    resend = new Resend(leerEnv('RESEND_API_KEY', import.meta.env.RESEND_API_KEY));
     // El SDK de Resend NO lanza en errores de la API: devuelve
     // { data, error }. Hay que comprobar `error` explícitamente o un 403
     // (p. ej. dominio sin verificar) se trataría como éxito.
     const { error } = await resend.emails.send({
       from: remitente(),
-      to: import.meta.env.RESEND_TO_EMAIL || site.email,
+      to: leerEnv('RESEND_TO_EMAIL', import.meta.env.RESEND_TO_EMAIL) || site.email,
       replyTo: email,
       subject: `Nuevo diagnóstico: ${nombre} (${sector})`,
       text: [
@@ -140,7 +141,7 @@ function json(data: unknown, status: number) {
 }
 
 function remitente(): string {
-  return import.meta.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+  return leerEnv('RESEND_FROM_EMAIL', import.meta.env.RESEND_FROM_EMAIL) || 'onboarding@resend.dev';
 }
 
 /** Dominio sin protocolo, para mostrarlo dentro del texto: "mdsia.com". */
