@@ -22,3 +22,7 @@ assets-anuncios/
 
 # Salida de scripts/previsualizar-email.mjs
 previsualizacion-email.html
+
+# Ficheros de trabajo generados en sesiones de Claude (plantillas, listas,
+# exportaciones). Son tuyos y siguen en disco, pero no forman parte del sitio.
+Claude outputs/
