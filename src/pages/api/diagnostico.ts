@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { site, routes } from '../../config/site';
 import { fechaEntregaDiagnostico } from '../../lib/fechas';
+import { registrarLeadEnHubspot } from '../../lib/hubspot';
 
 export const prerender = false;
 
@@ -116,10 +117,17 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return json({ error: 'No se pudo enviar el email' }, 502);
   }
 
-  // El lead ya está capturado. La confirmación es cortesía: si falla, se
-  // registra y se devuelve 200 igualmente, porque perder el aviso interno
-  // por un fallo en el acuse de recibo sería mucho peor que no acusarlo.
-  await enviarConfirmacionAlLead(resend, { nombre, email, sector, horas, problema });
+  // El lead ya está capturado. Lo que viene son extras: si fallan, se
+  // registran y se devuelve 200 igualmente, porque perder el aviso interno
+  // por un fallo del acuse de recibo o del CRM sería mucho peor.
+  //
+  // En paralelo porque son servicios distintos y encadenarlos solo sumaría
+  // espera a quien acaba de darle a enviar. Ninguna de las dos lanza, y
+  // allSettled lo garantiza aunque eso cambie.
+  await Promise.allSettled([
+    enviarConfirmacionAlLead(resend, { nombre, email, sector, horas, problema }),
+    registrarLeadEnHubspot({ nombre, email, sector, horas, problema, solucion }),
+  ]);
 
   return json({ ok: true }, 200);
 };
