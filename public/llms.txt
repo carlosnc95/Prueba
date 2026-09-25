@@ -1,0 +1,78 @@
+# MDS
+
+> Consultoría de automatización con inteligencia artificial para pymes
+> españolas. Diagnosticamos el proceso, diseñamos la solución y la
+> construimos. Quien diagnostica el proceso es quien después lo construye.
+
+## Qué hacemos
+
+Automatizamos tareas repetitivas que consumen horas de personas, sobre las
+herramientas que la empresa ya usa: ERP, correo, hojas de cálculo o CRM. No
+sustituimos herramientas ni exigimos cambiar de sistema.
+
+Seis familias de procesos, 24 soluciones:
+
+- Documentos y datos: lectura y extracción de documentos, clasificación y
+  archivo, comparación de versiones, validación de datos maestros.
+- Clientes y comunicación: asistente de atención al cliente, triaje de
+  bandejas de entrada, resúmenes de reuniones, buscador de conocimiento
+  interno.
+- Procesos y sistemas: integración entre herramientas, flujos con decisión
+  asistida, cierres y conciliaciones, informes recurrentes.
+- Comercial y contenido: borradores de propuestas, priorización de leads,
+  contenido con la voz de la empresa, respuesta a licitaciones.
+- Operaciones y previsión: previsión de demanda y stock, planificación de
+  rutas y turnos, control de calidad asistido, mantenimiento predictivo.
+- Personas y talento: cribado de candidaturas, onboarding asistido, control
+  de vencimientos documentales, análisis de encuestas internas.
+
+## Cómo empezamos: diagnóstico gratuito
+
+La entrada es siempre un diagnóstico sin coste y sin compromiso. El cliente
+describe la tarea que más tiempo le ocupa y recibe por escrito, en menos de
+48 horas: qué parte de ese proceso se puede automatizar y cuál no, el
+alcance, el plazo y un rango de inversión, además de cuántas horas al año
+está consumiendo hoy.
+
+Después se trabaja por proyecto cerrado, empezando por un proceso concreto.
+Sin permanencia.
+
+## A quién nos dirigimos
+
+Pymes españolas con procesos repetitivos que consumen horas de su equipo.
+Encajan especialmente industria, ingeniería, logística, operaciones y
+servicios profesionales.
+
+## Quiénes somos
+
+Ingenieros con experiencia previa en defensa, aeroespacial, operaciones
+industriales y consultoría. Entornos donde un error sale caro y el tiempo
+del equipo es el recurso más escaso.
+
+## Confidencialidad
+
+Firmamos acuerdo de confidencialidad antes de ver nada. Cuando el proceso lo
+requiere, la solución se despliega sobre la propia infraestructura del
+cliente.
+
+## Dónde trabajamos
+
+España. El trabajo se hace en remoto salvo que el proceso requiera presencia.
+
+## Contacto
+
+Email: hola@mdsia.com
+WhatsApp: +34 611980931
+Web: https://mdsia.com
+
+## Páginas principales
+
+- Catálogo de soluciones: https://mdsia.com/soluciones
+- Documentos y datos: https://mdsia.com/soluciones/documentos-y-datos
+- Clientes y comunicación: https://mdsia.com/soluciones/clientes-y-comunicacion
+- Procesos y sistemas: https://mdsia.com/soluciones/procesos-y-sistemas
+- Comercial y contenido: https://mdsia.com/soluciones/comercial-y-contenido
+- Operaciones y previsión: https://mdsia.com/soluciones/operaciones-y-prevision
+- Personas y talento: https://mdsia.com/soluciones/personas-y-talento
+- Quiénes somos: https://mdsia.com/quienes-somos
+- Privacidad: https://mdsia.com/privacidad

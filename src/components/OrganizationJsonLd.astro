@@ -1,6 +1,11 @@
 ---
 import { site } from '../config/site';
 
+import { familias } from '../data/soluciones';
+
+// Solo se declara lo que la web afirma de verdad. Nada de dirección, horario
+// ni valoraciones mientras no existan: un dato inventado aquí es el que un
+// asistente le repetirá a un cliente.
 const data = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -9,9 +14,25 @@ const data = {
   logo: new URL(site.ogImage, site.domain).toString(),
   description: 'Diagnóstico y desarrollo de automatizaciones con IA para procesos de empresa.',
   email: site.email,
+  telephone: `+${site.whatsapp}`,
   areaServed: 'ES',
   sameAs: [],
   knowsAbout: ['Automatización de procesos', 'Inteligencia artificial aplicada', 'Análisis de datos', 'Desarrollo de software'],
+  // Las seis familias como catálogo: deja explícito qué se ofrece en lugar
+  // de que haya que deducirlo del texto de las páginas.
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Soluciones de automatización con IA',
+    itemListElement: familias.map((f) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: f.label,
+        description: f.intro,
+        url: new URL(`/soluciones/${f.slug}`, site.domain).toString(),
+      },
+    })),
+  },
 };
 ---
 

@@ -25,6 +25,27 @@ const otras = familias.filter((f) => f.slug !== familia.slug);
 
 const canonical = new URL(familiaHref(familia.slug), site.domain).toString();
 
+// Cada familia como Service, con sus cuatro soluciones. Solo se marca lo que
+// está visible en la página: marcar lo que el visitante no ve es cloaking.
+const servicio = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: familia.titulo,
+  description: familia.metaDescription,
+  url: canonical,
+  serviceType: familia.label,
+  areaServed: 'ES',
+  provider: { '@type': 'Organization', name: site.name, url: site.domain },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: familia.label,
+    itemListElement: familia.items.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.nombre, description: s.linea },
+    })),
+  },
+};
+
 const breadcrumbs = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -47,6 +68,7 @@ const breadcrumbs = {
   headerNavItems={headerNav}
 >
   <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(servicio)} />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbs)} />
   </Fragment>
 
