@@ -15,6 +15,18 @@ export const site = {
   ga4Id: 'G-W0Y6TE0FPD',
 } as const;
 
+/**
+ * Perfiles oficiales de MDS en otros sitios (ficha de Google, LinkedIn,
+ * directorios). Se publican como `sameAs` en el esquema Organization: es lo
+ * que permite a un buscador o a un asistente confirmar que esas fichas y
+ * esta web son la misma entidad, en lugar de tratarlas como negocios
+ * distintos que se llaman parecido.
+ *
+ * Solo perfiles verificados y propios. Una URL equivocada aquí conecta la
+ * marca con algo que no es suyo.
+ */
+export const perfiles: string[] = [];
+
 export const nav = [
   { label: 'Soluciones', href: '/soluciones' },
   { label: 'Quiénes somos', href: '/quienes-somos' },

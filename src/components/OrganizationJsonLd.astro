@@ -1,5 +1,5 @@
 ---
-import { site } from '../config/site';
+import { site, perfiles } from '../config/site';
 
 import { familias } from '../data/soluciones';
 
@@ -16,7 +16,7 @@ const data = {
   email: site.email,
   telephone: `+${site.whatsapp}`,
   areaServed: 'ES',
-  sameAs: [],
+  sameAs: perfiles,
   knowsAbout: ['Automatización de procesos', 'Inteligencia artificial aplicada', 'Análisis de datos', 'Desarrollo de software'],
   // Las seis familias como catálogo: deja explícito qué se ofrece en lugar
   // de que haya que deducirlo del texto de las páginas.
