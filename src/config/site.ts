@@ -25,7 +25,13 @@ export const site = {
  * Solo perfiles verificados y propios. Una URL equivocada aquí conecta la
  * marca con algo que no es suyo.
  */
-export const perfiles: string[] = [];
+export const perfiles: string[] = [
+  // Ficha de empresa en Google, verificada el 26/09/2026. Se usa el
+  // identificador de entidad del Grafo de Conocimiento (kgmid) en lugar del
+  // enlace corto de share.google: los acortadores pueden caducar y además
+  // arrastran parámetros de seguimiento.
+  'https://www.google.com/search?kgmid=/g/11zyzm2vkh',
+];
 
 export const nav = [
   { label: 'Soluciones', href: '/soluciones' },
