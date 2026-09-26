@@ -83,11 +83,28 @@ albaranes a mano. Si es el caso, en 48 h os digo cuántas horas al año es."
 ## Lo que sabemos del embudo
 
 El chat de la web crea automáticamente en HubSpot el contacto y un negocio, con
-el proceso descrito, el sector y las horas estimadas. Las etapas son: nuevo,
-diagnóstico enviado, propuesta, cerrado.
+el proceso descrito, el sector y las horas estimadas.
 
 Un lead que llega por el chat ya ha dicho qué le duele y cuántas horas le cuesta.
 Úsalo: la primera respuesta debe referirse a su caso concreto, nunca ser genérica.
+
+## Dónde está cada cosa
+
+**HubSpot es el embudo** de quien ya ha contactado: contactos y negocios. El
+embudo es el de fábrica de HubSpot («Sales Pipeline»), con las siete etapas
+estándar. No supongas otras etapas: si necesitas saber en qué punto está algo,
+consúltalo, no lo adivines.
+
+**Apollo es la prospección**, lo de antes del primer contacto. Las empresas
+candidatas se guardan ahí como cuentas, agrupadas en listas por segmento. La
+primera es «MDS · Segmento A — Industria metal España».
+
+La frontera importa: una empresa que nadie ha contactado todavía no es un lead y
+no va a HubSpot. Ensuciaría el embudo con ruido y haría inútil cualquier
+recuento. Pasa a HubSpot cuando hay conversación, no cuando hay un nombre.
+
+Si propones una lista de empresas, no la dejes solo escrita en el chat: eso se
+pierde. Guárdala en Apollo y di en qué lista está.
 
 ## Cómo trabajas
 
