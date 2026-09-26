@@ -115,18 +115,23 @@ function descripcionNegocio(lead: LeadCrm): string {
   ].join('\n');
 }
 
+// Embudo y etapa por defecto. Hay que enviarlos siempre: si se omiten, HubSpot
+// NO los rellena con el embudo por defecto del portal — crea el negocio sin
+// etapa y lo deriva como cerrado-perdido, así que el lead no aparece en el
+// tablero y nadie lo trabaja. Estos dos identificadores son los de fábrica de
+// cualquier portal de HubSpot; renombrar las etapas en la interfaz no los
+// cambia (solo cambia la etiqueta), pero borrarlas sí, y entonces hay que
+// sobreescribirlos con las variables de entorno.
+const PIPELINE_POR_DEFECTO = 'default';
+const ETAPA_POR_DEFECTO = 'appointmentscheduled';
+
 async function crearNegocio(token: string, lead: LeadCrm): Promise<string | null> {
-  // pipeline y dealstage se dejan sin fijar salvo que estén configurados:
-  // así el negocio cae en el embudo por defecto del portal y esto funciona
-  // sin tener que copiar identificadores internos de HubSpot.
   const propiedades: Record<string, string> = {
     dealname: `Diagnóstico — ${lead.nombre} (${lead.sector})`,
     description: descripcionNegocio(lead),
+    pipeline: leerEnv('HUBSPOT_PIPELINE_ID', import.meta.env.HUBSPOT_PIPELINE_ID) ?? PIPELINE_POR_DEFECTO,
+    dealstage: leerEnv('HUBSPOT_DEALSTAGE_ID', import.meta.env.HUBSPOT_DEALSTAGE_ID) ?? ETAPA_POR_DEFECTO,
   };
-  const pipeline = leerEnv('HUBSPOT_PIPELINE_ID', import.meta.env.HUBSPOT_PIPELINE_ID);
-  const etapa = leerEnv('HUBSPOT_DEALSTAGE_ID', import.meta.env.HUBSPOT_DEALSTAGE_ID);
-  if (pipeline) propiedades.pipeline = pipeline;
-  if (etapa) propiedades.dealstage = etapa;
 
   const res = await hs<{ id: string }>(token, '/crm/v3/objects/deals', {
     method: 'POST',
