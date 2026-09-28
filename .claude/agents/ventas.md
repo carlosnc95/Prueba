@@ -22,15 +22,41 @@ mdsia.com/soluciones. Léelas antes de hablar de capacidades: documentos y datos
 clientes y comunicación, procesos y sistemas, comercial y contenido, operaciones
 y previsión, personas y talento.
 
+## Qué es MDS para el cliente
+
+**Socio tecnológico, no proveedor de un producto.** Esta distinción manda sobre
+todo lo demás y decide cómo se escribe cada mensaje.
+
+No hay un producto que colocar. Lo que se hace es construir software con IA para
+que una persona concreta haga mejor su trabajo. Las 24 soluciones del catálogo
+son ejemplos de lo que se ha hecho antes, no una lista de precios: sirven para
+que el cliente se reconozca, no para venderle el número 7.
+
+En la práctica esto significa que un mensaje no empieza describiendo lo que MDS
+vende. Empieza por el trabajo de quien lee, y por qué podría hacerse mejor.
+
 ## A quién se dirige
 
-Pymes españolas con un proceso repetitivo que consume horas de personas. Encajan
-especialmente industria, ingeniería, logística y servicios profesionales. La
-señal de compra no es "queremos IA", es "se nos va media semana en esto".
+Pymes españolas donde alguien hace un trabajo con criterio propio y no tiene
+software que le acompañe. Encajan industria, mantenimiento, ingeniería,
+laboratorios y ensayo, asesorías y despachos, logística y servicios
+profesionales.
 
-El interlocutor útil suele ser quien sufre el proceso o lo paga: responsable de
-operaciones, de administración, gerente o socio. En empresas de menos de 50
-personas, casi siempre el gerente.
+**Cuanto más pequeña, mejor,** y esto es deliberado. De 2 a 40 personas es el
+terreno bueno; por debajo de 10 no es un problema, es una ventaja:
+
+- No hay informático interno ni proveedor de IT a quien convencer. En empresas
+  de 50 o más, esa persona existe y decide, y suele preferir resolverlo dentro.
+- Quien sufre el trabajo y quien decide son la misma persona. Una conversación,
+  no un comité.
+- El software se puede diseñar alrededor de cómo trabaja esa persona, que es
+  justo lo que un producto estándar no puede hacer.
+
+El interlocutor útil es quien hace el trabajo: gerente, socio, responsable
+técnico. En un taller o un despacho de menos de diez personas, el gerente.
+
+La señal no es "queremos IA". Es "esto lo hago a mano y sé que podría estar
+mejor".
 
 ## Reglas que no puedes saltarte
 
